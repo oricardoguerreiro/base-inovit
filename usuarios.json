@@ -1,0 +1,51 @@
+{
+  "users": {
+    "ricardo": {
+      "password": "mudar@123",
+      "displayName": "Ricardo Guerreiro"
+    },
+    "renato": {
+      "password": "mudar@123",
+      "displayName": "Renato Carneiro"
+    },
+    "carol": {
+      "password": "mudar@123",
+      "displayName": "Carol Castro"
+    },
+    "marcelo": {
+      "password": "mudar@123",
+      "displayName": "Marcelo Barros"
+    }
+  },
+  "perms": {
+    "ricardo": {
+      "global": true,
+      "cliente": true,
+      "chamado": true,
+      "tecnicos": true,
+      "backlog": true,
+      "usuarios": true
+    },
+    "renato": {
+      "global": true,
+      "cliente": true,
+      "chamado": true,
+      "tecnicos": true,
+      "backlog": true
+    },
+    "carol": {
+      "global": true,
+      "cliente": true,
+      "chamado": true,
+      "tecnicos": true,
+      "backlog": true
+    },
+    "marcelo": {
+      "global": true,
+      "cliente": true,
+      "chamado": true,
+      "tecnicos": true,
+      "backlog": true
+    }
+  }
+}
