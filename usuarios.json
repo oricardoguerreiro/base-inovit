@@ -31,27 +31,21 @@
       "cliente": true,
       "chamado": true,
       "tecnicos": true,
-      "produtividade": true,
-      "backlog": true,
-      "usuarios": false
+      "backlog": true
     },
     "carol": {
       "global": true,
       "cliente": true,
       "chamado": true,
       "tecnicos": true,
-      "produtividade": true,
-      "backlog": true,
-      "usuarios": false
+      "backlog": true
     },
     "marcelo": {
       "global": true,
       "cliente": true,
       "chamado": true,
       "tecnicos": true,
-      "produtividade": true,
-      "backlog": true,
-      "usuarios": false
+      "backlog": true
     }
   }
 }
