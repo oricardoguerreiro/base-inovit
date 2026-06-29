@@ -15,6 +15,10 @@
     "marcelo": {
       "password": "mudar@123",
       "displayName": "Marcelo Barros"
+    },
+    "tiago": {
+      "password": "mudar@123",
+      "displayName": "Tiago Patriarca"
     }
   },
   "perms": {
@@ -45,6 +49,14 @@
       "cliente": true,
       "chamado": true,
       "tecnicos": true,
+      "backlog": true
+    },
+    "tiago": {
+      "global": true,
+      "cliente": true,
+      "chamado": true,
+      "tecnicos": true,
+      "produtividade": true,
       "backlog": true
     }
   }
