@@ -3062,109 +3062,72 @@ function savePermEdit(){
 function closePermEdit(){ document.getElementById('perm-edit-modal').style.display='none'; editPermUsername=null; }
 
 // ================================================================
-// 10. CRM – DECISORES E GERAL (parsers corrigidos)
+// 10. CRM – DECISORES E GERAL (parser 100% corrigido)
 // ================================================================
 
 const DECISORES_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt';
 const GERAL_CSV_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt';
 
-// --- Função auxiliar: extrai email e telefone de uma string ---
-function extrairEmailTelefone(texto) {
-    // E-mail: captura qualquer padrão com @, ignorando mailto: e colchetes
+function parseLinhaCRM(line) {
+    if (!line.trim()) return null;
+
+    let texto = line.trim();
     let email = '';
-    let resto = texto;
-    // Tenta capturar email entre colchetes ou sem
-    const emailMatch = texto.match(/(?:mailto:)?\s*([\w\.-]+@[\w\.-]+\.\w+)/);
+    let telefone = '';
+
+    // 1. Extrair e-mail (com ou sem mailto: e colchetes)
+    const emailMatch = texto.match(/(?:mailto:)?\s*\[?([\w\.-]+@[\w\.-]+\.\w+)\]?/);
     if (emailMatch) {
-        email = emailMatch[1].trim();
-        resto = texto.replace(emailMatch[0], '').trim();
+        email = emailMatch[1];
+        texto = texto.replace(emailMatch[0], '').trim();
     } else {
-        // Tenta capturar apenas o email sem mailto
         const emailSimples = texto.match(/([\w\.-]+@[\w\.-]+\.\w+)/);
         if (emailSimples) {
-            email = emailSimples[0].trim();
-            resto = texto.replace(email, '').trim();
+            email = emailSimples[0];
+            texto = texto.replace(emailSimples[0], '').trim();
         }
     }
 
-    // Telefone: padrão com +, parênteses, hífens, espaços
-    let telefone = '';
-    // Tenta capturar com +55
-    const telMatch = resto.match(/(\+\d{1,3}?[\s\-\(\)]*\d{2,}[\s\-\(\)]*\d{4,})/);
+    // 2. Extrair telefone (completo, incluindo hífen e sufixo)
+    // Padrões: +55 71 9326-5750, (71) 9326-5750, 71 9326-5750, 71 9326-5750
+    const telMatch = texto.match(/(\+\d{1,3}\s*)?(?:\(?\d{2}\)?[\s\-]*)?\d{4,5}[\s\-]*\d{4}/);
     if (telMatch) {
         telefone = telMatch[0].trim();
-        resto = resto.replace(telefone, '').trim();
-    } else {
-        // Sem +, captura números com DDD e separadores
-        const telSimples = resto.match(/(\d{2,}\s*\d{4,}\s*\d{4})/);
-        if (telSimples) {
-            telefone = telSimples[0].trim();
-            resto = resto.replace(telefone, '').trim();
-        }
+        texto = texto.replace(telMatch[0], '').trim();
     }
 
-    // Remove colchetes residuais
-    email = email.replace(/^\[|\]$/g, '');
-    // Remove hífens ou traços iniciais do resto
-    resto = resto.replace(/^[-–—]\s*/, '').trim();
+    // 3. Remover colchetes, mailto: residuais e hífens soltos
+    texto = texto.replace(/\[|\]|mailto:/g, '').trim();
+    texto = texto.replace(/^[-–—]\s*/, '').trim();
 
-    return { email, telefone, resto };
-}
-
-// --- Separa nome e cliente a partir do resto ---
-function separarNomeCliente(resto) {
-    // Tenta identificar o cliente como palavras em CAIXA ALTA ou siglas
-    // Exemplo: "ACCTA", "ANDRE GUIMARAES", "HUMANA BRASIL"
-    // A regex captura sequências de maiúsculas (pelo menos 2 caracteres) com espaços
-    const clienteMatch = resto.match(/([A-Z][A-Z\s]+)/);
+    // 4. Separar nome e cliente
+    let nome = texto;
     let cliente = '';
-    let nome = '';
-    if (clienteMatch) {
-        cliente = clienteMatch[0].trim();
-        nome = resto.replace(cliente, '').trim();
-    } else {
-        // Se não houver maiúsculas, tenta separar pela última palavra (pode ser sigla)
-        const parts = resto.split(/\s+/);
-        if (parts.length >= 2) {
-            const last = parts[parts.length - 1];
-            // Se a última palavra tem 2-6 letras maiúsculas, é sigla
-            if (/^[A-Z]{2,6}$/.test(last)) {
-                cliente = last;
-                nome = parts.slice(0, -1).join(' ');
+    const parts = texto.split(/\s+/);
+    if (parts.length >= 2) {
+        const last = parts[parts.length - 1];
+        // Se a última palavra for uma sigla (2-6 letras maiúsculas) -> cliente
+        if (/^[A-Z]{2,6}$/.test(last)) {
+            cliente = last;
+            nome = parts.slice(0, -1).join(' ');
+        } else {
+            // Procura palavras em maiúsculas (ex: ANDRE GUIMARAES)
+            const clienteMatch = texto.match(/([A-Z][A-Z\s]+)/);
+            if (clienteMatch) {
+                cliente = clienteMatch[0].trim();
+                nome = texto.replace(cliente, '').trim();
             } else {
-                // Senão, nome é a primeira palavra, cliente é o restante
+                // Último recurso: primeira palavra é nome, resto é cliente
                 nome = parts[0];
                 cliente = parts.slice(1).join(' ');
             }
-        } else {
-            nome = resto;
-            cliente = '';
         }
     }
-    return { nome, cliente };
-}
 
-// --- Parsing para decisores ---
-function parseDecisoresLine(line) {
-    if (!line.trim()) return null;
-    const { email, telefone, resto } = extrairEmailTelefone(line);
-    if (!resto) return null;
-    const { nome, cliente } = separarNomeCliente(resto);
-    if (!nome) return null;
     return { nome, cliente, telefone, email };
 }
 
-// --- Parsing para geral (mesma lógica) ---
-function parseGeralLine(line) {
-    if (!line.trim()) return null;
-    const { email, telefone, resto } = extrairEmailTelefone(line);
-    if (!resto) return null;
-    const { nome, cliente } = separarNomeCliente(resto);
-    if (!nome) return null;
-    return { nome, cliente, telefone, email };
-}
-
-// --- Funções loadDecisores e loadGeral (iguais, apenas usam os novos parsers) ---
+// Funções loadDecisores e loadGeral (idênticas às anteriores, usando parseLinhaCRM)
 function loadDecisores() {
     let data = localStorage.getItem('crm_decisores');
     if (data) {
@@ -3183,7 +3146,7 @@ function loadDecisores() {
             const lines = text.split('\n').filter(line => line.trim() !== '');
             const parsed = [];
             for (const line of lines) {
-                const obj = parseDecisoresLine(line);
+                const obj = parseLinhaCRM(line);
                 if (obj) {
                     parsed.push({
                         nome: obj.nome,
@@ -3220,7 +3183,7 @@ function loadGeral() {
             const lines = text.split('\n').filter(line => line.trim() !== '');
             const parsed = [];
             for (const line of lines) {
-                const obj = parseGeralLine(line);
+                const obj = parseLinhaCRM(line);
                 if (obj) {
                     parsed.push({
                         nome: obj.nome,
