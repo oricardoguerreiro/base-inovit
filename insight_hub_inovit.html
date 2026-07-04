@@ -6,7 +6,7 @@
     <title>INOVIT | Insight HUB</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/75e05c3bb826c5efa8b4b70514f3e3f94e13200b/logo_inovit.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- XLSX removido conforme solicitado -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -17,9 +17,10 @@
     <style>
         /* ============================================================
            DESIGN SYSTEM REFINADO – INSPIRAÇÃO PREMIUM
+           (mantido exatamente igual ao original)
            ============================================================ */
         :root {
-            --bg-primary: #eef3f6;          /* fundo mais suave */
+            --bg-primary: #eef3f6;
             --bg-card: rgba(255,255,255,0.72);
             --bg-input: rgba(255,255,255,0.85);
             --text-primary: #0b1e2e;
@@ -44,14 +45,10 @@
             --sidebar-hover-bg: rgba(26, 42, 68, 0.6);
             --sidebar-active-bg: rgba(26, 42, 68, 0.8);
             --sidebar-active-border: #0474c4;
-
-            /* Efeitos de vidro */
             --glass-bg: rgba(255,255,255,0.55);
             --glass-border: rgba(255,255,255,0.25);
             --glass-shadow: 0 8px 32px rgba(0,0,0,0.06);
             --blur-amount: 20px;
-
-            /* Gradientes */
             --gradient-primary: linear-gradient(135deg, #0474c4 0%, #0a5f9e 100%);
             --gradient-success: linear-gradient(135deg, #1e7e34, #145a24);
             --gradient-danger: linear-gradient(135deg, #b71c1c, #7f1414);
@@ -493,6 +490,16 @@
             flex-direction: column;
             gap: 6px;
         }
+        .nav-group .nav-group-title {
+            color: var(--sidebar-text);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 12px 16px 4px;
+            opacity: 0.5;
+            font-weight: 600;
+            cursor: default;
+        }
 
         /* ===== MAIN ===== */
         #main-content {
@@ -541,7 +548,8 @@
         .btn-primary, .btn-secondary, .btn-backup, .btn-add-user, .btn-save-pass,
         .btn-cancel-pass, .btn-logout-confirm, .btn-logout-cancel, .btn-close-reset,
         .btn-filter-action, .btn-clear-action, .btn-edit-name, .btn-edit-login,
-        .btn-change-password, .btn-edit-permissions, .btn-remove-user, .modal-close {
+        .btn-change-password, .btn-edit-permissions, .btn-remove-user, .modal-close,
+        .btn-crm-save, .btn-crm-add, .btn-crm-tab, .btn-crm-copy {
             padding: 8px 20px;
             font-size: 14px;
             font-weight: 500;
@@ -719,6 +727,48 @@
         .btn-remove-user:hover {
             background: rgba(183, 28, 28, 0.08);
             transform: scale(1.1);
+        }
+        .btn-crm-save {
+            background: var(--gradient-success);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 14px rgba(30, 126, 52, 0.25);
+        }
+        .btn-crm-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(30, 126, 52, 0.35);
+        }
+        .btn-crm-add {
+            background: var(--gradient-primary);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 14px rgba(4,116,196,0.2);
+        }
+        .btn-crm-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(4,116,196,0.3);
+        }
+        .btn-crm-tab.active-tab {
+            background: var(--gradient-primary);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 14px rgba(4,116,196,0.2);
+        }
+        .btn-crm-tab.active-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(4,116,196,0.3);
+        }
+        .btn-crm-copy {
+            background: var(--glass-bg);
+            border-color: var(--blue-primary);
+            color: var(--blue-primary);
+            padding: 4px 12px;
+            min-height: 32px;
+            font-size: 12px;
+        }
+        .btn-crm-copy:hover {
+            background: rgba(4,116,196,0.08);
+            transform: translateY(-1px);
         }
 
         /* ===== KPI CARDS PREMIUM ===== */
@@ -1606,6 +1656,106 @@
             letter-spacing: 0.5px;
         }
 
+        /* ===== CRM TABLES (editáveis) ===== */
+        .crm-table-container {
+            overflow-x: auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            margin-top: 12px;
+            box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.4);
+            padding: 8px;
+        }
+        .crm-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .crm-table th {
+            background: rgba(227, 240, 255, 0.5);
+            backdrop-filter: blur(4px);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--blue-dark);
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--border-color);
+            text-align: left;
+            letter-spacing: 0.3px;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+        .crm-table td {
+            padding: 6px 8px;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+            vertical-align: middle;
+        }
+        .crm-table input {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: var(--bg-input);
+            font-size: 13px;
+            color: var(--text-primary);
+            transition: var(--transition);
+            min-width: 60px;
+        }
+        .crm-table input:focus {
+            border-color: var(--blue-primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(4,116,196,0.08);
+        }
+        .crm-table .btn-remove-row {
+            background: transparent;
+            border: none;
+            color: var(--danger);
+            font-size: 16px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 40px;
+            transition: var(--transition);
+        }
+        .crm-table .btn-remove-row:hover {
+            background: rgba(183, 28, 28, 0.08);
+            transform: scale(1.2);
+        }
+        .crm-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 16px 0 8px;
+        }
+        .crm-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        /* ===== CRM SEARCH (GERAL) ===== */
+        .crm-search-container {
+            display: none;
+            margin-bottom: 16px;
+        }
+        .crm-search-container input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(4px);
+            font-size: 15px;
+            transition: var(--transition);
+        }
+        .crm-search-container input:focus {
+            border-color: var(--blue-primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(4,116,196,0.08);
+        }
+
         /* ===== RESPONSIVO ===== */
         @media (max-width: 768px) {
             #sidebar { display: none; }
@@ -1617,6 +1767,7 @@
             .date-filter-box input { font-size: 12px; max-width: 90px; }
             #topbar-user { font-size: 12px; padding: 4px 12px; }
             .kpi-grid-10 { grid-template-columns: repeat(2, 1fr); }
+            .crm-table input { font-size: 12px; padding: 4px; }
         }
         @media (max-width: 480px) {
             .flex-card-grid { grid-template-columns: 1fr; }
@@ -1626,7 +1777,6 @@
         }
 
         /* ===== MELHORIAS ADICIONAIS ===== */
-        /* Efeito de brilho sutil em cards */
         .kpi-card::after,
         .client-summary-card::after,
         .chart-card::after,
@@ -1645,25 +1795,16 @@
             opacity: 0.3;
         }
 
-        /* Scroll suave */
         html { scroll-behavior: smooth; }
-
-        /* Transições para todos os elementos interativos */
         button, input, select, .kpi-card, .client-summary-card, .chart-card, .nav-item {
             transition: var(--transition);
         }
-
-        /* Melhoria de contraste em textos */
         .kpi-val, .client-metric-row .val, .prod-rank-list li .value {
             font-weight: 700;
         }
-
-        /* Ajuste de espaçamento em grids */
         .charts-grid, .kpi-grid-10, .flex-card-grid, .prod-dashboard-grid {
             gap: 20px;
         }
-
-        /* Tooltip personalizado para gráficos (Chart.js) */
         .chart-card canvas {
             filter: drop-shadow(0 2px 8px rgba(0,0,0,0.02));
         }
@@ -1758,6 +1899,8 @@
             <button class="nav-item" onclick="switchSection('tecnicos', this)" data-module="tecnicos">👨‍💻 Técnicos</button>
             <button class="nav-item" onclick="switchSection('produtividade', this)" data-module="produtividade">📊 Produtividade</button>
             <button class="nav-item" onclick="switchSection('backlog', this)" data-module="backlog">⏳ Backlog</button>
+            <!-- CRM único -->
+            <button class="nav-item" onclick="switchSection('crm', this)" data-module="crm">📋 CRM</button>
             <button class="nav-item" onclick="switchSection('usuarios', this)" data-module="usuarios">👥 Gestão de Usuários</button>
         </div>
         <div class="sidebar-footer"></div>
@@ -1881,6 +2024,41 @@
             </div>
         </div>
 
+        <!-- ===== CRM (único) ===== -->
+        <div id="panel-crm" class="section-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">📋 CRM</h2>
+                <div class="panel-actions" data-html2canvas-ignore="true">
+                    <button class="btn-secondary" onclick="exportPanelToJPG('panel-crm','CRM')">JPG</button>
+                    <button class="btn-secondary" onclick="openExportPdfPopup('panel-crm','CRM')">PDF</button>
+                </div>
+            </div>
+            <div class="crm-tabs">
+                <button class="btn-crm-tab active-tab" id="crm-tab-decisores" onclick="switchCrmTab('decisores')">👤 Decisores</button>
+                <button class="btn-crm-tab" id="crm-tab-geral" onclick="switchCrmTab('geral')">📄 Geral</button>
+            </div>
+
+            <!-- Campo de pesquisa (visível apenas na aba Geral) -->
+            <div class="crm-search-container" id="crm-search-container">
+                <input type="text" id="crm-search-input" placeholder="🔍 Pesquisar em Geral (Nome, Cliente, WhatsApp, E-mail)..." oninput="applyCrmFilter()">
+            </div>
+
+            <div class="crm-actions" id="crm-actions">
+                <button class="btn-crm-save" id="crm-save-btn" onclick="saveCrmData()">💾 Salvar</button>
+                <button class="btn-crm-add" id="crm-add-btn" onclick="addCrmRow()">➕ Adicionar Linha</button>
+            </div>
+            <div class="crm-table-container" id="crm-table-wrap">
+                <table class="crm-table" id="crm-table">
+                    <thead id="crm-table-head"></thead>
+                    <tbody id="crm-table-body"></tbody>
+                </table>
+            </div>
+            <div class="pagination-container" id="crm-pagination" style="margin-top:12px;">
+                <span class="info" id="crm-info">Mostrando 0 de 0</span>
+                <div class="pagination-buttons" id="crm-buttons"></div>
+            </div>
+        </div>
+
         <!-- ===== USUÁRIOS ===== -->
         <div id="panel-usuarios" class="section-panel">
             <div class="panel-header"><h2 class="panel-title">👥 Gestão de Usuários e Permissões</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('panel-usuarios','Usuarios')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('panel-usuarios','Usuarios')">PDF</button></div></div>
@@ -1899,7 +2077,7 @@
                     <div class="form-group"><label>Usuário (login)</label><input type="text" id="new-username" placeholder="Digite o nome de usuário"></div>
                     <div class="form-group"><label>Nome de Exibição (opcional)</label><input type="text" id="new-displayname" placeholder="Nome que aparecerá na saudação"></div>
                     <div class="form-group"><label>Senha (mín. 8 caracteres)</label><input type="password" id="new-userpass" placeholder="Digite a senha"></div>
-                    <div class="form-group"><label>Permissões por Módulo</label><div class="perm-group" id="perm-checkboxes"><label><input type="checkbox" value="global" checked> Dashboard Global</label><label><input type="checkbox" value="cliente" checked> Por Cliente</label><label><input type="checkbox" value="chamado" checked> Por Chamado</label><label><input type="checkbox" value="tecnicos" checked> Técnicos</label><label><input type="checkbox" value="produtividade" checked> Produtividade</label><label><input type="checkbox" value="backlog" checked> Backlog</label><label><input type="checkbox" value="usuarios" checked> Gestão de Usuários</label></div></div>
+                    <div class="form-group"><label>Permissões por Módulo</label><div class="perm-group" id="perm-checkboxes"><label><input type="checkbox" value="global" checked> Dashboard Global</label><label><input type="checkbox" value="cliente" checked> Por Cliente</label><label><input type="checkbox" value="chamado" checked> Por Chamado</label><label><input type="checkbox" value="tecnicos" checked> Técnicos</label><label><input type="checkbox" value="produtividade" checked> Produtividade</label><label><input type="checkbox" value="backlog" checked> Backlog</label><label><input type="checkbox" value="crm" checked> CRM</label><label><input type="checkbox" value="usuarios" checked> Gestão de Usuários</label></div></div>
                     <button class="btn-add-user" onclick="addUser()">Adicionar Usuário</button>
                 </div>
             </div>
@@ -1908,14 +2086,14 @@
     </div>
 </div>
 
-<!-- ===== MODAIS (IDs mantidos) ===== -->
+<!-- ===== MODAIS ===== -->
 <div id="modal-ticket-list" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="ticket-list-title">Lista de Chamados</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-ticket-list','Lista_Chamados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-ticket-list','Lista_Chamados')">PDF</button><button class="modal-close" onclick="closeModal('modal-ticket-list')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="ticket-list-table"><thead id="ticket-list-thead"></thead><tbody id="ticket-list-tbody"></tbody></table></div><div class="pagination-container" id="ticket-list-pagination"><span class="info" id="ticket-list-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="ticket-list-buttons"></div></div></div></div>
 <div id="modal-ticket-detail" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="ticket-detail-title">Detalhes do Chamado</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-ticket-detail','Detalhe_Chamado')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-ticket-detail','Detalhe_Chamado')">PDF</button><button class="modal-close" onclick="closeModal('modal-ticket-detail')">Fechar</button></div></div><div id="ticket-detail-content"></div></div></div>
 <div id="modal-client-detail" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="client-detail-title">Detalhes do Cliente</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-client-detail','Detalhe_Cliente')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-client-detail','Detalhe_Cliente')">PDF</button><button class="modal-close" onclick="closeModal('modal-client-detail')">Fechar</button></div></div><div id="client-detail-content"></div></div></div>
 <div id="modal-technician-detail" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="technician-detail-title">Detalhes do Técnico</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-technician-detail','Detalhe_Tecnico')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-technician-detail','Detalhe_Tecnico')">PDF</button><button class="modal-close" onclick="closeModal('modal-technician-detail')">Fechar</button></div></div><div id="technician-detail-content"></div></div></div>
 <div id="modal-tech-evaluated" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="tech-evaluated-title">Chamados Avaliados pelo Técnico</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-tech-evaluated','Tecnico_Avaliados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-tech-evaluated','Tecnico_Avaliados')">PDF</button><button class="modal-close" onclick="closeModal('modal-tech-evaluated')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="tech-evaluated-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Abertura</th><th>Solução</th><th>CSAT</th></tr></thead><tbody id="tech-evaluated-tbody"></tbody></table></div><div class="pagination-container" id="tech-evaluated-pagination"><span class="info" id="tech-evaluated-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="tech-evaluated-buttons"></div></div></div></div>
 <div id="modal-backlog-isolated" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-backlog-isolated-title">Chamados de Backlog Mapeados</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-backlog-isolated','Backlog_Isolado')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-backlog-isolated','Backlog_Isolado')">PDF</button><button class="modal-close" onclick="closeModal('modal-backlog-isolated')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="table-backlog-isolated-rows"><thead><tr><th>ID</th><th>Entidade</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Técnico</th><th>Equipe</th><th>Status</th></tr></thead><tbody></tbody></table></div></div></div>
-<div id="modal-client-universal" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-client-name">VISÃO UNIVERSAL DO CLIENTE</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-client-universal','Relatorio_Cliente')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-client-universal','Relatorio_Cliente')">PDF</button><button class="modal-close" onclick="closeModal('modal-client-universal')">Fechar</button></div></div><div id="report-client-header-tag" style="font-family:'JetBrains Mono'; font-size:14px; color:var(--blue-primary); margin-bottom:12px; font-weight:600;"></div><div class="kpi-grid-10" id="modal-client-kpis"></div><div id="modal-client-requester-section" style="margin-top:20px; margin-bottom:20px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Top 10 Requerentes Mais Ativos</h3><div class="modern-table-container"><table class="modern-table" id="modal-client-table-requesters"><thead><tr><th>Rank</th><th>Nome do Requerente</th><th>Quantidade</th></tr></thead><tbody></tbody></table></div></div><div id="modal-financial-section"><h3 class="panel-title" style="font-size:20px; margin:20px 0 8px;">Simulador de Viabilidade Econômica</h3><div class="simulator-split-grid"><div class="sim-input-card"><div class="sim-field"><label>Faturamento Mensal (R$)</label><input type="number" id="sim-input-revenue" value="12000" oninput="recalculateContractViability()"></div><div class="sim-field"><label>Custo Hora Técnico (R$/h)</label><input type="number" id="sim-input-hourly" value="130" oninput="recalculateContractViability()"></div></div><div class="sim-results-card"><div class="sim-res-row"><span class="sim-res-lbl">Ações Monitoradas:</span><span class="sim-res-val" id="sim-res-actions">0</span></div><div class="sim-res-row"><span class="sim-res-lbl">Esforço Médio (0.85h):</span><span class="sim-res-val" id="sim-res-hours">0.0h</span></div><div class="sim-res-row"><span class="sim-res-lbl">Custo Operacional Bruto:</span><span class="sim-res-val" id="sim-res-cost">R$ 0,00</span></div><div class="sim-res-row"><span class="sim-res-lbl">Margem de Rentabilidade:</span><span class="sim-res-val" id="sim-res-margin">0.0%</span></div></div></div><div id="sim-verdict-block"></div></div><div id="modal-client-dynamic-content-area"><h3 class="panel-title" id="modal-table-title" style="font-size:20px; margin:20px 0 8px;">Top 10 Categorias mais recorrentes</h3><div class="modern-table-container" id="modal-client-table-wrapper"><table class="modern-table" id="modal-client-table-tickets"><thead><tr><th>Quantidade</th><th>Categoria</th><th>% do Todo</th></tr></thead><tbody></tbody></table></div><div id="modal-client-ia-strategic-box" class="ai-insights-box" style="display:none;"></div></div><div id="modal-client-weekday-chart-container" style="margin-top:24px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Distribuição por Dia da Semana (período filtrado)</h3><div class="bar-chart-container" id="modal-client-weekday-bar-chart"><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-0" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Dom</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-1" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Seg</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-2" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Ter</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-3" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Qua</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-4" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Qui</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-5" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Sexta</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-6" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Sáb</div></div></div></div><div id="modal-client-teams-section" style="margin-top:20px; margin-bottom:20px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Técnicos Alocados</h3><div id="modal-client-teams-container" style="display:flex; flex-direction:column; gap:8px;"></div></div><div id="modal-client-evaluated-section" style="margin-top:20px; margin-bottom:20px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Chamados Avaliados (CSAT)</h3><div class="modern-table-container"><table class="modern-table" id="modal-client-evaluated-table"><thead><tr><th>ID</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Nota CSAT</th><th>Técnico</th></tr></thead><tbody></tbody></table></div></div></div></div>
+<div id="modal-client-universal" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-client-name">VISÃO UNIVERSAL DO CLIENTE</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-client-universal','Relatorio_Cliente')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-client-universal','Relatorio_Cliente')">PDF</button><button class="modal-close" onclick="closeModal('modal-client-universal')">Fechar</button></div></div><div id="report-client-header-tag" style="font-family:'JetBrains Mono'; font-size:14px; color:var(--blue-primary); margin-bottom:12px; font-weight:600;"></div><div class="kpi-grid-10" id="modal-client-kpis"></div><div id="modal-client-requester-section" style="margin-top:20px; margin-bottom:20px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Top 10 Requerentes Mais Ativos</h3><div class="modern-table-container"><table class="modern-table" id="modal-client-table-requesters"><thead><tr><th>Rank</th><th>Nome do Requerente</th><th>Quantidade</th><th>Percentual</th><th>Horas</th></tr></thead><tbody></tbody></table></div></div><div id="modal-financial-section"><h3 class="panel-title" style="font-size:20px; margin:20px 0 8px;">Simulador de Viabilidade Econômica</h3><div class="simulator-split-grid"><div class="sim-input-card"><div class="sim-field"><label>Faturamento Mensal (R$)</label><input type="number" id="sim-input-revenue" value="12000" oninput="recalculateContractViability()"></div><div class="sim-field"><label>Custo Hora Técnico (R$/h)</label><input type="number" id="sim-input-hourly" value="130" oninput="recalculateContractViability()"></div></div><div class="sim-results-card"><div class="sim-res-row"><span class="sim-res-lbl">Ações Monitoradas:</span><span class="sim-res-val" id="sim-res-actions">0</span></div><div class="sim-res-row"><span class="sim-res-lbl">Esforço Médio (0.85h):</span><span class="sim-res-val" id="sim-res-hours">0.0h</span></div><div class="sim-res-row"><span class="sim-res-lbl">Custo Operacional Bruto:</span><span class="sim-res-val" id="sim-res-cost">R$ 0,00</span></div><div class="sim-res-row"><span class="sim-res-lbl">Margem de Rentabilidade:</span><span class="sim-res-val" id="sim-res-margin">0.0%</span></div></div></div><div id="sim-verdict-block"></div></div><div id="modal-client-dynamic-content-area"><h3 class="panel-title" id="modal-table-title" style="font-size:20px; margin:20px 0 8px;">Top 10 Categorias mais recorrentes</h3><div class="modern-table-container" id="modal-client-table-wrapper"><table class="modern-table" id="modal-client-table-tickets"><thead><tr><th>Quantidade</th><th>Categoria</th><th>% do Todo</th></tr></thead><tbody></tbody></table></div><div id="modal-client-ia-strategic-box" class="ai-insights-box" style="display:none;"></div></div><div id="modal-client-weekday-chart-container" style="margin-top:24px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Distribuição por Dia da Semana (período filtrado)</h3><div class="bar-chart-container" id="modal-client-weekday-bar-chart"><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-0" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Dom</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-1" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Seg</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-2" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Ter</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-3" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Qua</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-4" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Qui</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-5" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Sexta</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-6" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Sáb</div></div></div></div><div id="modal-client-teams-section" style="margin-top:20px; margin-bottom:20px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Técnicos Alocados</h3><div id="modal-client-teams-container" style="display:flex; flex-direction:column; gap:8px;"></div></div><div id="modal-client-evaluated-section" style="margin-top:20px; margin-bottom:20px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Chamados Avaliados (CSAT)</h3><div class="modern-table-container"><table class="modern-table" id="modal-client-evaluated-table"><thead><tr><th>ID</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Nota CSAT</th><th>Técnico</th></tr></thead><tbody></tbody></table></div></div></div></div>
 
 <div id="perm-edit-modal" class="modal-fullscreen" style="display:none; align-items:center; justify-content:center;"><div class="modal-container" style="max-width:500px;"><div class="perm-edit-box"><h3>Editar Permissões</h3><div id="perm-edit-user" style="font-weight:600; margin-bottom:12px;"></div><div class="perm-checkboxes" id="perm-edit-checkboxes"></div><div><button class="btn-save-perms" onclick="savePermEdit()">Salvar</button><button class="btn-cancel-perms" onclick="closePermEdit()">Cancelar</button></div></div></div></div>
 
@@ -1942,7 +2120,6 @@ function hasPermission(module) {
     return !!(perms[user] && perms[user][module] === true);
 }
 
-// NOVA FUNÇÃO: download do JSON com usuários atuais
 function downloadCurrentUsersJSON() {
     const data = {
         users: getUsers(),
@@ -1958,20 +2135,16 @@ function downloadCurrentUsersJSON() {
     alert('📁 Arquivo JSON baixado com os dados atuais de usuários e permissões.');
 }
 
-// Carregar do GitHub apenas se não houver dados no localStorage
 function loadUsersFromGitHub() {
     const localUsers = getUsers();
-    // Se já houver dados no localStorage (e não estiver vazio), não sobrescrever
     if (Object.keys(localUsers).length > 0) {
         console.log('✅ Usando dados do localStorage (já existem usuários)');
         return Promise.resolve(true);
     }
-    // Caso contrário, carregar do GitHub
     return fetch(USERS_JSON_URL)
         .then(res => { if (!res.ok) throw new Error('Arquivo não encontrado'); return res.json(); })
         .then(data => { if (data.users) saveUsers(data.users); if (data.perms) savePerms(data.perms); console.log('✅ Usuários carregados do GitHub (primeira vez)'); return true; })
         .catch(err => { console.warn('⚠️ Erro ao carregar do GitHub, usando fallback', err);
-            // Fallback: criar admin se não existir
             let users = getUsers();
             if (!users.ricardo) {
                 users.ricardo = { password: 'mudar@123', displayName: 'Ricardo Guerreiro' };
@@ -1979,7 +2152,7 @@ function loadUsersFromGitHub() {
             }
             let perms = getPerms();
             if (!perms.ricardo) {
-                perms.ricardo = { global:true, cliente:true, chamado:true, tecnicos:true, produtividade:true, backlog:true, usuarios:true };
+                perms.ricardo = { global:true, cliente:true, chamado:true, tecnicos:true, produtividade:true, backlog:true, crm:true, usuarios:true };
                 savePerms(perms);
             }
             return false;
@@ -1993,8 +2166,8 @@ function resetAdminOnly() {
     else { users.ricardo.password='mudar@123'; users.ricardo.displayName='Ricardo Guerreiro'; }
     saveUsers(users);
     const perms = getPerms();
-    if (!perms.ricardo) perms.ricardo = { global:true, cliente:true, chamado:true, tecnicos:true, produtividade:true, backlog:true, usuarios:true };
-    else { perms.ricardo.global=true; perms.ricardo.cliente=true; perms.ricardo.chamado=true; perms.ricardo.tecnicos=true; perms.ricardo.produtividade=true; perms.ricardo.backlog=true; perms.ricardo.usuarios=true; }
+    if (!perms.ricardo) perms.ricardo = { global:true, cliente:true, chamado:true, tecnicos:true, produtividade:true, backlog:true, crm:true, usuarios:true };
+    else { perms.ricardo.global=true; perms.ricardo.cliente=true; perms.ricardo.chamado=true; perms.ricardo.tecnicos=true; perms.ricardo.produtividade=true; perms.ricardo.backlog=true; perms.ricardo.crm=true; perms.ricardo.usuarios=true; }
     savePerms(perms);
     renderUserManagement();
     alert('Admin resetado com sucesso!');
@@ -2082,6 +2255,8 @@ function doLogin() {
         loadDataFromDrive();
         applyPermissionsToSidebar();
         renderUserManagement();
+        // Carregar dados CRM
+        loadCrmData();
     } else {
         errorEl.textContent='Usuário ou senha inválidos.';
         errorEl.style.display='block';
@@ -2099,8 +2274,17 @@ function applyPermissionsToSidebar() {
     let hasVisible = false;
     items.forEach(item => {
         const module = item.getAttribute('data-module');
-        if (hasPermission(module)) { item.style.display='flex'; hasVisible=true; }
-        else item.style.display='none';
+        if (module === 'crm') {
+            if (hasPermission('crm') || hasPermission('decisores') || hasPermission('geral')) {
+                item.style.display='flex';
+                hasVisible = true;
+            } else {
+                item.style.display='none';
+            }
+        } else {
+            if (hasPermission(module)) { item.style.display='flex'; hasVisible=true; }
+            else item.style.display='none';
+        }
     });
     if (!hasVisible) {
         document.getElementById('main-content').innerHTML = `<div class="empty-state" style="padding:60px 20px;"><div class="icon">🔒</div><h4>Você não tem permissão para acessar nenhum módulo.</h4><p style="color:var(--text-muted);">Contate o administrador para solicitar acesso.</p></div>`;
@@ -2110,7 +2294,7 @@ function applyPermissionsToSidebar() {
     if (activePanel) {
         const id=activePanel.id;
         const module=id.replace('panel-','');
-        if (!hasPermission(module)) {
+        if (!hasPermission(module) && module !== 'crm') {
             const firstAvailable=document.querySelector('.nav-item[data-module]');
             if (firstAvailable) {
                 const firstModule=firstAvailable.getAttribute('data-module');
@@ -2120,19 +2304,53 @@ function applyPermissionsToSidebar() {
     }
 }
 function switchSection(sectionKey, btnEl) {
-    if (!hasPermission(sectionKey)) {
-        const firstAvailable=document.querySelector('.nav-item[data-module]');
-        if (firstAvailable) {
-            const firstModule=firstAvailable.getAttribute('data-module');
-            if (firstModule!==sectionKey) switchSection(firstModule, firstAvailable);
+    if (sectionKey === 'crm') {
+        if (!hasPermission('crm') && !hasPermission('decisores') && !hasPermission('geral')) {
+            const firstAvailable=document.querySelector('.nav-item[data-module]');
+            if (firstAvailable) {
+                const firstModule=firstAvailable.getAttribute('data-module');
+                if (firstModule!==sectionKey) switchSection(firstModule, firstAvailable);
+            }
+            return;
         }
-        return;
+    } else {
+        if (!hasPermission(sectionKey)) {
+            const firstAvailable=document.querySelector('.nav-item[data-module]');
+            if (firstAvailable) {
+                const firstModule=firstAvailable.getAttribute('data-module');
+                if (firstModule!==sectionKey) switchSection(firstModule, firstAvailable);
+            }
+            return;
+        }
     }
     document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
     document.querySelectorAll('.section-panel').forEach(el=>el.classList.remove('active'));
     btnEl.classList.add('active');
     const target = document.getElementById(`panel-${sectionKey}`);
     if (target) target.classList.add('active');
+    if (sectionKey === 'crm') {
+        if (!window.crmActiveTab) window.crmActiveTab = 'decisores';
+        renderCrmTable();
+        document.querySelectorAll('.crm-tabs .btn-crm-tab').forEach(btn => btn.classList.remove('active-tab'));
+        document.getElementById(`crm-tab-${window.crmActiveTab}`).classList.add('active-tab');
+        // Mostra/esconde o campo de pesquisa conforme a aba
+        const searchContainer = document.getElementById('crm-search-container');
+        if (window.crmActiveTab === 'geral') {
+            searchContainer.style.display = 'block';
+            const searchInput = document.getElementById('crm-search-input');
+            if (searchInput.value.trim() !== '') {
+                applyCrmFilter();
+            } else {
+                renderCrmTable();
+            }
+        } else {
+            searchContainer.style.display = 'none';
+            document.getElementById('crm-search-input').value = '';
+            crmFilteredData = null;
+            crmSearchTerm = '';
+            renderCrmTable();
+        }
+    }
 }
 
 // ================================================================
@@ -2151,7 +2369,6 @@ let activePdfFilenameLabel = "";
 let chartInstances = {};
 let editPermUsername = null;
 
-// Status que definem BACKLOG segundo ITIL
 const BACKLOG_STATUSES = ['novo', 'pendente', 'em atendimento (atribuído)', 'em atendimento (planejado)'];
 
 function isBacklogStatus(status) {
@@ -2188,10 +2405,8 @@ function processFileRows(rows) {
     rows.forEach(row=>{
         const openParsed=parseDate(row[openCol]); if(!openParsed) return;
         const closeParsed=parseDate(row[closeCol]);
-        // isBacklog agora baseado no status
         const rawStatus = (statusCol && row[statusCol]) ? String(row[statusCol]).trim() : '';
         const isBacklog = isBacklogStatus(rawStatus);
-        // withinSLA: só calcula se NÃO for backlog (ITIL)
         let withinSLA = null;
         if (!isBacklog && closeParsed && openParsed.dateObj && closeParsed.dateObj) {
             withinSLA = calcularSla16HorasUteis(openParsed.dateObj, closeParsed.dateObj);
@@ -2550,7 +2765,17 @@ function openClientUniversalModal(clientKey, mode) {
         const reqCountMap={}; clientRows.forEach(d=>reqCountMap[d.requerente]=(reqCountMap[d.requerente]||0)+1);
         const sortedRequesters=Object.keys(reqCountMap).sort((a,b)=>reqCountMap[b]-reqCountMap[a]).slice(0,10);
         const reqTbody=document.querySelector('#modal-client-table-requesters tbody'); reqTbody.innerHTML='';
-        sortedRequesters.forEach((req,idx)=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td style="font-family:'JetBrains Mono';">#${idx+1}</td><td>${req}</td><td style="font-family:'JetBrains Mono';">${reqCountMap[req]}</td>`; reqTbody.appendChild(tr); });
+        const totalReq = clientRows.length;
+        const horasPorRequerente = {};
+        clientRows.forEach(d=>{ if(!horasPorRequerente[d.requerente]) horasPorRequerente[d.requerente]=0; horasPorRequerente[d.requerente] += d.duracao||0; });
+        sortedRequesters.forEach((req,idx)=>{
+            const qtd = reqCountMap[req];
+            const pct = totalReq > 0 ? ((qtd / totalReq) * 100).toFixed(1) : '0.0';
+            const horas = horasPorRequerente[req] ? horasPorRequerente[req].toFixed(1) : '0.0';
+            const tr=document.createElement('tr');
+            tr.innerHTML=`<td style="font-family:'JetBrains Mono';">#${idx+1}</td><td>${req}</td><td style="font-family:'JetBrains Mono';">${qtd}</td><td>${pct}%</td><td style="font-family:'JetBrains Mono';">${horas}h</td>`;
+            reqTbody.appendChild(tr);
+        });
         const tbodyCats=document.querySelector('#modal-client-table-tickets tbody'); tbodyCats.innerHTML='';
         const catCountMap={}; clientRows.forEach(d=>catCountMap[d.categoria]=(catCountMap[d.categoria]||0)+1);
         const sortedClientCats=Object.keys(catCountMap).sort((a,b)=>catCountMap[b]-catCountMap[a]).slice(0,10);
@@ -2666,7 +2891,8 @@ function openGlobalDrilldown(type) {
         case 'tecnicos': {
             const techs=[...new Set(currentFiltered.filter(d=>d.tecnico!=='').map(d=>d.tecnico))];
             const techData=techs.map(t=>{ const rows=currentFiltered.filter(d=>d.tecnico===t); const horasPorChamado={}; rows.forEach(d=>{ if(!horasPorChamado[d.id]) horasPorChamado[d.id]=d.duracao||0; }); const horas=Object.values(horasPorChamado).reduce((a,b)=>a+b,0); const dentro=rows.filter(d=>d.withinSLA===true).length; const total=rows.length; const pct=total>0?(dentro/total*100).toFixed(1):"0.0"; return {id:t,tecnico:t,total:total,sla:pct+'%',horas:horas.toFixed(1)}; }).sort((a,b)=>b.total-a.total);
-            openTicketList('👨‍💻 Técnicos', techData, ['tecnico','total','sla','horas'], true); break;
+            openTicketList('👨‍💻 Técnicos', techData, ['tecnico','total','sla','horas'], false);
+            break;
         }
         case 'tipo': { const tipoCounts={}; currentFiltered.forEach(d=>{ const t=d.tipo||'Outros'; tipoCounts[t]=(tipoCounts[t]||0)+1; }); const tipoData=Object.keys(tipoCounts).map(t=>({label:t,value:tipoCounts[t]})); openTicketList('📊 Distribuição de Tipo', tipoData, ['label','value'], false); break; }
         case 'horas': {
@@ -2824,8 +3050,8 @@ function openPermEdit(username) {
     editPermUsername=username; const perms=getPerms(); const userPerms=perms[username]||{};
     const modal=document.getElementById('perm-edit-modal'); document.getElementById('perm-edit-user').innerText=`Editando permissões de: ${username}`;
     const container=document.getElementById('perm-edit-checkboxes'); container.innerHTML='';
-    const allModules=['global','cliente','chamado','tecnicos','produtividade','backlog','usuarios'];
-    const moduleLabels={global:'Dashboard Global',cliente:'Por Cliente',chamado:'Por Chamado',tecnicos:'Técnicos',produtividade:'Produtividade',backlog:'Backlog',usuarios:'Gestão de Usuários'};
+    const allModules=['global','cliente','chamado','tecnicos','produtividade','backlog','crm','usuarios'];
+    const moduleLabels={global:'Dashboard Global',cliente:'Por Cliente',chamado:'Por Chamado',tecnicos:'Técnicos',produtividade:'Produtividade',backlog:'Backlog',crm:'CRM',usuarios:'Gestão de Usuários'};
     allModules.forEach(mod=>{ const checked=userPerms[mod]===true; const label=document.createElement('label'); label.innerHTML=`<input type="checkbox" value="${mod}" ${checked?'checked':''}> ${moduleLabels[mod]}`; container.appendChild(label); });
     modal.style.display='flex';
 }
@@ -2836,7 +3062,478 @@ function savePermEdit(){
 function closePermEdit(){ document.getElementById('perm-edit-modal').style.display='none'; editPermUsername=null; }
 
 // ================================================================
-// 10. LOADING E INICIALIZAÇÃO
+// 10. CRM – DECISORES E GERAL (parsers aprimorados)
+// ================================================================
+
+const DECISORES_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt';
+const GERAL_CSV_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt';
+
+// --- Função auxiliar: extrai email e telefone de uma string ---
+function extrairEmailTelefone(texto) {
+    // Email: padrão simples, captura até o domínio
+    const emailMatch = texto.match(/([\w\.-]+@[\w\.-]+\.\w+)/);
+    let email = '';
+    let resto = texto;
+    if (emailMatch) {
+        email = emailMatch[0].trim();
+        resto = texto.replace(email, '').trim();
+    }
+    // Remove colchetes que envolvem o email
+    if (email.startsWith('[') && email.endsWith(']')) {
+        email = email.slice(1, -1);
+    }
+
+    // Telefone: captura +55, DDD, número com espaços, hífens, parênteses
+    // Padrão: pode começar com +, depois dígitos, espaços, parênteses, hífens
+    const telefoneMatch = resto.match(/(\+\d{1,3}?[\s\-\(\)]*\d{2,}[\s\-\(\)]*\d{4,})/);
+    let telefone = '';
+    if (telefoneMatch) {
+        telefone = telefoneMatch[0].trim();
+        resto = resto.replace(telefone, '').trim();
+    } else {
+        // Se não capturou com +, tenta capturar apenas números com DDD
+        const telefoneSimple = resto.match(/(\d{2,}\s*\d{4,}\s*\d{4})/);
+        if (telefoneSimple) {
+            telefone = telefoneSimple[0].trim();
+            resto = resto.replace(telefone, '').trim();
+        }
+    }
+
+    // Remove traços ou separadores extras que possam ter ficado
+    resto = resto.replace(/^[-–—]\s*/, '').trim();
+
+    return { email, telefone, resto };
+}
+
+// --- Função para identificar cliente (palavras em maiúsculas) ---
+function identificarClienteEResto(resto) {
+    // Tenta encontrar palavras em maiúsculas (pelo menos duas letras maiúsculas)
+    // Exemplo: "HUMANA BRASIL", "ANDRE GUIMARAES"
+    const clienteMatch = resto.match(/([A-Z][A-Z\s]+)/);
+    let cliente = '';
+    let nome = '';
+    if (clienteMatch) {
+        cliente = clienteMatch[0].trim();
+        nome = resto.replace(cliente, '').trim();
+    } else {
+        // Se não houver palavra em maiúsculas, tenta identificar siglas curtas (ex: ACCTA)
+        // Ou assume que a última palavra é o cliente
+        const parts = resto.split(/\s+/);
+        if (parts.length >= 2) {
+            // Verifica se a última palavra parece uma sigla (2-6 letras maiúsculas)
+            const last = parts[parts.length - 1];
+            if (/^[A-Z]{2,6}$/.test(last)) {
+                cliente = last;
+                nome = parts.slice(0, -1).join(' ');
+            } else {
+                // Se não, assume que o nome é a primeira palavra e cliente o resto
+                nome = parts[0];
+                cliente = parts.slice(1).join(' ');
+            }
+        } else {
+            nome = resto;
+            cliente = '';
+        }
+    }
+    return { nome, cliente };
+}
+
+// --- Parsing para decisores ---
+function parseDecisoresLine(line) {
+    if (!line.trim()) return null;
+    const { email, telefone, resto } = extrairEmailTelefone(line);
+    if (!resto) return null;
+    const { nome, cliente } = identificarClienteEResto(resto);
+    if (!nome) return null;
+    return { nome, cliente, telefone, email };
+}
+
+// --- Parsing para geral (mesma lógica, mas pode ter mais variações) ---
+function parseGeralLine(line) {
+    if (!line.trim()) return null;
+    const { email, telefone, resto } = extrairEmailTelefone(line);
+    if (!resto) return null;
+    // Para geral, o cliente pode aparecer em maiúsculas, mas também pode ser uma sigla
+    const { nome, cliente } = identificarClienteEResto(resto);
+    // Se não encontrou cliente, tenta extrair como sendo a parte entre nome e telefone
+    // mas já foi feito.
+    if (!nome) return null;
+    return { nome, cliente, telefone, email };
+}
+
+// --- Funções de carregamento (usam os parsers acima) ---
+
+function loadDecisores() {
+    let data = localStorage.getItem('crm_decisores');
+    if (data) {
+        try {
+            return JSON.parse(data);
+        } catch (e) {
+            console.warn('Erro ao parsear decisores do localStorage, recarregando da URL');
+        }
+    }
+    return fetch(DECISORES_URL)
+        .then(res => {
+            if (!res.ok) throw new Error('Falha ao carregar decisores');
+            return res.text();
+        })
+        .then(text => {
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            const parsed = [];
+            for (const line of lines) {
+                const obj = parseDecisoresLine(line);
+                if (obj) {
+                    parsed.push({
+                        nome: obj.nome,
+                        cliente: obj.cliente,
+                        whatsapp: obj.telefone,
+                        email: obj.email
+                    });
+                }
+            }
+            localStorage.setItem('crm_decisores', JSON.stringify(parsed));
+            return parsed;
+        })
+        .catch(() => {
+            localStorage.setItem('crm_decisores', JSON.stringify([]));
+            return [];
+        });
+}
+
+function loadGeral() {
+    let data = localStorage.getItem('crm_geral');
+    if (data) {
+        try {
+            return JSON.parse(data);
+        } catch (e) {
+            console.warn('Erro ao parsear geral do localStorage, recarregando da URL');
+        }
+    }
+    return fetch(GERAL_CSV_URL)
+        .then(res => {
+            if (!res.ok) throw new Error('Falha ao carregar geral.txt');
+            return res.text();
+        })
+        .then(text => {
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            const parsed = [];
+            for (const line of lines) {
+                const obj = parseGeralLine(line);
+                if (obj) {
+                    parsed.push({
+                        nome: obj.nome,
+                        cliente: obj.cliente,
+                        whatsapp: obj.telefone,
+                        email: obj.email
+                    });
+                }
+            }
+            localStorage.setItem('crm_geral', JSON.stringify(parsed));
+            return parsed;
+        })
+        .catch(() => {
+            localStorage.setItem('crm_geral', JSON.stringify([]));
+            return [];
+        });
+}
+// Variáveis de filtro para a aba Geral
+let crmSearchTerm = '';
+let crmFilteredData = null;
+
+// Função para aplicar o filtro na aba Geral
+function applyCrmFilter() {
+    const searchInput = document.getElementById('crm-search-input');
+    const term = searchInput.value.trim().toLowerCase();
+    crmSearchTerm = term;
+
+    if (term === '') {
+        crmFilteredData = null;
+        renderCrmTable();
+        return;
+    }
+
+    const allData = loadGeral();
+    if (!Array.isArray(allData)) {
+        crmFilteredData = [];
+        renderCrmTable();
+        return;
+    }
+
+    const filtered = allData.filter(item => {
+        const searchable = [
+            item.nome || '',
+            item.cliente || '',
+            item.whatsapp || '',
+            item.email || ''
+        ].join(' ').toLowerCase();
+        return searchable.includes(term);
+    });
+
+    crmFilteredData = filtered;
+    crmCurrentPage = 0;
+    renderCrmTable();
+}
+
+// Função para salvar dados (mantém no localStorage)
+function saveDecisores() {
+    const tbody = document.getElementById('crm-table-body');
+    const rows = tbody.querySelectorAll('tr');
+    const newData = [];
+    rows.forEach(tr => {
+        const inputs = tr.querySelectorAll('input');
+        if (inputs.length === 4) {
+            newData.push({
+                nome: inputs[0].value.trim(),
+                cliente: inputs[1].value.trim(),
+                whatsapp: inputs[2].value.trim(),
+                email: inputs[3].value.trim()
+            });
+        }
+    });
+    localStorage.setItem('crm_decisores', JSON.stringify(newData));
+    alert('✅ Decisores salvos com sucesso!');
+    renderCrmTable();
+}
+
+function saveGeral() {
+    const tbody = document.getElementById('crm-table-body');
+    const rows = tbody.querySelectorAll('tr');
+    const newData = [];
+    rows.forEach(tr => {
+        const inputs = tr.querySelectorAll('input');
+        if (inputs.length === 4) {
+            newData.push({
+                nome: inputs[0].value.trim(),
+                cliente: inputs[1].value.trim(),
+                whatsapp: inputs[2].value.trim(),
+                email: inputs[3].value.trim()
+            });
+        }
+    });
+    localStorage.setItem('crm_geral', JSON.stringify(newData));
+    alert('✅ Geral salvo com sucesso!');
+    if (crmSearchTerm && crmSearchTerm !== '') {
+        applyCrmFilter();
+    } else {
+        renderCrmTable();
+    }
+}
+
+// Função para copiar linha (copia para área de transferência)
+function copyCrmRow(btn) {
+    const tr = btn.closest('tr');
+    const inputs = tr.querySelectorAll('input');
+    const values = Array.from(inputs).map(inp => inp.value);
+
+    const tab = window.crmActiveTab;
+    let textToCopy = '';
+    if (tab === 'decisores' || tab === 'geral') {
+        if (values.length === 4) {
+            textToCopy = `${values[0]}\t${values[1]}\t${values[2]}\t${values[3]}`;
+        } else {
+            return;
+        }
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy)
+            .then(() => {
+                alert('Dados copiados para a área de transferência!');
+            })
+            .catch(err => {
+                console.error('Erro ao copiar: ', err);
+                alert('Não foi possível copiar. Tente novamente.');
+            });
+    } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            alert('Dados copiados para a área de transferência!');
+        } catch (err) {
+            alert('Não foi possível copiar. Tente novamente.');
+        }
+        document.body.removeChild(textarea);
+    }
+}
+
+// ===== Funções de controle da aba CRM =====
+window.crmActiveTab = 'decisores';
+let crmCurrentPage = 0;
+const crmPageSize = 100;
+
+function switchCrmTab(tab) {
+    window.crmActiveTab = tab;
+    document.querySelectorAll('.crm-tabs .btn-crm-tab').forEach(btn => btn.classList.remove('active-tab'));
+    document.getElementById(`crm-tab-${tab}`).classList.add('active-tab');
+    crmCurrentPage = 0;
+
+    const searchContainer = document.getElementById('crm-search-container');
+    if (tab === 'geral') {
+        searchContainer.style.display = 'block';
+        const searchInput = document.getElementById('crm-search-input');
+        if (searchInput.value.trim() !== '') {
+            applyCrmFilter();
+        } else {
+            crmFilteredData = null;
+            renderCrmTable();
+        }
+    } else {
+        searchContainer.style.display = 'none';
+        document.getElementById('crm-search-input').value = '';
+        crmFilteredData = null;
+        crmSearchTerm = '';
+        renderCrmTable();
+    }
+}
+
+function renderCrmTable() {
+    const tab = window.crmActiveTab;
+    const thead = document.getElementById('crm-table-head');
+    const tbody = document.getElementById('crm-table-body');
+    const pagination = document.getElementById('crm-pagination');
+    const info = document.getElementById('crm-info');
+    const buttons = document.getElementById('crm-buttons');
+
+    let data;
+    if (tab === 'decisores') {
+        data = loadDecisores();
+        if (!Array.isArray(data)) data = [];
+        thead.innerHTML = `<tr><th>Nome do contato</th><th>Cliente</th><th>WhatsApp</th><th>E-mail do contato</th><th style="width:100px;">Ações</th></tr>`;
+    } else {
+        if (crmSearchTerm && crmSearchTerm !== '' && crmFilteredData !== null) {
+            data = crmFilteredData;
+        } else {
+            data = [];
+        }
+        if (!Array.isArray(data)) data = [];
+        thead.innerHTML = `<tr><th>Nome do contato</th><th>Cliente</th><th>WhatsApp</th><th>E-mail do contato</th><th style="width:100px;">Ações</th></tr>`;
+    }
+
+    const total = data.length;
+    const totalPages = Math.ceil(total / crmPageSize);
+    if (crmCurrentPage >= totalPages) crmCurrentPage = 0;
+    const start = crmCurrentPage * crmPageSize;
+    const end = Math.min(start + crmPageSize, total);
+    const pageData = data.slice(start, end);
+
+    tbody.innerHTML = '';
+    if (pageData.length === 0) {
+        const msg = (tab === 'geral' && crmSearchTerm === '') ? 'Digite algo para pesquisar' : 'Nenhum dado encontrado.';
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center" style="padding:20px; color:var(--text-muted);">${msg}</td></tr>`;
+    } else {
+        pageData.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" value="${escapeStr(item.nome)}"></td>
+                <td><input type="text" value="${escapeStr(item.cliente)}"></td>
+                <td><input type="text" value="${escapeStr(item.whatsapp)}"></td>
+                <td><input type="text" value="${escapeStr(item.email)}"></td>
+                <td style="display:flex; gap:4px; flex-wrap:wrap;">
+                    <button class="btn-crm-copy" onclick="copyCrmRow(this)">📋 Copiar</button>
+                    <button class="btn-remove-row" onclick="this.closest('tr').remove()">✕</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    info.innerText = `Mostrando ${total>0?start+1:0}–${end} de ${total}`;
+    buttons.innerHTML = `
+        <button onclick="crmGoToPage(${crmCurrentPage-1})" ${crmCurrentPage===0?'disabled':''}>◀</button>
+        <span style="padding:4px 12px; font-weight:600;">${totalPages>0?crmCurrentPage+1:0} / ${totalPages||1}</span>
+        <button onclick="crmGoToPage(${crmCurrentPage+1})" ${crmCurrentPage>=totalPages-1?'disabled':''}>▶</button>
+    `;
+    pagination.style.display = total > crmPageSize ? 'flex' : 'none';
+    document.getElementById('crm-save-btn').onclick = saveCrmData;
+    document.getElementById('crm-add-btn').onclick = addCrmRow;
+}
+
+function crmGoToPage(page) {
+    const tab = window.crmActiveTab;
+    let data;
+    if (tab === 'decisores') {
+        data = loadDecisores();
+    } else {
+        if (crmSearchTerm && crmSearchTerm !== '' && crmFilteredData !== null) {
+            data = crmFilteredData;
+        } else {
+            data = [];
+        }
+    }
+    if (!Array.isArray(data)) data = [];
+    const totalPages = Math.ceil(data.length / crmPageSize);
+    if (page < 0 || page >= totalPages) return;
+    crmCurrentPage = page;
+    renderCrmTable();
+}
+
+function saveCrmData() {
+    const tab = window.crmActiveTab;
+    if (tab === 'decisores') saveDecisores();
+    else saveGeral();
+}
+
+function addCrmRow() {
+    const tab = window.crmActiveTab;
+    const tbody = document.getElementById('crm-table-body');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td><input type="text" placeholder="Nome" value=""></td>
+        <td><input type="text" placeholder="Cliente" value=""></td>
+        <td><input type="text" placeholder="WhatsApp" value=""></td>
+        <td><input type="text" placeholder="E-mail" value=""></td>
+        <td style="display:flex; gap:4px; flex-wrap:wrap;">
+            <button class="btn-crm-copy" onclick="copyCrmRow(this)">📋 Copiar</button>
+            <button class="btn-remove-row" onclick="this.closest('tr').remove()">✕</button>
+        </td>
+    `;
+    tbody.appendChild(tr);
+    let data;
+    if (tab === 'decisores') {
+        data = loadDecisores();
+    } else {
+        if (crmSearchTerm && crmSearchTerm !== '' && crmFilteredData !== null) {
+            data = crmFilteredData;
+        } else {
+            data = [];
+        }
+    }
+    if (!Array.isArray(data)) data = [];
+    const totalPages = Math.ceil((data.length + 1) / crmPageSize);
+    if (crmCurrentPage < totalPages - 1) {
+        crmCurrentPage = totalPages - 1;
+    }
+    renderCrmTable();
+}
+
+// Função para carregar dados CRM de forma assíncrona
+function loadCrmData() {
+    return Promise.all([
+        loadDecisores(),
+        loadGeral()
+    ]).then(() => {
+        if (!window.crmActiveTab) window.crmActiveTab = 'decisores';
+        renderCrmTable();
+        document.querySelectorAll('.crm-tabs .btn-crm-tab').forEach(btn => btn.classList.remove('active-tab'));
+        document.getElementById(`crm-tab-${window.crmActiveTab}`).classList.add('active-tab');
+        const searchContainer = document.getElementById('crm-search-container');
+        if (window.crmActiveTab === 'geral') {
+            searchContainer.style.display = 'block';
+        } else {
+            searchContainer.style.display = 'none';
+        }
+    }).catch(err => {
+        console.warn('Erro ao carregar dados CRM:', err);
+        if (!window.crmActiveTab) window.crmActiveTab = 'decisores';
+        renderCrmTable();
+    });
+}
+
+// ================================================================
+// 11. LOADING E INICIALIZAÇÃO
 // ================================================================
 function showLoadingOverlay(txt){ document.getElementById('loading-overlay').style.display='flex'; document.getElementById('loading-text').innerText=txt; }
 function hideLoadingOverlay(){ document.getElementById('loading-overlay').style.display='none'; }
@@ -2854,13 +3551,15 @@ function showDashboard() {
     document.getElementById('topbar-username').innerText=displayName;
     document.getElementById('topbar-greeting').innerText='Bem-vindo(a), ';
     populateFilterDropdowns(); applyFilters(); renderUserManagement(); applyPermissionsToSidebar();
+    // Carregar CRM
+    loadCrmData();
     const horasPorChamado={}; globalData.forEach(d=>{ if(!horasPorChamado[d.id]) horasPorChamado[d.id]=d.duracao||0; });
     const totalHoras=Object.values(horasPorChamado).reduce((a,b)=>a+b,0);
     console.log(`Soma total de "Tarefas - Duração" (por chamado único): ${totalHoras.toFixed(2)} horas (${Math.floor(totalHoras)} horas e ${Math.round((totalHoras%1)*60)} minutos)`);
 }
 
 // ================================================================
-// 11. INICIALIZAÇÃO
+// 12. INICIALIZAÇÃO
 // ================================================================
 window.onload = function() {
     loadUsersFromGitHub()
