@@ -3062,7 +3062,7 @@ function savePermEdit(){
 function closePermEdit(){ document.getElementById('perm-edit-modal').style.display='none'; editPermUsername=null; }
 
 // ================================================================
-// 10. CRM – DECISORES E GERAL (parsers aprimorados)
+// 10. CRM – DECISORES E GERAL (parsers corrigidos)
 // ================================================================
 
 const DECISORES_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt';
@@ -3070,45 +3070,52 @@ const GERAL_CSV_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-
 
 // --- Função auxiliar: extrai email e telefone de uma string ---
 function extrairEmailTelefone(texto) {
-    // Email: padrão simples, captura até o domínio
-    const emailMatch = texto.match(/([\w\.-]+@[\w\.-]+\.\w+)/);
+    // E-mail: captura qualquer padrão com @, ignorando mailto: e colchetes
     let email = '';
     let resto = texto;
+    // Tenta capturar email entre colchetes ou sem
+    const emailMatch = texto.match(/(?:mailto:)?\s*([\w\.-]+@[\w\.-]+\.\w+)/);
     if (emailMatch) {
-        email = emailMatch[0].trim();
-        resto = texto.replace(email, '').trim();
-    }
-    // Remove colchetes que envolvem o email
-    if (email.startsWith('[') && email.endsWith(']')) {
-        email = email.slice(1, -1);
+        email = emailMatch[1].trim();
+        resto = texto.replace(emailMatch[0], '').trim();
+    } else {
+        // Tenta capturar apenas o email sem mailto
+        const emailSimples = texto.match(/([\w\.-]+@[\w\.-]+\.\w+)/);
+        if (emailSimples) {
+            email = emailSimples[0].trim();
+            resto = texto.replace(email, '').trim();
+        }
     }
 
-    // Telefone: captura +55, DDD, número com espaços, hífens, parênteses
-    // Padrão: pode começar com +, depois dígitos, espaços, parênteses, hífens
-    const telefoneMatch = resto.match(/(\+\d{1,3}?[\s\-\(\)]*\d{2,}[\s\-\(\)]*\d{4,})/);
+    // Telefone: padrão com +, parênteses, hífens, espaços
     let telefone = '';
-    if (telefoneMatch) {
-        telefone = telefoneMatch[0].trim();
+    // Tenta capturar com +55
+    const telMatch = resto.match(/(\+\d{1,3}?[\s\-\(\)]*\d{2,}[\s\-\(\)]*\d{4,})/);
+    if (telMatch) {
+        telefone = telMatch[0].trim();
         resto = resto.replace(telefone, '').trim();
     } else {
-        // Se não capturou com +, tenta capturar apenas números com DDD
-        const telefoneSimple = resto.match(/(\d{2,}\s*\d{4,}\s*\d{4})/);
-        if (telefoneSimple) {
-            telefone = telefoneSimple[0].trim();
+        // Sem +, captura números com DDD e separadores
+        const telSimples = resto.match(/(\d{2,}\s*\d{4,}\s*\d{4})/);
+        if (telSimples) {
+            telefone = telSimples[0].trim();
             resto = resto.replace(telefone, '').trim();
         }
     }
 
-    // Remove traços ou separadores extras que possam ter ficado
+    // Remove colchetes residuais
+    email = email.replace(/^\[|\]$/g, '');
+    // Remove hífens ou traços iniciais do resto
     resto = resto.replace(/^[-–—]\s*/, '').trim();
 
     return { email, telefone, resto };
 }
 
-// --- Função para identificar cliente (palavras em maiúsculas) ---
-function identificarClienteEResto(resto) {
-    // Tenta encontrar palavras em maiúsculas (pelo menos duas letras maiúsculas)
-    // Exemplo: "HUMANA BRASIL", "ANDRE GUIMARAES"
+// --- Separa nome e cliente a partir do resto ---
+function separarNomeCliente(resto) {
+    // Tenta identificar o cliente como palavras em CAIXA ALTA ou siglas
+    // Exemplo: "ACCTA", "ANDRE GUIMARAES", "HUMANA BRASIL"
+    // A regex captura sequências de maiúsculas (pelo menos 2 caracteres) com espaços
     const clienteMatch = resto.match(/([A-Z][A-Z\s]+)/);
     let cliente = '';
     let nome = '';
@@ -3116,17 +3123,16 @@ function identificarClienteEResto(resto) {
         cliente = clienteMatch[0].trim();
         nome = resto.replace(cliente, '').trim();
     } else {
-        // Se não houver palavra em maiúsculas, tenta identificar siglas curtas (ex: ACCTA)
-        // Ou assume que a última palavra é o cliente
+        // Se não houver maiúsculas, tenta separar pela última palavra (pode ser sigla)
         const parts = resto.split(/\s+/);
         if (parts.length >= 2) {
-            // Verifica se a última palavra parece uma sigla (2-6 letras maiúsculas)
             const last = parts[parts.length - 1];
+            // Se a última palavra tem 2-6 letras maiúsculas, é sigla
             if (/^[A-Z]{2,6}$/.test(last)) {
                 cliente = last;
                 nome = parts.slice(0, -1).join(' ');
             } else {
-                // Se não, assume que o nome é a primeira palavra e cliente o resto
+                // Senão, nome é a primeira palavra, cliente é o restante
                 nome = parts[0];
                 cliente = parts.slice(1).join(' ');
             }
@@ -3143,26 +3149,22 @@ function parseDecisoresLine(line) {
     if (!line.trim()) return null;
     const { email, telefone, resto } = extrairEmailTelefone(line);
     if (!resto) return null;
-    const { nome, cliente } = identificarClienteEResto(resto);
+    const { nome, cliente } = separarNomeCliente(resto);
     if (!nome) return null;
     return { nome, cliente, telefone, email };
 }
 
-// --- Parsing para geral (mesma lógica, mas pode ter mais variações) ---
+// --- Parsing para geral (mesma lógica) ---
 function parseGeralLine(line) {
     if (!line.trim()) return null;
     const { email, telefone, resto } = extrairEmailTelefone(line);
     if (!resto) return null;
-    // Para geral, o cliente pode aparecer em maiúsculas, mas também pode ser uma sigla
-    const { nome, cliente } = identificarClienteEResto(resto);
-    // Se não encontrou cliente, tenta extrair como sendo a parte entre nome e telefone
-    // mas já foi feito.
+    const { nome, cliente } = separarNomeCliente(resto);
     if (!nome) return null;
     return { nome, cliente, telefone, email };
 }
 
-// --- Funções de carregamento (usam os parsers acima) ---
-
+// --- Funções loadDecisores e loadGeral (iguais, apenas usam os novos parsers) ---
 function loadDecisores() {
     let data = localStorage.getItem('crm_decisores');
     if (data) {
