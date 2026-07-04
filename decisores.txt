@@ -1,53 +1,51 @@
-| Nome do contato | Cliente                | WhatsApp          | E-mail do contato                                                                           |
-| --------------- | ---------------------- | ----------------- | ------------------------------------------------------------------------------------------- |
-| Claudia         | ACCTA                  | +55 71 9326-5750  | [claudia@accta.com.br](mailto:claudia@accta.com.br)                                         |
-| Tawany          | ACTA                   | +55 71 9399-3317  | [adm@acta.com.br](mailto:adm@acta.com.br)                                                   |
-| Juliana         | AGILIZE                | +55 61 99864-8594 | [ juliana.oliveira@agilize.com.br](mailto: juliana.oliveira@agilize.com.br)                         |
-| Bruna           | AROMARKETING           | +55 71 99988-1904 | [bruna.barreto@aromarketing.com.br](mailto:bruna.barreto@aromarketing.com.br)               |
-| Luis            | CEMJ                   | +55 71 99196-7984 | [luis.informatica@cemj.com.br](mailto:luis.informatica@cemj.com.br)                         |
-| Élcio           | CICV                   | +55 71 99187-1952 | [administracao@clinicacicv.com.br](mailto:administracao@clinicacicv.com.br)                 |
-| Daniela         | CLÍNICA HUMANA         | +55 71 99966-2341 | [gestao@clinicahumana.com.br](mailto:gestao@clinicahumana.com.br)                           |
-| Ulisses         | CLINILABVET            | +55 71 99142-7788 | [ulisses.filho@clinilabvet.com.br](mailto:ulisses.filho@clinilabvet.com.br)                 |
-| Bárbara         | CLINDAY                | +55 71 98700-5313 | [barbara@clinday.com.br](mailto:barbara@clinday.com.br)                                     |
-| Thiago          | CLISUR                 | +55 71 99368-5006 | [thiago.silva@clisur.com.br](mailto:thiago.silva@clisur.com.br)                             |
-| Fernanda        | COF                    | +55 71 98707-5051 | [contasmedicas@cof.com.br](mailto:contasmedicas@cof.com.br)                                 |
-| Patrícia        | COFB                   | +55 71 99906-4942 | [setoradministrativo@cofb.com.br](mailto:setoradministrativo@cofb.com.br)                   |
-| Mariana         | COLÉGIO OFICINA        | +55 71 99903-7373 | [mariana.viana@colegiooficina.com.br](mailto:mariana.viana@colegiooficina.com.br)           |
-| Saulo           | CS CONSTRUÇÕES         | +55 71 99933-8415 | [saulo.carvalho@csconstrucoes-ba.com.br](mailto:saulo.carvalho@csconstrucoes-ba.com.br)     |
-| Leonardo        | CSG ENGENHARIA         | +55 71 99980-0701 | [leonardosantana@csgengenharia.com.br](mailto:leonardosantana@csgengenharia.com.br)         |
-| Magno           | FEIRA CÓPIAS           | +55 75 98848-4298 | [escritorio@feiracopias.com.br](mailto:escritorio@feiracopias.com.br)                       |
-| Lucas           | FINE BPO               | +55 71 99187-1509 | [lucas.scardua@finebpo.com](mailto:lucas.scardua@finebpo.com)                               |
-| Flávio          | FLÁVIO LOPES ADVOGADOS | +55 71 99953-0562 | [flavio@flaviolopes.adv.br](mailto:flavio@flaviolopes.adv.br)                               |
-| Eliana          | FNN                    | +55 71 98814-0543 | [elianaponde@yahoo.com.br](mailto:elianaponde@yahoo.com.br)                                 |
-| Romário         | GESCON                 | +55 71 99956-6026 | [romario@gesconnet.com.br](mailto:romario@gesconnet.com.br)                                 |
-| Victor          | GRUPO BRASILEIRO       | +55 73 99928-3502 | [rafael.gomes@grupobrasileiro.com.br](mailto:rafael.gomes@grupobrasileiro.com.br)           |
-| Aloysio         | GVF EMPREENDIMENTOS    | +55 71 99605-6670 | [aloysio@gvfempreendimentos.com.br](mailto:aloysio@gvfempreendimentos.com.br)               |
-| Bárbara         | HPN ADVOGADOS          | +55 71 98386-6140 | [auxiliaradmfin@hpnadv.com](mailto:auxiliaradmfin@hpnadv.com)                               |
-| Beatriz         | HUMANA BRASIL          | +55 11 99696-1558 | [beatriz.angioletto@humanabrasil.org](mailto:beatriz.angioletto@humanabrasil.org)           |
-| Gustavo         | INSIGHT PROMO          | +55 71 99235-9605 | [gustavo@insightpromo.com.br](mailto:gustavo@insightpromo.com.br)                           |
-| Ana             | ISETES (IVF)           | +55 71 99657-3814 | [adm@isetes.org.br](mailto:adm@isetes.org.br)                                               |
-| Rogério         | JAIME CERQUEIRA e IDEM | +55 71 99701-2277 | [gestao@jclab.com.br](mailto:gestao@jclab.com.br)                                           |
-| João Paulo      | JUST TRAVEL            | +55 71 98451-4268 | [joaopaulo@justtraveltour.com] (mailto:joaopaulo@justtraveltour.com)
-| Júlio           | LPC                    | +55 71 99931-6175 | [ti2@laboratoriolpc.com.br](mailto:ti2@laboratoriolpc.com.br)                               |
-| Daniel          | MAIS AÇÕES             | +55 71 98898-8668 | [daniel@maisacoes.com.br](mailto:daniel@maisacoes.com.br)                                   |
-| Analice         | MARIN MEDICA           | +55 71 99127-9735 | [analice@marinmedical.com.br](mailto:analice@marinmedical.com.br)                           |
-| Marilene        | MELO & NOVAES          | +55 71 99687-4260 | [marilene@meloenovaes.com.br](mailto:marilene@meloenovaes.com.br)                           |
-| Vanise          | MFA (MOTA FONSECA)     | +55 71 98819-8101 | [vanise.santos@motafonseca.com.br](mailto:vanise.santos@motafonseca.com.br)                 |
-| Maira           | MORAIS & ADVOGADOS     | +55 71 93500-7166 | [atendimento@moraiseadvogados.adv.br](mailto:atendimento@moraiseadvogados.adv.br)           |
-| Jarbas          | MP CONDOMINIAL         | +55 71 99271-9014 | [jarbas@mpcondominial.com.br](mailto:jarbas@mpcondominial.com.br)                           |
-| Rafael          | MP CONTADORES          | +55 71 98319-0281 | [rafael@mpcontadores.com.br](mailto:rafael@mpcontadores.com.br)                             |
-| Victor          | NOVA SOLUÇÃO DIGITAL   | +55 71 99126-6622 | [victor@novasolucaodigital.com.br](mailto:victor@novasolucaodigital.com.br)                 |
-| Priscila        | NOOBA                  | +55 71 99271-9014 | [priscila.souza@nooba.com.br](mailto:priscila.souza@nooba.com.br)                           |
-| Aline           | ODONTO S/A             | +55 71 99729-8313 | [gerencia@odontosa.com.br](mailto:gerencia@odontosa.com.br)                                 |
-| Rafael          | ONLINE GESTÃO          | +55 71 99702-7403 | [rafael.brandao@onlinegestao.com.br](mailto:rafael.brandao@onlinegestao.com.br)             |
-| Mayse           | ORTOPED                | +55 71 99251-6060 | [mayselopes@ortoped.com.br](mailto:mayselopes@ortoped.com.br)                               |
-| Renata          | ORTRA                  | +55 71 99198-1115 | [gerencia@clinicaortra.com.br](mailto:gerencia@clinicaortra.com.br)                         |
-| Uilbert         | ORTRA (Gerente de TI)  | +55 71 98837-6569 | [uilbert@sdr.grupojsg.com.br](mailto:uilbert@sdr.grupojsg.com.br)                           |
-| Fred            | PHYSIOMEDICAL          | +55 71 99966-2910 | [physiomedicalba.adm@gmail.com](mailto:physiomedicalba.adm@gmail.com)                       |
-| Ana             | PI CONTABILIDADE       | +55 71 99955-9013 | [admfin@picontabilidade.com.br](mailto:admfin@picontabilidade.com.br)                       |
-| Theonio         | PPF                    | +55 71 98616-7301 | [theoniofreitas@ppf.com.br](mailto:theoniofreitas@ppf.com.br)                               |
-| Antenor         | REALIZA                | +55 71 99317-2425 | [antenor@realizarentacar.com.br](mailto:antenor@realizarentacar.com.br)                     |
-| Roberval        | SETA                   | +55 71 99313-0574 | [roberval@clinicaseta.com.br](mailto:roberval@clinicaseta.com.br)                           |
-| Waltércio       | TRILUZ                 | +55 71 99233-1154 | [andrade@triluz.com.br](mailto:andrade@triluz.com.br)                                       |
-| Alan            | UORT                   | +55 71 99367-2087 | [anderson.bispo@uort.com.br](mailto:anderson.bispo@uort.com.br)                             |
-| Zé Antônio      | UNIVERSITÁRIA          | +55 71 99400-1011 | [escritorio@copiadorauniversitaria.com.br](mailto:escritorio@copiadorauniversitaria.com.br) |
+Claudia ACCTA +55 71 9326-5750 [claudia@accta.com.br](mailto:claudia@accta.com.br)
+Tawany ACTA +55 71 9399-3317 [adm@acta.com.br](mailto:adm@acta.com.br)
+Juliana AGILIZE +55 61 99864-8594 [ juliana.oliveira@agilize.com.br](mailto: juliana.oliveira@agilize.com.br)
+Bruna AROMARKETING +55 71 99988-1904 [bruna.barreto@aromarketing.com.br](mailto:bruna.barreto@aromarketing.com.br)
+Luis CEMJ +55 71 99196-7984 [luis.informatica@cemj.com.br](mailto:luis.informatica@cemj.com.br)
+Ã‰lcio CICV +55 71 99187-1952 [administracao@clinicacicv.com.br](mailto:administracao@clinicacicv.com.br)
+Daniela CLÃNICA HUMANA +55 71 99966-2341 [gestao@clinicahumana.com.br](mailto:gestao@clinicahumana.com.br)
+Ulisses CLINILABVET +55 71 99142-7788 [ulisses.filho@clinilabvet.com.br](mailto:ulisses.filho@clinilabvet.com.br)
+BÃ¡rbara CLINDAY +55 71 98700-5313 [barbara@clinday.com.br](mailto:barbara@clinday.com.br)
+Thiago CLISUR +55 71 99368-5006 [thiago.silva@clisur.com.br](mailto:thiago.silva@clisur.com.br)
+Fernanda COF +55 71 98707-5051 [contasmedicas@cof.com.br](mailto:contasmedicas@cof.com.br)
+PatrÃ­cia COFB +55 71 99906-4942 [setoradministrativo@cofb.com.br](mailto:setoradministrativo@cofb.com.br)
+Mariana COLÃ‰GIO OFICINA +55 71 99903-7373 [mariana.viana@colegiooficina.com.br](mailto:mariana.viana@colegiooficina.com.br)
+Saulo CS CONSTRUÃ‡Ã•ES +55 71 99933-8415 [saulo.carvalho@csconstrucoes-ba.com.br](mailto:saulo.carvalho@csconstrucoes-ba.com.br)
+Leonardo CSG ENGENHARIA +55 71 99980-0701 [leonardosantana@csgengenharia.com.br](mailto:leonardosantana@csgengenharia.com.br)
+Magno FEIRA CÃ“PIAS +55 75 98848-4298 [escritorio@feiracopias.com.br](mailto:escritorio@feiracopias.com.br)
+Lucas FINE BPO +55 71 99187-1509 [lucas.scardua@finebpo.com](mailto:lucas.scardua@finebpo.com)
+FlÃ¡vio FLÃVIO LOPES ADVOGADOS +55 71 99953-0562 [flavio@flaviolopes.adv.br](mailto:flavio@flaviolopes.adv.br)
+Eliana FNN +55 71 98814-0543 [elianaponde@yahoo.com.br](mailto:elianaponde@yahoo.com.br)
+RomÃ¡rio GESCON +55 71 99956-6026 [romario@gesconnet.com.br](mailto:romario@gesconnet.com.br)
+Victor GRUPO BRASILEIRO +55 73 99928-3502 [rafael.gomes@grupobrasileiro.com.br](mailto:rafael.gomes@grupobrasileiro.com.br)
+Aloysio GVF EMPREENDIMENTOS +55 71 99605-6670 [aloysio@gvfempreendimentos.com.br](mailto:aloysio@gvfempreendimentos.com.br)
+BÃ¡rbara HPN ADVOGADOS +55 71 98386-6140 [auxiliaradmfin@hpnadv.com](mailto:auxiliaradmfin@hpnadv.com)
+Beatriz HUMANA BRASIL +55 11 99696-1558 [beatriz.angioletto@humanabrasil.org](mailto:beatriz.angioletto@humanabrasil.org)
+Gustavo INSIGHT PROMO +55 71 99235-9605 [gustavo@insightpromo.com.br](mailto:gustavo@insightpromo.com.br)
+Ana ISETES (IVF) +55 71 99657-3814 [adm@isetes.org.br](mailto:adm@isetes.org.br)
+RogÃ©rio JAIME CERQUEIRA e IDEM +55 71 99701-2277 [gestao@jclab.com.br](mailto:gestao@jclab.com.br)
+JoÃ£o Paulo JUST TRAVEL +55 71 98451-4268 [joaopaulo@justtraveltour.com] (mailto:joaopaulo@justtraveltour.com)
+JÃºlio LPC +55 71 99931-6175 [ti2@laboratoriolpc.com.br](mailto:ti2@laboratoriolpc.com.br)
+Daniel MAIS AÃ‡Ã•ES +55 71 98898-8668 [daniel@maisacoes.com.br](mailto:daniel@maisacoes.com.br)
+Analice MARIN MEDICA +55 71 99127-9735 [analice@marinmedical.com.br](mailto:analice@marinmedical.com.br)
+Marilene MELO & NOVAES +55 71 99687-4260 [marilene@meloenovaes.com.br](mailto:marilene@meloenovaes.com.br)
+Vanise MFA (MOTA FONSECA) +55 71 98819-8101 [vanise.santos@motafonseca.com.br](mailto:vanise.santos@motafonseca.com.br)
+Maira MORAIS & ADVOGADOS +55 71 93500-7166 [atendimento@moraiseadvogados.adv.br](mailto:atendimento@moraiseadvogados.adv.br)
+Jarbas MP CONDOMINIAL +55 71 99271-9014 [jarbas@mpcondominial.com.br](mailto:jarbas@mpcondominial.com.br)
+Rafael MP CONTADORES +55 71 98319-0281 [rafael@mpcontadores.com.br](mailto:rafael@mpcontadores.com.br)
+Victor NOVA SOLUÃ‡ÃƒO DIGITAL +55 71 99126-6622 [victor@novasolucaodigital.com.br](mailto:victor@novasolucaodigital.com.br)
+Priscila NOOBA +55 71 99271-9014 [priscila.souza@nooba.com.br](mailto:priscila.souza@nooba.com.br)
+Aline ODONTO S/A +55 71 99729-8313 [gerencia@odontosa.com.br](mailto:gerencia@odontosa.com.br)
+Rafael ONLINE GESTÃƒO +55 71 99702-7403 [rafael.brandao@onlinegestao.com.br](mailto:rafael.brandao@onlinegestao.com.br)
+Mayse ORTOPED +55 71 99251-6060 [mayselopes@ortoped.com.br](mailto:mayselopes@ortoped.com.br)
+Renata ORTRA +55 71 99198-1115 [gerencia@clinicaortra.com.br](mailto:gerencia@clinicaortra.com.br)
+Uilbert ORTRA (Gerente de TI) +55 71 98837-6569 [uilbert@sdr.grupojsg.com.br](mailto:uilbert@sdr.grupojsg.com.br)
+Fred PHYSIOMEDICAL +55 71 99966-2910 [physiomedicalba.adm@gmail.com](mailto:physiomedicalba.adm@gmail.com)
+Ana PI CONTABILIDADE +55 71 99955-9013 [admfin@picontabilidade.com.br](mailto:admfin@picontabilidade.com.br)
+Theonio PPF +55 71 98616-7301 [theoniofreitas@ppf.com.br](mailto:theoniofreitas@ppf.com.br)
+Antenor REALIZA +55 71 99317-2425 [antenor@realizarentacar.com.br](mailto:antenor@realizarentacar.com.br)
+Roberval SETA +55 71 99313-0574 [roberval@clinicaseta.com.br](mailto:roberval@clinicaseta.com.br)
+WaltÃ©rcio TRILUZ +55 71 99233-1154 [andrade@triluz.com.br](mailto:andrade@triluz.com.br)
+Alan UORT +55 71 99367-2087 [anderson.bispo@uort.com.br](mailto:anderson.bispo@uort.com.br)
+ZÃ© AntÃ´nio UNIVERSITÃRIA +55 71 99400-1011 [escritorio@copiadorauniversitaria.com.br](mailto:escritorio@copiadorauniversitaria.com.br)
