@@ -549,7 +549,7 @@
         .btn-cancel-pass, .btn-logout-confirm, .btn-logout-cancel, .btn-close-reset,
         .btn-filter-action, .btn-clear-action, .btn-edit-name, .btn-edit-login,
         .btn-change-password, .btn-edit-permissions, .btn-remove-user, .modal-close,
-        .btn-crm-save, .btn-crm-add, .btn-crm-tab, .btn-crm-copy {
+        .btn-crm-save, .btn-crm-add, .btn-crm-tab, .btn-crm-copy, .btn-crm-reset {
             padding: 8px 20px;
             font-size: 14px;
             font-weight: 500;
@@ -595,11 +595,11 @@
             background: rgba(227, 240, 255, 0.4);
             transform: translateY(-2px);
         }
-        .btn-backup.danger {
+        .btn-backup.danger, .btn-crm-reset {
             color: var(--danger);
             border-color: var(--danger);
         }
-        .btn-backup.danger:hover {
+        .btn-backup.danger:hover, .btn-crm-reset:hover {
             background: rgba(183, 28, 28, 0.06);
         }
         .btn-add-user {
@@ -2046,6 +2046,7 @@
             <div class="crm-actions" id="crm-actions">
                 <button class="btn-crm-save" id="crm-save-btn" onclick="saveCrmData()">💾 Salvar</button>
                 <button class="btn-crm-add" id="crm-add-btn" onclick="addCrmRow()">➕ Adicionar Linha</button>
+                <button class="btn-crm-reset" onclick="resetCrmData()">🔄 Recarregar do GitHub</button>
             </div>
             <div class="crm-table-container" id="crm-table-wrap">
                 <table class="crm-table" id="crm-table">
@@ -3062,72 +3063,78 @@ function savePermEdit(){
 function closePermEdit(){ document.getElementById('perm-edit-modal').style.display='none'; editPermUsername=null; }
 
 // ================================================================
-// 10. CRM – DECISORES E GERAL (parser 100% corrigido)
+// 10. CRM – DECISORES E GERAL (parsers corrigidos + exportação TXT)
 // ================================================================
 
 const DECISORES_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt';
 const GERAL_CSV_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt';
 
-function parseLinhaCRM(line) {
-    if (!line.trim()) return null;
-
-    let texto = line.trim();
+// --- Função auxiliar: extrai email e telefone ---
+function extrairEmailTelefone(texto) {
     let email = '';
-    let telefone = '';
-
-    // 1. Extrair e-mail (com ou sem mailto: e colchetes)
+    let resto = texto;
     const emailMatch = texto.match(/(?:mailto:)?\s*\[?([\w\.-]+@[\w\.-]+\.\w+)\]?/);
     if (emailMatch) {
         email = emailMatch[1];
-        texto = texto.replace(emailMatch[0], '').trim();
+        resto = texto.replace(emailMatch[0], '').trim();
     } else {
         const emailSimples = texto.match(/([\w\.-]+@[\w\.-]+\.\w+)/);
         if (emailSimples) {
             email = emailSimples[0];
-            texto = texto.replace(emailSimples[0], '').trim();
+            resto = texto.replace(emailSimples[0], '').trim();
         }
     }
-
-    // 2. Extrair telefone (completo, incluindo hífen e sufixo)
-    // Padrões: +55 71 9326-5750, (71) 9326-5750, 71 9326-5750, 71 9326-5750
-    const telMatch = texto.match(/(\+\d{1,3}\s*)?(?:\(?\d{2}\)?[\s\-]*)?\d{4,5}[\s\-]*\d{4}/);
+    let telefone = '';
+    const telMatch = resto.match(/(\+\d{1,3}\s*)?(?:\(?\d{2}\)?[\s\-]*)?\d{4,5}[\s\-]*\d{4}/);
     if (telMatch) {
         telefone = telMatch[0].trim();
-        texto = texto.replace(telMatch[0], '').trim();
+        resto = resto.replace(telMatch[0], '').trim();
     }
+    resto = resto.replace(/\[|\]|mailto:/g, '').trim();
+    resto = resto.replace(/^[-–—]\s*/, '').trim();
+    return { email, telefone, resto };
+}
 
-    // 3. Remover colchetes, mailto: residuais e hífens soltos
-    texto = texto.replace(/\[|\]|mailto:/g, '').trim();
-    texto = texto.replace(/^[-–—]\s*/, '').trim();
-
-    // 4. Separar nome e cliente
-    let nome = texto;
+// --- Separa nome e cliente ---
+function separarNomeCliente(resto) {
+    let nome = resto;
     let cliente = '';
-    const parts = texto.split(/\s+/);
+    const parts = resto.split(/\s+/);
     if (parts.length >= 2) {
         const last = parts[parts.length - 1];
-        // Se a última palavra for uma sigla (2-6 letras maiúsculas) -> cliente
         if (/^[A-Z]{2,6}$/.test(last)) {
             cliente = last;
             nome = parts.slice(0, -1).join(' ');
         } else {
-            // Procura palavras em maiúsculas (ex: ANDRE GUIMARAES)
-            const clienteMatch = texto.match(/([A-Z][A-Z\s]+)/);
+            const clienteMatch = resto.match(/([A-Z][A-Z\s]+)/);
             if (clienteMatch) {
                 cliente = clienteMatch[0].trim();
-                nome = texto.replace(cliente, '').trim();
+                nome = resto.replace(cliente, '').trim();
             } else {
-                // Último recurso: primeira palavra é nome, resto é cliente
                 nome = parts[0];
                 cliente = parts.slice(1).join(' ');
             }
         }
     }
+    return { nome, cliente };
+}
 
+// --- Parsing decisores ---
+function parseDecisoresLine(line) {
+    if (!line.trim()) return null;
+    const { email, telefone, resto } = extrairEmailTelefone(line);
+    if (!resto) return null;
+    const { nome, cliente } = separarNomeCliente(resto);
+    if (!nome) return null;
     return { nome, cliente, telefone, email };
 }
 
-// Funções loadDecisores e loadGeral (idênticas às anteriores, usando parseLinhaCRM)
+// --- Parsing geral (usa a mesma lógica) ---
+function parseGeralLine(line) {
+    return parseDecisoresLine(line); // mesmo parser
+}
+
+// --- Funções loadDecisores e loadGeral (com cache) ---
 function loadDecisores() {
     let data = localStorage.getItem('crm_decisores');
     if (data) {
@@ -3146,7 +3153,7 @@ function loadDecisores() {
             const lines = text.split('\n').filter(line => line.trim() !== '');
             const parsed = [];
             for (const line of lines) {
-                const obj = parseLinhaCRM(line);
+                const obj = parseDecisoresLine(line);
                 if (obj) {
                     parsed.push({
                         nome: obj.nome,
@@ -3183,7 +3190,7 @@ function loadGeral() {
             const lines = text.split('\n').filter(line => line.trim() !== '');
             const parsed = [];
             for (const line of lines) {
-                const obj = parseLinhaCRM(line);
+                const obj = parseGeralLine(line);
                 if (obj) {
                     parsed.push({
                         nome: obj.nome,
@@ -3201,45 +3208,30 @@ function loadGeral() {
             return [];
         });
 }
-// Variáveis de filtro para a aba Geral
-let crmSearchTerm = '';
-let crmFilteredData = null;
 
-// Função para aplicar o filtro na aba Geral
-function applyCrmFilter() {
-    const searchInput = document.getElementById('crm-search-input');
-    const term = searchInput.value.trim().toLowerCase();
-    crmSearchTerm = term;
-
-    if (term === '') {
-        crmFilteredData = null;
-        renderCrmTable();
-        return;
-    }
-
-    const allData = loadGeral();
-    if (!Array.isArray(allData)) {
-        crmFilteredData = [];
-        renderCrmTable();
-        return;
-    }
-
-    const filtered = allData.filter(item => {
-        const searchable = [
-            item.nome || '',
-            item.cliente || '',
-            item.whatsapp || '',
-            item.email || ''
-        ].join(' ').toLowerCase();
-        return searchable.includes(term);
-    });
-
-    crmFilteredData = filtered;
-    crmCurrentPage = 0;
-    renderCrmTable();
+// --- Função de reset (limpa localStorage e recarrega) ---
+function resetCrmData() {
+    if (!confirm('Isso vai descartar todas as alterações salvas e recarregar os dados originais do GitHub. Continuar?')) return;
+    localStorage.removeItem('crm_decisores');
+    localStorage.removeItem('crm_geral');
+    location.reload();
 }
 
-// Função para salvar dados (mantém no localStorage)
+// --- Função para baixar arquivo TXT ---
+function downloadTxt(data, filename) {
+    const lines = data.map(row => `${row.nome} | ${row.cliente} | ${row.whatsapp} | ${row.email}`).join('\n');
+    const blob = new Blob([lines], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// --- Salvar decisores (localStorage + export TXT) ---
 function saveDecisores() {
     const tbody = document.getElementById('crm-table-body');
     const rows = tbody.querySelectorAll('tr');
@@ -3256,10 +3248,13 @@ function saveDecisores() {
         }
     });
     localStorage.setItem('crm_decisores', JSON.stringify(newData));
-    alert('✅ Decisores salvos com sucesso!');
+    // Exporta TXT
+    downloadTxt(newData, 'decisores_editado.txt');
+    alert('✅ Decisores salvos e arquivo TXT baixado!');
     renderCrmTable();
 }
 
+// --- Salvar geral (localStorage + export TXT) ---
 function saveGeral() {
     const tbody = document.getElementById('crm-table-body');
     const rows = tbody.querySelectorAll('tr');
@@ -3276,7 +3271,8 @@ function saveGeral() {
         }
     });
     localStorage.setItem('crm_geral', JSON.stringify(newData));
-    alert('✅ Geral salvo com sucesso!');
+    downloadTxt(newData, 'geral_editado.txt');
+    alert('✅ Geral salvo e arquivo TXT baixado!');
     if (crmSearchTerm && crmSearchTerm !== '') {
         applyCrmFilter();
     } else {
@@ -3284,47 +3280,30 @@ function saveGeral() {
     }
 }
 
-// Função para copiar linha (copia para área de transferência)
+// --- Função para copiar linha ---
 function copyCrmRow(btn) {
     const tr = btn.closest('tr');
     const inputs = tr.querySelectorAll('input');
     const values = Array.from(inputs).map(inp => inp.value);
-
-    const tab = window.crmActiveTab;
-    let textToCopy = '';
-    if (tab === 'decisores' || tab === 'geral') {
-        if (values.length === 4) {
-            textToCopy = `${values[0]}\t${values[1]}\t${values[2]}\t${values[3]}`;
-        } else {
-            return;
-        }
-    }
-
+    const textToCopy = values.join('\t');
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(textToCopy)
-            .then(() => {
-                alert('Dados copiados para a área de transferência!');
-            })
-            .catch(err => {
-                console.error('Erro ao copiar: ', err);
-                alert('Não foi possível copiar. Tente novamente.');
-            });
+            .then(() => alert('Dados copiados para a área de transferência!'))
+            .catch(() => alert('Não foi possível copiar.'));
     } else {
         const textarea = document.createElement('textarea');
         textarea.value = textToCopy;
         document.body.appendChild(textarea);
         textarea.select();
-        try {
-            document.execCommand('copy');
-            alert('Dados copiados para a área de transferência!');
-        } catch (err) {
-            alert('Não foi possível copiar. Tente novamente.');
-        }
+        try { document.execCommand('copy'); alert('Dados copiados!'); }
+        catch (e) { alert('Falha ao copiar.'); }
         document.body.removeChild(textarea);
     }
 }
 
-// ===== Funções de controle da aba CRM =====
+// ===== Variáveis de filtro e controle da aba CRM =====
+let crmSearchTerm = '';
+let crmFilteredData = null;
 window.crmActiveTab = 'decisores';
 let crmCurrentPage = 0;
 const crmPageSize = 100;
@@ -3334,17 +3313,12 @@ function switchCrmTab(tab) {
     document.querySelectorAll('.crm-tabs .btn-crm-tab').forEach(btn => btn.classList.remove('active-tab'));
     document.getElementById(`crm-tab-${tab}`).classList.add('active-tab');
     crmCurrentPage = 0;
-
     const searchContainer = document.getElementById('crm-search-container');
     if (tab === 'geral') {
         searchContainer.style.display = 'block';
         const searchInput = document.getElementById('crm-search-input');
-        if (searchInput.value.trim() !== '') {
-            applyCrmFilter();
-        } else {
-            crmFilteredData = null;
-            renderCrmTable();
-        }
+        if (searchInput.value.trim() !== '') applyCrmFilter();
+        else { crmFilteredData = null; renderCrmTable(); }
     } else {
         searchContainer.style.display = 'none';
         document.getElementById('crm-search-input').value = '';
@@ -3354,13 +3328,28 @@ function switchCrmTab(tab) {
     }
 }
 
+function applyCrmFilter() {
+    const term = document.getElementById('crm-search-input').value.trim().toLowerCase();
+    crmSearchTerm = term;
+    if (term === '') { crmFilteredData = null; renderCrmTable(); return; }
+    const allData = loadGeral();
+    if (!Array.isArray(allData)) { crmFilteredData = []; renderCrmTable(); return; }
+    const filtered = allData.filter(item => {
+        const searchable = [item.nome || '', item.cliente || '', item.whatsapp || '', item.email || ''].join(' ').toLowerCase();
+        return searchable.includes(term);
+    });
+    crmFilteredData = filtered;
+    crmCurrentPage = 0;
+    renderCrmTable();
+}
+
 function renderCrmTable() {
     const tab = window.crmActiveTab;
     const thead = document.getElementById('crm-table-head');
     const tbody = document.getElementById('crm-table-body');
-    const pagination = document.getElementById('crm-pagination');
     const info = document.getElementById('crm-info');
     const buttons = document.getElementById('crm-buttons');
+    const pagination = document.getElementById('crm-pagination');
 
     let data;
     if (tab === 'decisores') {
@@ -3368,11 +3357,8 @@ function renderCrmTable() {
         if (!Array.isArray(data)) data = [];
         thead.innerHTML = `<tr><th>Nome do contato</th><th>Cliente</th><th>WhatsApp</th><th>E-mail do contato</th><th style="width:100px;">Ações</th></tr>`;
     } else {
-        if (crmSearchTerm && crmSearchTerm !== '' && crmFilteredData !== null) {
-            data = crmFilteredData;
-        } else {
-            data = [];
-        }
+        if (crmSearchTerm && crmSearchTerm !== '' && crmFilteredData !== null) data = crmFilteredData;
+        else data = [];
         if (!Array.isArray(data)) data = [];
         thead.innerHTML = `<tr><th>Nome do contato</th><th>Cliente</th><th>WhatsApp</th><th>E-mail do contato</th><th style="width:100px;">Ações</th></tr>`;
     }
@@ -3405,28 +3391,26 @@ function renderCrmTable() {
         });
     }
 
-    info.innerText = `Mostrando ${total>0?start+1:0}–${end} de ${total}`;
+    info.innerText = `Mostrando ${total > 0 ? start + 1 : 0}–${end} de ${total}`;
     buttons.innerHTML = `
-        <button onclick="crmGoToPage(${crmCurrentPage-1})" ${crmCurrentPage===0?'disabled':''}>◀</button>
-        <span style="padding:4px 12px; font-weight:600;">${totalPages>0?crmCurrentPage+1:0} / ${totalPages||1}</span>
-        <button onclick="crmGoToPage(${crmCurrentPage+1})" ${crmCurrentPage>=totalPages-1?'disabled':''}>▶</button>
+        <button onclick="crmGoToPage(${crmCurrentPage - 1})" ${crmCurrentPage === 0 ? 'disabled' : ''}>◀</button>
+        <span style="padding:4px 12px; font-weight:600;">${totalPages > 0 ? crmCurrentPage + 1 : 0} / ${totalPages || 1}</span>
+        <button onclick="crmGoToPage(${crmCurrentPage + 1})" ${crmCurrentPage >= totalPages - 1 ? 'disabled' : ''}>▶</button>
     `;
     pagination.style.display = total > crmPageSize ? 'flex' : 'none';
-    document.getElementById('crm-save-btn').onclick = saveCrmData;
+
+    // Atualiza os eventos dos botões Salvar e Adicionar
+    document.getElementById('crm-save-btn').onclick = tab === 'decisores' ? saveDecisores : saveGeral;
     document.getElementById('crm-add-btn').onclick = addCrmRow;
 }
 
 function crmGoToPage(page) {
     const tab = window.crmActiveTab;
     let data;
-    if (tab === 'decisores') {
-        data = loadDecisores();
-    } else {
-        if (crmSearchTerm && crmSearchTerm !== '' && crmFilteredData !== null) {
-            data = crmFilteredData;
-        } else {
-            data = [];
-        }
+    if (tab === 'decisores') data = loadDecisores();
+    else {
+        if (crmSearchTerm && crmSearchTerm !== '' && crmFilteredData !== null) data = crmFilteredData;
+        else data = [];
     }
     if (!Array.isArray(data)) data = [];
     const totalPages = Math.ceil(data.length / crmPageSize);
@@ -3457,44 +3441,32 @@ function addCrmRow() {
     `;
     tbody.appendChild(tr);
     let data;
-    if (tab === 'decisores') {
-        data = loadDecisores();
-    } else {
-        if (crmSearchTerm && crmSearchTerm !== '' && crmFilteredData !== null) {
-            data = crmFilteredData;
-        } else {
-            data = [];
-        }
+    if (tab === 'decisores') data = loadDecisores();
+    else {
+        if (crmSearchTerm && crmSearchTerm !== '' && crmFilteredData !== null) data = crmFilteredData;
+        else data = [];
     }
     if (!Array.isArray(data)) data = [];
     const totalPages = Math.ceil((data.length + 1) / crmPageSize);
-    if (crmCurrentPage < totalPages - 1) {
-        crmCurrentPage = totalPages - 1;
-    }
+    if (crmCurrentPage < totalPages - 1) crmCurrentPage = totalPages - 1;
     renderCrmTable();
 }
 
-// Função para carregar dados CRM de forma assíncrona
 function loadCrmData() {
-    return Promise.all([
-        loadDecisores(),
-        loadGeral()
-    ]).then(() => {
-        if (!window.crmActiveTab) window.crmActiveTab = 'decisores';
-        renderCrmTable();
-        document.querySelectorAll('.crm-tabs .btn-crm-tab').forEach(btn => btn.classList.remove('active-tab'));
-        document.getElementById(`crm-tab-${window.crmActiveTab}`).classList.add('active-tab');
-        const searchContainer = document.getElementById('crm-search-container');
-        if (window.crmActiveTab === 'geral') {
-            searchContainer.style.display = 'block';
-        } else {
-            searchContainer.style.display = 'none';
-        }
-    }).catch(err => {
-        console.warn('Erro ao carregar dados CRM:', err);
-        if (!window.crmActiveTab) window.crmActiveTab = 'decisores';
-        renderCrmTable();
-    });
+    return Promise.all([loadDecisores(), loadGeral()])
+        .then(() => {
+            if (!window.crmActiveTab) window.crmActiveTab = 'decisores';
+            renderCrmTable();
+            document.querySelectorAll('.crm-tabs .btn-crm-tab').forEach(btn => btn.classList.remove('active-tab'));
+            document.getElementById(`crm-tab-${window.crmActiveTab}`).classList.add('active-tab');
+            const searchContainer = document.getElementById('crm-search-container');
+            searchContainer.style.display = window.crmActiveTab === 'geral' ? 'block' : 'none';
+        })
+        .catch(err => {
+            console.warn('Erro ao carregar dados CRM:', err);
+            if (!window.crmActiveTab) window.crmActiveTab = 'decisores';
+            renderCrmTable();
+        });
 }
 
 // ================================================================
@@ -3516,7 +3488,6 @@ function showDashboard() {
     document.getElementById('topbar-username').innerText=displayName;
     document.getElementById('topbar-greeting').innerText='Bem-vindo(a), ';
     populateFilterDropdowns(); applyFilters(); renderUserManagement(); applyPermissionsToSidebar();
-    // Carregar CRM
     loadCrmData();
     const horasPorChamado={}; globalData.forEach(d=>{ if(!horasPorChamado[d.id]) horasPorChamado[d.id]=d.duracao||0; });
     const totalHoras=Object.values(horasPorChamado).reduce((a,b)=>a+b,0);
