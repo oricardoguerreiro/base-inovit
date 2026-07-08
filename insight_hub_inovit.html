@@ -6,7 +6,6 @@
     <title>INOVIT | Insight HUB</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/75e05c3bb826c5efa8b4b70514f3e3f94e13200b/logo_inovit.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <!-- XLSX removido conforme solicitado -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -17,7 +16,6 @@
     <style>
         /* ============================================================
            DESIGN SYSTEM REFINADO – INSPIRAÇÃO PREMIUM
-           (mantido exatamente igual ao original)
            ============================================================ */
         :root {
             --bg-primary: #eef3f6;
@@ -2094,7 +2092,35 @@
 <div id="modal-technician-detail" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="technician-detail-title">Detalhes do Técnico</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-technician-detail','Detalhe_Tecnico')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-technician-detail','Detalhe_Tecnico')">PDF</button><button class="modal-close" onclick="closeModal('modal-technician-detail')">Fechar</button></div></div><div id="technician-detail-content"></div></div></div>
 <div id="modal-tech-evaluated" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="tech-evaluated-title">Chamados Avaliados pelo Técnico</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-tech-evaluated','Tecnico_Avaliados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-tech-evaluated','Tecnico_Avaliados')">PDF</button><button class="modal-close" onclick="closeModal('modal-tech-evaluated')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="tech-evaluated-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Abertura</th><th>Solução</th><th>CSAT</th></tr></thead><tbody id="tech-evaluated-tbody"></tbody></table></div><div class="pagination-container" id="tech-evaluated-pagination"><span class="info" id="tech-evaluated-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="tech-evaluated-buttons"></div></div></div></div>
 <div id="modal-backlog-isolated" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-backlog-isolated-title">Chamados de Backlog Mapeados</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-backlog-isolated','Backlog_Isolado')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-backlog-isolated','Backlog_Isolado')">PDF</button><button class="modal-close" onclick="closeModal('modal-backlog-isolated')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="table-backlog-isolated-rows"><thead><tr><th>ID</th><th>Entidade</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Técnico</th><th>Equipe</th><th>Status</th></tr></thead><tbody></tbody></table></div></div></div>
-<div id="modal-client-universal" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-client-name">VISÃO UNIVERSAL DO CLIENTE</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-client-universal','Relatorio_Cliente')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-client-universal','Relatorio_Cliente')">PDF</button><button class="modal-close" onclick="closeModal('modal-client-universal')">Fechar</button></div></div><div id="report-client-header-tag" style="font-family:'JetBrains Mono'; font-size:14px; color:var(--blue-primary); margin-bottom:12px; font-weight:600;"></div><div class="kpi-grid-10" id="modal-client-kpis"></div><div id="modal-client-requester-section" style="margin-top:20px; margin-bottom:20px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Top 10 Requerentes Mais Ativos</h3><div class="modern-table-container"><table class="modern-table" id="modal-client-table-requesters"><thead><tr><th>Rank</th><th>Nome do Requerente</th><th>Quantidade</th><th>Percentual</th><th>Horas</th></tr></thead><tbody></tbody></table></div></div><div id="modal-financial-section"><h3 class="panel-title" style="font-size:20px; margin:20px 0 8px;">Simulador de Viabilidade Econômica</h3><div class="simulator-split-grid"><div class="sim-input-card"><div class="sim-field"><label>Faturamento Mensal (R$)</label><input type="number" id="sim-input-revenue" value="12000" oninput="recalculateContractViability()"></div><div class="sim-field"><label>Custo Hora Técnico (R$/h)</label><input type="number" id="sim-input-hourly" value="130" oninput="recalculateContractViability()"></div></div><div class="sim-results-card"><div class="sim-res-row"><span class="sim-res-lbl">Ações Monitoradas:</span><span class="sim-res-val" id="sim-res-actions">0</span></div><div class="sim-res-row"><span class="sim-res-lbl">Esforço Médio (0.85h):</span><span class="sim-res-val" id="sim-res-hours">0.0h</span></div><div class="sim-res-row"><span class="sim-res-lbl">Custo Operacional Bruto:</span><span class="sim-res-val" id="sim-res-cost">R$ 0,00</span></div><div class="sim-res-row"><span class="sim-res-lbl">Margem de Rentabilidade:</span><span class="sim-res-val" id="sim-res-margin">0.0%</span></div></div></div><div id="sim-verdict-block"></div></div><div id="modal-client-dynamic-content-area"><h3 class="panel-title" id="modal-table-title" style="font-size:20px; margin:20px 0 8px;">Top 10 Categorias mais recorrentes</h3><div class="modern-table-container" id="modal-client-table-wrapper"><table class="modern-table" id="modal-client-table-tickets"><thead><tr><th>Quantidade</th><th>Categoria</th><th>% do Todo</th></tr></thead><tbody></tbody></table></div><div id="modal-client-ia-strategic-box" class="ai-insights-box" style="display:none;"></div></div><div id="modal-client-weekday-chart-container" style="margin-top:24px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Distribuição por Dia da Semana (período filtrado)</h3><div class="bar-chart-container" id="modal-client-weekday-bar-chart"><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-0" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Dom</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-1" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Seg</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-2" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Ter</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-3" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Qua</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-4" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Qui</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-5" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Sexta</div></div><div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-6" style="height:0%;" data-val="0"></div><div class="bar-chart-lbl">Sáb</div></div></div></div><div id="modal-client-teams-section" style="margin-top:20px; margin-bottom:20px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Técnicos Alocados</h3><div id="modal-client-teams-container" style="display:flex; flex-direction:column; gap:8px;"></div></div><div id="modal-client-evaluated-section" style="margin-top:20px; margin-bottom:20px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Chamados Avaliados (CSAT)</h3><div class="modern-table-container"><table class="modern-table" id="modal-client-evaluated-table"><thead><tr><th>ID</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Nota CSAT</th><th>Técnico</th></tr></thead><tbody></tbody></table></div></div></div></div>
+
+<!-- ALTERAÇÃO: Modal para listar chamados por categoria (item 1) -->
+<div id="modal-category-tickets" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="category-tickets-title">Chamados por Categoria</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-category-tickets','Categoria_Chamados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-category-tickets','Categoria_Chamados')">PDF</button><button class="modal-close" onclick="closeModal('modal-category-tickets')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="category-tickets-table"><thead><tr><th>ID</th><th>Título</th><th>Data Abertura</th><th>Data Solução</th><th>Técnico</th></tr></thead><tbody id="category-tickets-tbody"></tbody></table></div></div></div>
+
+<!-- ALTERAÇÃO: Modal para listar chamados por cliente com tempo (item 6) -->
+<div id="modal-client-tickets-time" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="client-tickets-time-title">Chamados do Cliente com Tempo de Atendimento</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-client-tickets-time','Cliente_Tempo')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-client-tickets-time','Cliente_Tempo')">PDF</button><button class="modal-close" onclick="closeModal('modal-client-tickets-time')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="client-tickets-time-table"><thead><tr><th>ID</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Duração (h)</th><th>Técnico</th></tr></thead><tbody id="client-tickets-time-tbody"></tbody></table></div></div></div>
+
+<div id="modal-client-universal" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-client-name">VISÃO UNIVERSAL DO CLIENTE</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-client-universal','Relatorio_Cliente')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-client-universal','Relatorio_Cliente')">PDF</button><button class="modal-close" onclick="closeModal('modal-client-universal')">Fechar</button></div></div>
+<div id="report-client-header-tag" style="font-family:'JetBrains Mono'; font-size:14px; color:var(--blue-primary); margin-bottom:12px; font-weight:600; display:flex; justify-content:space-between; align-items:center;">
+    <span id="report-client-name"></span>
+    <span id="report-client-hours" style="background:var(--glass-bg); backdrop-filter:blur(12px); padding:6px 16px; border-radius:var(--radius-sm); border:1px solid var(--glass-border); font-weight:700;"></span>
+</div>
+<div class="kpi-grid-10" id="modal-client-kpis"></div>
+<div id="modal-client-requester-section" style="margin-top:20px; margin-bottom:20px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Top 10 Requerentes Mais Ativos</h3><div class="modern-table-container"><table class="modern-table" id="modal-client-table-requesters"><thead><tr><th>Rank</th><th>Nome do Requerente</th><th>Quantidade</th><th>Percentual</th><th>Horas</th></tr></thead><tbody></tbody></table></div></div>
+<div id="modal-financial-section"><h3 class="panel-title" style="font-size:20px; margin:20px 0 8px;">Simulador de Viabilidade Econômica</h3><div class="simulator-split-grid"><div class="sim-input-card"><div class="sim-field"><label>Faturamento Mensal (R$)</label><input type="number" id="sim-input-revenue" value="12000" oninput="recalculateContractViability()"></div><div class="sim-field"><label>Custo Hora Técnico (R$/h)</label><input type="number" id="sim-input-hourly" value="130" oninput="recalculateContractViability()"></div></div><div class="sim-results-card"><div class="sim-res-row"><span class="sim-res-lbl">Ações Monitoradas:</span><span class="sim-res-val" id="sim-res-actions">0</span></div><div class="sim-res-row"><span class="sim-res-lbl">Esforço Médio (0.85h):</span><span class="sim-res-val" id="sim-res-hours">0.0h</span></div><div class="sim-res-row"><span class="sim-res-lbl">Custo Operacional Bruto:</span><span class="sim-res-val" id="sim-res-cost">R$ 0,00</span></div><div class="sim-res-row"><span class="sim-res-lbl">Margem de Rentabilidade:</span><span class="sim-res-val" id="sim-res-margin">0.0%</span></div></div></div><div id="sim-verdict-block"></div></div>
+<div id="modal-client-dynamic-content-area"><h3 class="panel-title" id="modal-table-title" style="font-size:20px; margin:20px 0 8px;">Top 10 Categorias mais recorrentes</h3><div class="modern-table-container" id="modal-client-table-wrapper"><table class="modern-table" id="modal-client-table-tickets"><thead><tr><th>Quantidade</th><th>Categoria</th><th>% do Todo</th></tr></thead><tbody></tbody></table></div><div id="modal-client-ia-strategic-box" class="ai-insights-box" style="display:none;"></div></div>
+<div id="modal-client-weekday-chart-container" style="margin-top:24px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Distribuição por Dia da Semana (período filtrado)</h3><div class="bar-chart-container" id="modal-client-weekday-bar-chart">
+    <!-- ALTERAÇÃO: cada coluna terá um span para exibir o valor em cima da barra -->
+    <div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-0" style="height:0%;" data-val="0"><span class="bar-value" id="modal-bar-val-0">0</span></div><div class="bar-chart-lbl">Dom</div></div>
+    <div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-1" style="height:0%;" data-val="0"><span class="bar-value" id="modal-bar-val-1">0</span></div><div class="bar-chart-lbl">Seg</div></div>
+    <div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-2" style="height:0%;" data-val="0"><span class="bar-value" id="modal-bar-val-2">0</span></div><div class="bar-chart-lbl">Ter</div></div>
+    <div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-3" style="height:0%;" data-val="0"><span class="bar-value" id="modal-bar-val-3">0</span></div><div class="bar-chart-lbl">Qua</div></div>
+    <div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-4" style="height:0%;" data-val="0"><span class="bar-value" id="modal-bar-val-4">0</span></div><div class="bar-chart-lbl">Qui</div></div>
+    <div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-5" style="height:0%;" data-val="0"><span class="bar-value" id="modal-bar-val-5">0</span></div><div class="bar-chart-lbl">Sexta</div></div>
+    <div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-6" style="height:0%;" data-val="0"><span class="bar-value" id="modal-bar-val-6">0</span></div><div class="bar-chart-lbl">Sáb</div></div>
+</div></div>
+<div id="modal-client-teams-section" style="margin-top:20px; margin-bottom:20px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Técnicos Alocados</h3><div id="modal-client-teams-container" style="display:flex; flex-direction:column; gap:8px;"></div></div>
+<!-- ALTERAÇÃO: removido o painel Chamados Avaliados (CSAT) -->
+</div></div>
 
 <div id="perm-edit-modal" class="modal-fullscreen" style="display:none; align-items:center; justify-content:center;"><div class="modal-container" style="max-width:500px;"><div class="perm-edit-box"><h3>Editar Permissões</h3><div id="perm-edit-user" style="font-weight:600; margin-bottom:12px;"></div><div class="perm-checkboxes" id="perm-edit-checkboxes"></div><div><button class="btn-save-perms" onclick="savePermEdit()">Salvar</button><button class="btn-cancel-perms" onclick="closePermEdit()">Cancelar</button></div></div></div></div>
 
@@ -2334,7 +2360,6 @@ function switchSection(sectionKey, btnEl) {
         renderCrmTable();
         document.querySelectorAll('.crm-tabs .btn-crm-tab').forEach(btn => btn.classList.remove('active-tab'));
         document.getElementById(`crm-tab-${window.crmActiveTab}`).classList.add('active-tab');
-        // Mostra/esconde o campo de pesquisa conforme a aba
         const searchContainer = document.getElementById('crm-search-container');
         if (window.crmActiveTab === 'geral') {
             searchContainer.style.display = 'block';
@@ -2745,11 +2770,24 @@ function openClientUniversalModal(clientKey, mode) {
     const weekdayCounts=[0,0,0,0,0,0,0];
     clientRows.forEach(d=>{ if(d.dataAbertura && d.dataAbertura.dateObj){ let dayIndex=d.dataAbertura.dateObj.getDay(); weekdayCounts[dayIndex]++; } });
     let maxDayVol=Math.max(...weekdayCounts)||1;
-    for(let i=0;i<7;i++){ let pctFill=(weekdayCounts[i]/maxDayVol)*100; let bar=document.getElementById(`modal-bar-day-${i}`); if(bar){ bar.style.height=`${pctFill*0.8}%`; bar.setAttribute('data-val',weekdayCounts[i]); } }
+    for(let i=0;i<7;i++){
+        let pctFill=(weekdayCounts[i]/maxDayVol)*100;
+        let bar=document.getElementById(`modal-bar-day-${i}`);
+        let valSpan=document.getElementById(`modal-bar-val-${i}`);
+        if(bar){
+            bar.style.height=`${pctFill*0.8}%`;
+            bar.setAttribute('data-val',weekdayCounts[i]);
+        }
+        if(valSpan){
+            valSpan.textContent=weekdayCounts[i];
+            valSpan.style.color=weekdayCounts[i]>0?'var(--text-primary)':'var(--text-muted)';
+        }
+    }
     const tipoContagemMap={}; clientRows.forEach(d=>{ const tName=d.tipo||'Outros'; tipoContagemMap[tName]=(tipoContagemMap[tName]||0)+1; });
     let subtituloCardTipo=Object.entries(tipoContagemMap).map(([tipoNome,qtd])=>`${tipoNome}: ${qtd}`).join(' | ');
     document.getElementById('modal-client-name').innerText=`VISÃO UNIVERSAL: ${cleanEntityName(clientKey)}`;
-    document.getElementById('report-client-header-tag').innerText=`Cliente: ${cleanEntityName(clientKey)} | Horas: ${horasClienteFormat}h`;
+    document.getElementById('report-client-name').innerText=`Cliente: ${cleanEntityName(clientKey)}`;
+    document.getElementById('report-client-hours').innerText=`⏱️ ${horasClienteFormat}h`;
     const teamsContainer=document.getElementById('modal-client-teams-container'); teamsContainer.innerHTML='';
     if(mode==='cliente'){
         document.getElementById('modal-client-teams-section').style.display='block';
@@ -2760,7 +2798,7 @@ function openClientUniversalModal(clientKey, mode) {
         document.getElementById('modal-table-title').innerText="Top 10 Categorias mais recorrentes";
         document.getElementById('modal-client-requester-section').style.display='block';
         document.getElementById('modal-client-weekday-chart-container').style.display='block';
-        document.getElementById('modal-client-evaluated-section').style.display='block';
+        // REMOVIDO: modal-client-evaluated-section
         const clientTechMap={}; clientRows.forEach(d=>{ if(d.tecnico) clientTechMap[d.tecnico]=(clientTechMap[d.tecnico]||0)+1; });
         if(Object.keys(clientTechMap).length>0){ Object.keys(clientTechMap).sort((a,b)=>clientTechMap[b]-clientTechMap[a]).forEach(techName=>{ const techCard=document.createElement('div'); techCard.style.background='rgba(227, 240, 255, 0.3)'; techCard.style.backdropFilter='blur(4px)'; techCard.style.border='1px solid var(--glass-border)'; techCard.style.borderRadius='var(--radius-sm)'; techCard.style.padding='10px 16px'; techCard.style.display='flex'; techCard.style.justifyContent='space-between'; techCard.innerHTML=`<span style="font-weight:600;">👨‍💻 ${techName}</span><span style="font-family:'JetBrains Mono'; font-weight:600; color:var(--blue-primary);">${clientTechMap[techName]} chamados</span>`; teamsContainer.appendChild(techCard); }); } else { teamsContainer.innerHTML='<div style="font-size:13px; color:var(--text-muted);">Nenhum técnico associado.</div>'; }
         const reqCountMap={}; clientRows.forEach(d=>reqCountMap[d.requerente]=(reqCountMap[d.requerente]||0)+1);
@@ -2777,13 +2815,20 @@ function openClientUniversalModal(clientKey, mode) {
             tr.innerHTML=`<td style="font-family:'JetBrains Mono';">#${idx+1}</td><td>${req}</td><td style="font-family:'JetBrains Mono';">${qtd}</td><td>${pct}%</td><td style="font-family:'JetBrains Mono';">${horas}h</td>`;
             reqTbody.appendChild(tr);
         });
+        // ALTERAÇÃO: tabela de categorias com clique
         const tbodyCats=document.querySelector('#modal-client-table-tickets tbody'); tbodyCats.innerHTML='';
         const catCountMap={}; clientRows.forEach(d=>catCountMap[d.categoria]=(catCountMap[d.categoria]||0)+1);
         const sortedClientCats=Object.keys(catCountMap).sort((a,b)=>catCountMap[b]-catCountMap[a]).slice(0,10);
-        sortedClientCats.forEach(cat=>{ const vol=catCountMap[cat]; const catPct=total>0?((vol/total)*100).toFixed(1):"0.0"; const tr=document.createElement('tr'); tr.innerHTML=`<td style="font-family:'JetBrains Mono'; font-weight:600;">${vol}</td><td>${cat}</td><td style="font-family:'JetBrains Mono'; color:var(--blue-primary);">${catPct}%</td>`; tbodyCats.appendChild(tr); });
-        const evalTbody=document.querySelector('#modal-client-evaluated-table tbody'); evalTbody.innerHTML='';
-        const evaluatedTickets=clientRows.filter(d=>d.csat!==null);
-        evaluatedTickets.forEach(d=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td style="font-family:'JetBrains Mono';">${d.id}</td><td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${d.titulo}">${d.titulo}</td><td>${d.dataAbertura.dia}/${d.dataAbertura.mes}/${d.dataAbertura.ano}</td><td>${d.dataSolucao?`${d.dataSolucao.dia}/${d.dataSolucao.mes}/${d.dataSolucao.ano}`:'ABERTO'}</td><td style="font-weight:700; color:var(--success);">⭐ ${d.csat}</td><td onclick="event.stopPropagation(); openTicketDetail('${escapeStr(d.id)}')" style="cursor:pointer; color:var(--blue-primary);">${d.tecnico}</td>`; evalTbody.appendChild(tr); });
+        sortedClientCats.forEach(cat=>{
+            const vol=catCountMap[cat];
+            const catPct=total>0?((vol/total)*100).toFixed(1):"0.0";
+            const tr=document.createElement('tr');
+            tr.className='clickable-row';
+            tr.setAttribute('onclick', `openTicketsByCategory('${escapeStr(clientKey)}','${escapeStr(cat)}')`);
+            tr.innerHTML=`<td style="font-family:'JetBrains Mono'; font-weight:600;">${vol}</td><td>${cat}</td><td style="font-family:'JetBrains Mono'; color:var(--blue-primary);">${catPct}%</td>`;
+            tbodyCats.appendChild(tr);
+        });
+        // Removido o bloco de chamados avaliados
     } else {
         document.getElementById('modal-client-teams-section').style.display='none';
         document.getElementById('modal-financial-section').style.display='block';
@@ -2791,7 +2836,7 @@ function openClientUniversalModal(clientKey, mode) {
         document.getElementById('modal-table-title').style.display='none';
         document.getElementById('modal-client-requester-section').style.display='none';
         document.getElementById('modal-client-weekday-chart-container').style.display='none';
-        document.getElementById('modal-client-evaluated-section').style.display='none';
+        // REMOVIDO: modal-client-evaluated-section
         const iaBox=document.getElementById('modal-client-ia-strategic-box'); iaBox.style.display='block';
         const revenue=Math.round(Math.max(3500,total*160)); const estimatedHours=total*0.85; const operationalCost=estimatedHours*130;
         iaBox.innerHTML=`<h3 style="color:var(--blue-primary);">🧠 RELATÓRIO ESTRATÉGICO</h3><div class="ai-topic"><div class="ai-topic-title">Sumário</div><div class="ai-topic-desc">Contrato com volume estável. SLA: ${sla}%.</div></div><div class="ai-topic"><div class="ai-topic-title">Rentabilidade</div><div class="ai-topic-desc">Margem bruta com faturamento simulado de R$ ${revenue.toLocaleString('pt-BR')}.</div></div><div class="ai-topic"><div class="ai-topic-title">Custo Operacional</div><div class="ai-topic-desc">Estimado em R$ ${operationalCost.toLocaleString('pt-BR')} para ${estimatedHours.toFixed(1)} horas.</div></div>`;
@@ -2802,6 +2847,64 @@ function openClientUniversalModal(clientKey, mode) {
     document.getElementById('sim-input-hourly').value=140;
     recalculateContractViability();
     document.getElementById('modal-client-universal').style.display='block'; document.body.style.overflow='hidden';
+}
+
+// ALTERAÇÃO: função para abrir chamados por categoria (item 1)
+function openTicketsByCategory(clientKey, category) {
+    const tickets = globalData.filter(d => d.entidade === clientKey && d.categoria === category);
+    if (tickets.length === 0) {
+        alert('Nenhum chamado encontrado para esta categoria.');
+        return;
+    }
+    const modal = document.getElementById('modal-category-tickets');
+    document.getElementById('category-tickets-title').innerText = `Chamados da categoria: ${category} (${tickets.length})`;
+    const tbody = document.getElementById('category-tickets-tbody');
+    tbody.innerHTML = '';
+    tickets.forEach(d => {
+        const tr = document.createElement('tr');
+        tr.className = 'clickable-row';
+        tr.setAttribute('onclick', `openTicketDetail('${escapeStr(d.id)}')`);
+        tr.innerHTML = `
+            <td style="font-family:'JetBrains Mono';">${d.id}</td>
+            <td>${d.titulo}</td>
+            <td>${d.dataAbertura.dia}/${d.dataAbertura.mes}/${d.dataAbertura.ano}</td>
+            <td>${d.dataSolucao?`${d.dataSolucao.dia}/${d.dataSolucao.mes}/${d.dataSolucao.ano}`:'ABERTO'}</td>
+            <td>${d.tecnico}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+// ALTERAÇÃO: função para abrir chamados por cliente com tempo (item 6)
+function openClientTicketsWithTime(clientKey) {
+    const tickets = globalData.filter(d => d.entidade === clientKey);
+    if (tickets.length === 0) {
+        alert('Nenhum chamado encontrado para este cliente.');
+        return;
+    }
+    const modal = document.getElementById('modal-client-tickets-time');
+    document.getElementById('client-tickets-time-title').innerText = `Chamados de ${cleanEntityName(clientKey)} (${tickets.length})`;
+    const tbody = document.getElementById('client-tickets-time-tbody');
+    tbody.innerHTML = '';
+    tickets.forEach(d => {
+        const tr = document.createElement('tr');
+        tr.className = 'clickable-row';
+        tr.setAttribute('onclick', `openTicketDetail('${escapeStr(d.id)}')`);
+        const duracao = (d.duracao || 0).toFixed(2);
+        tr.innerHTML = `
+            <td style="font-family:'JetBrains Mono';">${d.id}</td>
+            <td>${d.titulo}</td>
+            <td>${d.dataAbertura.dia}/${d.dataAbertura.mes}/${d.dataAbertura.ano}</td>
+            <td>${d.dataSolucao?`${d.dataSolucao.dia}/${d.dataSolucao.mes}/${d.dataSolucao.ano}`:'ABERTO'}</td>
+            <td style="font-family:'JetBrains Mono'; font-weight:600;">${duracao}h</td>
+            <td>${d.tecnico}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
 }
 
 function recalculateContractViability() {
@@ -2899,7 +3002,23 @@ function openGlobalDrilldown(type) {
         case 'horas': {
             const horasMap={}; currentFiltered.forEach(d=>{ if(!horasMap[d.entidade]) horasMap[d.entidade]=0; if(!horasMap[d.entidade+'_'+d.id]){ horasMap[d.entidade+'_'+d.id]=d.duracao||0; horasMap[d.entidade]+=d.duracao||0; } });
             const horasData=Object.keys(horasMap).filter(k=>!k.includes('_')).map(c=>({id:c,entidade:c,horas:horasMap[c].toFixed(1)})).sort((a,b)=>parseFloat(b.horas)-parseFloat(a.horas));
-            openTicketList('⏱️ Horas Trabalhadas por Cliente', horasData, ['entidade','horas'], true); break;
+            // ALTERAÇÃO: agora os itens são clicáveis e abrem a lista de chamados com tempo
+            const modal=document.getElementById('modal-ticket-list');
+            document.getElementById('ticket-list-title').innerText='⏱️ Horas Trabalhadas por Cliente';
+            const thead=document.getElementById('ticket-list-thead');
+            thead.innerHTML='<th>Cliente</th><th>Horas</th>';
+            const tbody=document.getElementById('ticket-list-tbody');
+            tbody.innerHTML='';
+            horasData.forEach(row=>{
+                const tr=document.createElement('tr');
+                tr.className='clickable-row';
+                tr.setAttribute('onclick', `openClientTicketsWithTime('${escapeStr(row.entidade)}')`);
+                tr.innerHTML=`<td>${cleanEntityName(row.entidade)}</td><td style="font-family:'JetBrains Mono';">${row.horas}</td>`;
+                tbody.appendChild(tr);
+            });
+            modal.style.display='block';
+            document.body.style.overflow='hidden';
+            break;
         }
         default: alert('Função de drilldown não implementada para este indicador.');
     }
@@ -3131,7 +3250,7 @@ function parseDecisoresLine(line) {
 
 // --- Parsing geral (usa a mesma lógica) ---
 function parseGeralLine(line) {
-    return parseDecisoresLine(line); // mesmo parser
+    return parseDecisoresLine(line);
 }
 
 // --- Funções loadDecisores e loadGeral (com cache) ---
@@ -3248,7 +3367,6 @@ function saveDecisores() {
         }
     });
     localStorage.setItem('crm_decisores', JSON.stringify(newData));
-    // Exporta TXT
     downloadTxt(newData, 'decisores_editado.txt');
     alert('✅ Decisores salvos e arquivo TXT baixado!');
     renderCrmTable();
@@ -3399,7 +3517,6 @@ function renderCrmTable() {
     `;
     pagination.style.display = total > crmPageSize ? 'flex' : 'none';
 
-    // Atualiza os eventos dos botões Salvar e Adicionar
     document.getElementById('crm-save-btn').onclick = tab === 'decisores' ? saveDecisores : saveGeral;
     document.getElementById('crm-add-btn').onclick = addCrmRow;
 }
