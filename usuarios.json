@@ -37,6 +37,7 @@
       "tecnicos": true,
       "produtividade": true,
       "backlog": true,
+      "crm": true,
       "usuarios": false
     },
     "carol": {
@@ -46,6 +47,7 @@
       "tecnicos": true,
       "produtividade": true,
       "backlog": true,
+      "crm": true,
       "usuarios": false
     },
     "marcelo": {
@@ -55,6 +57,7 @@
       "tecnicos": true,
       "produtividade": true,
       "backlog": true,
+      "crm": true,
       "usuarios": false
     },
     "tiago": {
@@ -63,7 +66,9 @@
       "chamado": true,
       "tecnicos": true,
       "produtividade": true,
-      "backlog": true
+      "backlog": true,
+      "crm": true,
+      "usuarios": false
     }
   }
 }
