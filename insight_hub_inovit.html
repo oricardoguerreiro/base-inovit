@@ -1141,6 +1141,11 @@
             background-clip: text;
         }
 
+        /* ALTERAÇÃO: z-index maior para o modal de categorias sobrepor o universal */
+        #modal-category-tickets {
+            z-index: 600;
+        }
+
         /* ===== LOGOUT CONFIRM ===== */
         #logout-confirm-modal {
             display: none;
@@ -2093,10 +2098,10 @@
 <div id="modal-tech-evaluated" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="tech-evaluated-title">Chamados Avaliados pelo Técnico</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-tech-evaluated','Tecnico_Avaliados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-tech-evaluated','Tecnico_Avaliados')">PDF</button><button class="modal-close" onclick="closeModal('modal-tech-evaluated')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="tech-evaluated-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Abertura</th><th>Solução</th><th>CSAT</th></tr></thead><tbody id="tech-evaluated-tbody"></tbody></table></div><div class="pagination-container" id="tech-evaluated-pagination"><span class="info" id="tech-evaluated-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="tech-evaluated-buttons"></div></div></div></div>
 <div id="modal-backlog-isolated" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-backlog-isolated-title">Chamados de Backlog Mapeados</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-backlog-isolated','Backlog_Isolado')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-backlog-isolated','Backlog_Isolado')">PDF</button><button class="modal-close" onclick="closeModal('modal-backlog-isolated')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="table-backlog-isolated-rows"><thead><tr><th>ID</th><th>Entidade</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Técnico</th><th>Equipe</th><th>Status</th></tr></thead><tbody></tbody></table></div></div></div>
 
-<!-- ALTERAÇÃO: Modal para listar chamados por categoria (item 1) -->
+<!-- Modal para listar chamados por categoria (sobrepõe o universal) -->
 <div id="modal-category-tickets" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="category-tickets-title">Chamados por Categoria</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-category-tickets','Categoria_Chamados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-category-tickets','Categoria_Chamados')">PDF</button><button class="modal-close" onclick="closeModal('modal-category-tickets')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="category-tickets-table"><thead><tr><th>ID</th><th>Título</th><th>Data Abertura</th><th>Data Solução</th><th>Técnico</th></tr></thead><tbody id="category-tickets-tbody"></tbody></table></div></div></div>
 
-<!-- ALTERAÇÃO: Modal para listar chamados por cliente com tempo (item 6) -->
+<!-- Modal para listar chamados por cliente com tempo -->
 <div id="modal-client-tickets-time" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="client-tickets-time-title">Chamados do Cliente com Tempo de Atendimento</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-client-tickets-time','Cliente_Tempo')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-client-tickets-time','Cliente_Tempo')">PDF</button><button class="modal-close" onclick="closeModal('modal-client-tickets-time')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="client-tickets-time-table"><thead><tr><th>ID</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Duração (h)</th><th>Técnico</th></tr></thead><tbody id="client-tickets-time-tbody"></tbody></table></div></div></div>
 
 <div id="modal-client-universal" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-client-name">VISÃO UNIVERSAL DO CLIENTE</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-client-universal','Relatorio_Cliente')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-client-universal','Relatorio_Cliente')">PDF</button><button class="modal-close" onclick="closeModal('modal-client-universal')">Fechar</button></div></div>
@@ -2109,7 +2114,6 @@
 <div id="modal-financial-section"><h3 class="panel-title" style="font-size:20px; margin:20px 0 8px;">Simulador de Viabilidade Econômica</h3><div class="simulator-split-grid"><div class="sim-input-card"><div class="sim-field"><label>Faturamento Mensal (R$)</label><input type="number" id="sim-input-revenue" value="12000" oninput="recalculateContractViability()"></div><div class="sim-field"><label>Custo Hora Técnico (R$/h)</label><input type="number" id="sim-input-hourly" value="130" oninput="recalculateContractViability()"></div></div><div class="sim-results-card"><div class="sim-res-row"><span class="sim-res-lbl">Ações Monitoradas:</span><span class="sim-res-val" id="sim-res-actions">0</span></div><div class="sim-res-row"><span class="sim-res-lbl">Esforço Médio (0.85h):</span><span class="sim-res-val" id="sim-res-hours">0.0h</span></div><div class="sim-res-row"><span class="sim-res-lbl">Custo Operacional Bruto:</span><span class="sim-res-val" id="sim-res-cost">R$ 0,00</span></div><div class="sim-res-row"><span class="sim-res-lbl">Margem de Rentabilidade:</span><span class="sim-res-val" id="sim-res-margin">0.0%</span></div></div></div><div id="sim-verdict-block"></div></div>
 <div id="modal-client-dynamic-content-area"><h3 class="panel-title" id="modal-table-title" style="font-size:20px; margin:20px 0 8px;">Top 10 Categorias mais recorrentes</h3><div class="modern-table-container" id="modal-client-table-wrapper"><table class="modern-table" id="modal-client-table-tickets"><thead><tr><th>Quantidade</th><th>Categoria</th><th>% do Todo</th></tr></thead><tbody></tbody></table></div><div id="modal-client-ia-strategic-box" class="ai-insights-box" style="display:none;"></div></div>
 <div id="modal-client-weekday-chart-container" style="margin-top:24px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Distribuição por Dia da Semana (período filtrado)</h3><div class="bar-chart-container" id="modal-client-weekday-bar-chart">
-    <!-- ALTERAÇÃO: cada coluna terá um span para exibir o valor em cima da barra -->
     <div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-0" style="height:0%;" data-val="0"><span class="bar-value" id="modal-bar-val-0">0</span></div><div class="bar-chart-lbl">Dom</div></div>
     <div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-1" style="height:0%;" data-val="0"><span class="bar-value" id="modal-bar-val-1">0</span></div><div class="bar-chart-lbl">Seg</div></div>
     <div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-2" style="height:0%;" data-val="0"><span class="bar-value" id="modal-bar-val-2">0</span></div><div class="bar-chart-lbl">Ter</div></div>
@@ -2119,7 +2123,6 @@
     <div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-6" style="height:0%;" data-val="0"><span class="bar-value" id="modal-bar-val-6">0</span></div><div class="bar-chart-lbl">Sáb</div></div>
 </div></div>
 <div id="modal-client-teams-section" style="margin-top:20px; margin-bottom:20px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Técnicos Alocados</h3><div id="modal-client-teams-container" style="display:flex; flex-direction:column; gap:8px;"></div></div>
-<!-- ALTERAÇÃO: removido o painel Chamados Avaliados (CSAT) -->
 </div></div>
 
 <div id="perm-edit-modal" class="modal-fullscreen" style="display:none; align-items:center; justify-content:center;"><div class="modal-container" style="max-width:500px;"><div class="perm-edit-box"><h3>Editar Permissões</h3><div id="perm-edit-user" style="font-weight:600; margin-bottom:12px;"></div><div class="perm-checkboxes" id="perm-edit-checkboxes"></div><div><button class="btn-save-perms" onclick="savePermEdit()">Salvar</button><button class="btn-cancel-perms" onclick="closePermEdit()">Cancelar</button></div></div></div></div>
@@ -2728,13 +2731,13 @@ function allTicketsGoToPage(page){ const totalPages=Math.ceil(allTicketsData.len
 // ================================================================
 // 5. MODAIS E INTERAÇÕES (COMPLETO)
 // ================================================================
-function openTicketList(title, dataSource, columns, clickable=true) {
+function openTicketList(title, dataSource, columns, clickable=true, rowClickCallback=null) {
     const modal=document.getElementById('modal-ticket-list');
     document.getElementById('ticket-list-title').innerText=title;
     const thead=document.getElementById('ticket-list-thead');
     thead.innerHTML=columns.map(c=>`<th>${c}</th>`).join('');
     const pageSize=50; let currentPage=0; const totalPages=Math.ceil(dataSource.length/pageSize);
-    function renderPage(page){ currentPage=page; const start=page*pageSize; const end=Math.min(start+pageSize,dataSource.length); const pageData=dataSource.slice(start,end); const tbody=document.getElementById('ticket-list-tbody'); tbody.innerHTML=''; if(pageData.length===0){ tbody.innerHTML=`<tr><td colspan="${columns.length}" class="text-center" style="padding:40px; color:var(--text-muted);">Nenhum registro encontrado.</td></tr>`; } else { pageData.forEach(row=>{ const tr=document.createElement('tr'); if(clickable && row.id){ tr.className='clickable-row'; tr.setAttribute('onclick', `openTicketDetail('${escapeStr(row.id)}')`); } const cells=columns.map(col=>{ let val=row[col]!==undefined?row[col]:''; if(col==='sla'){ if(row.isBacklog) return '<span class="status-badge warn">BACKLOG</span>'; return row.withinSLA===true?'<span class="status-badge success">DENTRO</span>':'<span class="status-badge danger">FORA</span>'; } if(col==='dataAbertura' && row.dataAbertura) return `${row.dataAbertura.dia}/${row.dataAbertura.mes}/${row.dataAbertura.ano}`; if(col==='dataSolucao' && row.dataSolucao) return `${row.dataSolucao.dia}/${row.dataSolucao.mes}/${row.dataSolucao.ano}`; if(col==='entidade') return cleanEntityName(row.entidade); if(col==='csat') return row.csat!==null?`⭐ ${row.csat}`:'—'; if(col==='duracao') return (row.duracao||0).toFixed(1)+'h'; return val; }); tr.innerHTML=cells.map(c=>`<td>${c}</td>`).join(''); tbody.appendChild(tr); }); } document.getElementById('ticket-list-info').innerText=`Mostrando ${start+1}–${end} de ${dataSource.length}`; const btnContainer=document.getElementById('ticket-list-buttons'); btnContainer.innerHTML=`<button onclick="renderTicketPage(${currentPage-1})" ${currentPage===0?'disabled':''}>◀</button><span style="padding:4px 12px; font-weight:600;">${currentPage+1} / ${totalPages||1}</span><button onclick="renderTicketPage(${currentPage+1})" ${currentPage>=totalPages-1?'disabled':''}>▶</button>`; }
+    function renderPage(page){ currentPage=page; const start=page*pageSize; const end=Math.min(start+pageSize,dataSource.length); const pageData=dataSource.slice(start,end); const tbody=document.getElementById('ticket-list-tbody'); tbody.innerHTML=''; if(pageData.length===0){ tbody.innerHTML=`<tr><td colspan="${columns.length}" class="text-center" style="padding:40px; color:var(--text-muted);">Nenhum registro encontrado.</td></tr>`; } else { pageData.forEach(row=>{ const tr=document.createElement('tr'); if(clickable && row.id){ tr.className='clickable-row'; let onclickAction = `openTicketDetail('${escapeStr(row.id)}')`; if (rowClickCallback) { onclickAction = rowClickCallback(row); } tr.setAttribute('onclick', onclickAction); } const cells=columns.map(col=>{ let val=row[col]!==undefined?row[col]:''; if(col==='sla'){ if(row.isBacklog) return '<span class="status-badge warn">BACKLOG</span>'; return row.withinSLA===true?'<span class="status-badge success">DENTRO</span>':'<span class="status-badge danger">FORA</span>'; } if(col==='dataAbertura' && row.dataAbertura) return `${row.dataAbertura.dia}/${row.dataAbertura.mes}/${row.dataAbertura.ano}`; if(col==='dataSolucao' && row.dataSolucao) return `${row.dataSolucao.dia}/${row.dataSolucao.mes}/${row.dataSolucao.ano}`; if(col==='entidade') return cleanEntityName(row.entidade); if(col==='csat') return row.csat!==null?`⭐ ${row.csat}`:'—'; if(col==='duracao') return (row.duracao||0).toFixed(1)+'h'; return val; }); tr.innerHTML=cells.map(c=>`<td>${c}</td>`).join(''); tbody.appendChild(tr); }); } document.getElementById('ticket-list-info').innerText=`Mostrando ${start+1}–${end} de ${dataSource.length}`; const btnContainer=document.getElementById('ticket-list-buttons'); btnContainer.innerHTML=`<button onclick="renderTicketPage(${currentPage-1})" ${currentPage===0?'disabled':''}>◀</button><span style="padding:4px 12px; font-weight:600;">${currentPage+1} / ${totalPages||1}</span><button onclick="renderTicketPage(${currentPage+1})" ${currentPage>=totalPages-1?'disabled':''}>▶</button>`; }
     window.renderTicketPage=function(page){ if(page<0 || page>=totalPages) return; renderPage(page); };
     renderPage(0); modal.style.display='block'; document.body.style.overflow='hidden';
 }
@@ -2815,7 +2818,6 @@ function openClientUniversalModal(clientKey, mode) {
             tr.innerHTML=`<td style="font-family:'JetBrains Mono';">#${idx+1}</td><td>${req}</td><td style="font-family:'JetBrains Mono';">${qtd}</td><td>${pct}%</td><td style="font-family:'JetBrains Mono';">${horas}h</td>`;
             reqTbody.appendChild(tr);
         });
-        // ALTERAÇÃO: tabela de categorias com clique
         const tbodyCats=document.querySelector('#modal-client-table-tickets tbody'); tbodyCats.innerHTML='';
         const catCountMap={}; clientRows.forEach(d=>catCountMap[d.categoria]=(catCountMap[d.categoria]||0)+1);
         const sortedClientCats=Object.keys(catCountMap).sort((a,b)=>catCountMap[b]-catCountMap[a]).slice(0,10);
@@ -2824,11 +2826,11 @@ function openClientUniversalModal(clientKey, mode) {
             const catPct=total>0?((vol/total)*100).toFixed(1):"0.0";
             const tr=document.createElement('tr');
             tr.className='clickable-row';
+            // ALTERAÇÃO: abre o modal de categorias sobrepondo o universal
             tr.setAttribute('onclick', `openTicketsByCategory('${escapeStr(clientKey)}','${escapeStr(cat)}')`);
             tr.innerHTML=`<td style="font-family:'JetBrains Mono'; font-weight:600;">${vol}</td><td>${cat}</td><td style="font-family:'JetBrains Mono'; color:var(--blue-primary);">${catPct}%</td>`;
             tbodyCats.appendChild(tr);
         });
-        // Removido o bloco de chamados avaliados
     } else {
         document.getElementById('modal-client-teams-section').style.display='none';
         document.getElementById('modal-financial-section').style.display='block';
@@ -2836,7 +2838,6 @@ function openClientUniversalModal(clientKey, mode) {
         document.getElementById('modal-table-title').style.display='none';
         document.getElementById('modal-client-requester-section').style.display='none';
         document.getElementById('modal-client-weekday-chart-container').style.display='none';
-        // REMOVIDO: modal-client-evaluated-section
         const iaBox=document.getElementById('modal-client-ia-strategic-box'); iaBox.style.display='block';
         const revenue=Math.round(Math.max(3500,total*160)); const estimatedHours=total*0.85; const operationalCost=estimatedHours*130;
         iaBox.innerHTML=`<h3 style="color:var(--blue-primary);">🧠 RELATÓRIO ESTRATÉGICO</h3><div class="ai-topic"><div class="ai-topic-title">Sumário</div><div class="ai-topic-desc">Contrato com volume estável. SLA: ${sla}%.</div></div><div class="ai-topic"><div class="ai-topic-title">Rentabilidade</div><div class="ai-topic-desc">Margem bruta com faturamento simulado de R$ ${revenue.toLocaleString('pt-BR')}.</div></div><div class="ai-topic"><div class="ai-topic-title">Custo Operacional</div><div class="ai-topic-desc">Estimado em R$ ${operationalCost.toLocaleString('pt-BR')} para ${estimatedHours.toFixed(1)} horas.</div></div>`;
@@ -2849,7 +2850,7 @@ function openClientUniversalModal(clientKey, mode) {
     document.getElementById('modal-client-universal').style.display='block'; document.body.style.overflow='hidden';
 }
 
-// ALTERAÇÃO: função para abrir chamados por categoria (item 1)
+// ALTERAÇÃO: função para abrir chamados por categoria (sobrepõe o universal)
 function openTicketsByCategory(clientKey, category) {
     const tickets = globalData.filter(d => d.entidade === clientKey && d.categoria === category);
     if (tickets.length === 0) {
@@ -2877,7 +2878,6 @@ function openTicketsByCategory(clientKey, category) {
     document.body.style.overflow = 'hidden';
 }
 
-// ALTERAÇÃO: função para abrir chamados por cliente com tempo (item 6)
 function openClientTicketsWithTime(clientKey) {
     const tickets = globalData.filter(d => d.entidade === clientKey);
     if (tickets.length === 0) {
@@ -2983,8 +2983,15 @@ function openGlobalDrilldown(type) {
         }
         case 'clientes': {
             const clients=[...new Set(currentFiltered.map(d=>d.entidade))];
-            const clientData=clients.map(c=>{ const rows=currentFiltered.filter(d=>d.entidade===c); const horasPorChamado={}; rows.forEach(d=>{ if(!horasPorChamado[d.id]) horasPorChamado[d.id]=d.duracao||0; }); const horas=Object.values(horasPorChamado).reduce((a,b)=>a+b,0); return {id:c,entidade:c,total:rows.length,horas:horas.toFixed(1)}; }).sort((a,b)=>b.total-a.total);
-            openTicketList('🏢 Clientes Ativos', clientData, ['entidade','total','horas'], true); break;
+            const clientData=clients.map(c=>{
+                const rows=currentFiltered.filter(d=>d.entidade===c);
+                const horasPorChamado={}; rows.forEach(d=>{ if(!horasPorChamado[d.id]) horasPorChamado[d.id]=d.duracao||0; });
+                const horas=Object.values(horasPorChamado).reduce((a,b)=>a+b,0);
+                return {id:c, entidade:c, total:rows.length, horas:horas.toFixed(1)};
+            }).sort((a,b)=>b.total-a.total);
+            // ALTERAÇÃO: Agora redireciona para a Visão Universal do Cliente
+            openTicketList('🏢 Clientes Ativos', clientData, ['entidade','total','horas'], true, (row) => `openClientUniversalModal('${escapeStr(row.id)}', 'cliente')`);
+            break;
         }
         case 'tickets': { const unique=[]; const seen=new Set(); currentFiltered.forEach(d=>{ if(!seen.has(d.id)){seen.add(d.id); unique.push(d);} }); openTicketList('📌 Chamados Únicos', unique, ['id','entidade','titulo','dataAbertura','sla'], true); break; }
         case 'acoes': { openTicketList('📌 Chamados Totais', currentFiltered, ['id','entidade','titulo','dataAbertura','sla'], true); break; }
@@ -2994,15 +3001,23 @@ function openGlobalDrilldown(type) {
         case 'csat': { const avaliados=currentFiltered.filter(d=>d.csat!==null); openTicketList('⭐ Chamados Avaliados (CSAT)', avaliados, ['id','entidade','titulo','dataAbertura','csat','sla'], true); break; }
         case 'tecnicos': {
             const techs=[...new Set(currentFiltered.filter(d=>d.tecnico!=='').map(d=>d.tecnico))];
-            const techData=techs.map(t=>{ const rows=currentFiltered.filter(d=>d.tecnico===t); const horasPorChamado={}; rows.forEach(d=>{ if(!horasPorChamado[d.id]) horasPorChamado[d.id]=d.duracao||0; }); const horas=Object.values(horasPorChamado).reduce((a,b)=>a+b,0); const dentro=rows.filter(d=>d.withinSLA===true).length; const total=rows.length; const pct=total>0?(dentro/total*100).toFixed(1):"0.0"; return {id:t,tecnico:t,total:total,sla:pct+'%',horas:horas.toFixed(1)}; }).sort((a,b)=>b.total-a.total);
-            openTicketList('👨‍💻 Técnicos', techData, ['tecnico','total','sla','horas'], false);
+            const techData=techs.map(t=>{
+                const rows=currentFiltered.filter(d=>d.tecnico===t);
+                const horasPorChamado={}; rows.forEach(d=>{ if(!horasPorChamado[d.id]) horasPorChamado[d.id]=d.duracao||0; });
+                const horas=Object.values(horasPorChamado).reduce((a,b)=>a+b,0);
+                const dentro=rows.filter(d=>d.withinSLA===true).length;
+                const total=rows.length;
+                const pct=total>0?(dentro/total*100).toFixed(1):"0.0";
+                return {id:t, tecnico:t, total:total, sla:pct+'%', horas:horas.toFixed(1)};
+            }).sort((a,b)=>b.total-a.total);
+            // ALTERAÇÃO: Agora redireciona para o detalhe do técnico
+            openTicketList('👨‍💻 Técnicos', techData, ['tecnico','total','sla','horas'], true, (row) => `openTechnicianDetail('${escapeStr(row.id)}')`);
             break;
         }
         case 'tipo': { const tipoCounts={}; currentFiltered.forEach(d=>{ const t=d.tipo||'Outros'; tipoCounts[t]=(tipoCounts[t]||0)+1; }); const tipoData=Object.keys(tipoCounts).map(t=>({label:t,value:tipoCounts[t]})); openTicketList('📊 Distribuição de Tipo', tipoData, ['label','value'], false); break; }
         case 'horas': {
             const horasMap={}; currentFiltered.forEach(d=>{ if(!horasMap[d.entidade]) horasMap[d.entidade]=0; if(!horasMap[d.entidade+'_'+d.id]){ horasMap[d.entidade+'_'+d.id]=d.duracao||0; horasMap[d.entidade]+=d.duracao||0; } });
             const horasData=Object.keys(horasMap).filter(k=>!k.includes('_')).map(c=>({id:c,entidade:c,horas:horasMap[c].toFixed(1)})).sort((a,b)=>parseFloat(b.horas)-parseFloat(a.horas));
-            // ALTERAÇÃO: agora os itens são clicáveis e abrem a lista de chamados com tempo
             const modal=document.getElementById('modal-ticket-list');
             document.getElementById('ticket-list-title').innerText='⏱️ Horas Trabalhadas por Cliente';
             const thead=document.getElementById('ticket-list-thead');
@@ -3091,7 +3106,20 @@ function getPeriodLabel() {
     const from=document.getElementById('filter-from').value; const to=document.getElementById('filter-to').value;
     if(from && to) return `Período: ${from} até ${to}`; if(from) return `Período: a partir de ${from}`; if(to) return `Período: até ${to}`; return 'Período: Todo o histórico';
 }
-function addPeriodHeaderToExport(container){ const old=container.querySelector('.export-period-header'); if(old) old.remove(); const header=document.createElement('div'); header.className='export-period-header'; header.innerHTML=`<span class="period-label">📅 ${getPeriodLabel()}</span>`; container.prepend(header); header.style.display='block'; return header; }
+// ALTERAÇÃO: adiciona a logo na barra de período (JPG/PDF)
+function addPeriodHeaderToExport(container) {
+    const old=container.querySelector('.export-period-header');
+    if(old) old.remove();
+    const header=document.createElement('div');
+    header.className='export-period-header';
+    header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; width:100%;';
+    header.innerHTML = `
+        <span class="period-label">📅 ${getPeriodLabel()}</span>
+        <img src="https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/75e05c3bb826c5efa8b4b70514f3e3f94e13200b/logo_inovit.png" style="height:30px; width:auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));">
+    `;
+    container.prepend(header);
+    return header;
+}
 function exportPanelToJPG(panelId, filenameLabel) {
     const el=document.getElementById(panelId); if(!el) return; showLoadingOverlay('GERANDO JPG...');
     const header=addPeriodHeaderToExport(el); const ignored=el.querySelectorAll('[data-html2canvas-ignore="true"]'); ignored.forEach(item=>item.removeAttribute('data-html2canvas-ignore'));
