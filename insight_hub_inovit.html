@@ -2852,9 +2852,10 @@ function openClientUniversalModal(clientKey, mode) {
 
 // ALTERAÇÃO: função para abrir chamados por categoria (sobrepõe o universal)
 function openTicketsByCategory(clientKey, category) {
-    const tickets = globalData.filter(d => d.entidade === clientKey && d.categoria === category);
+    // Usa currentFiltered para respeitar o período filtrado
+    const tickets = currentFiltered.filter(d => d.entidade === clientKey && d.categoria === category);
     if (tickets.length === 0) {
-        alert('Nenhum chamado encontrado para esta categoria.');
+        alert('Nenhum chamado encontrado para esta categoria no período filtrado.');
         return;
     }
     const modal = document.getElementById('modal-category-tickets');
