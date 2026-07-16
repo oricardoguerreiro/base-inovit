@@ -2725,6 +2725,7 @@ function renderTecnicosDashboard() {
     });
 }
 
+// ===== PRODUTIVIDADE =====
 function renderProdutividadeDashboard() {
     const fromEl=document.getElementById('filter-from');
     const toEl=document.getElementById('filter-to');
@@ -2777,6 +2778,7 @@ function renderProdutividadeDashboard() {
     if (sortedTechQtd.length===0) listTechQtd.innerHTML='<li style="color:var(--text-muted); text-align:center; padding:12px;">Nenhum dado</li>';
 }
 
+// ===== BACKLOG (REVISADO) =====
 function renderBacklogDashboard() {
     const summaryGrid=document.getElementById('grid-backlog-summary-cards'); summaryGrid.innerHTML='';
     const backlogRows=currentFiltered.filter(d=>d.isBacklog);
@@ -2791,6 +2793,7 @@ function renderBacklogDashboard() {
     filterBacklogSummaryCards();
 }
 
+// ===== TABELA RELAÇÃO INTEGRAL =====
 function renderAllPeriodTickets() {
     const tbody=document.getElementById('all-tickets-tbody'); if(!tbody) return;
     const total=allTicketsData.length; const totalPages=Math.ceil(total/allTicketsPageSize);
@@ -2983,26 +2986,133 @@ function recalculateContractViability() {
     if(grossMargin>=35){ marginElement.className="sim-res-val"; verdictBlock.innerHTML=`<div class="verdict-box success">Contrato com saúde financeira estável.</div>`; } else { marginElement.className="sim-res-val"; verdictBlock.innerHTML=`<div class="verdict-box danger">Esforço operacional elevado frente ao faturamento.</div>`; }
 }
 
+// ================================================================
+// FUNÇÃO MODIFICADA: openTechnicianDetail com painel de chamados
+// ================================================================
 function openTechnicianDetail(techKey) {
-    const rows=currentFiltered.filter(d=>d.tecnico===techKey);
-    if(rows.length===0){ alert('Técnico não encontrado no período filtrado.'); return; }
-    const modal=document.getElementById('modal-technician-detail');
-    document.getElementById('technician-detail-title').innerText=`Técnico: ${techKey} (${rows.length} chamados)`;
-    const horasPorChamadoTech={}; rows.forEach(d=>{ if(!horasPorChamadoTech[d.id]) horasPorChamadoTech[d.id]=d.duracao||0; });
-    const totalHoras=Object.values(horasPorChamadoTech).reduce((a,b)=>a+b,0);
-    const dentroSLA=rows.filter(d=>d.withinSLA===true).length;
-    const nonBacklog=rows.filter(d=>!d.isBacklog);
-    const slaPct=nonBacklog.length>0?((dentroSLA/nonBacklog.length)*100).toFixed(1):"100.0";
-    const backlog=rows.filter(d=>d.isBacklog).length;
-    const csatArr=rows.filter(d=>d.csat!==null).map(d=>d.csat);
-    const csatAvg=csatArr.length>0?(csatArr.reduce((a,b)=>a+b,0)/csatArr.length).toFixed(2):'N/A';
-    const clients=[...new Set(rows.map(d=>d.entidade))];
-    const categorias={}; rows.forEach(d=>categorias[d.categoria]=(categorias[d.categoria]||0)+1);
-    const topCats=Object.keys(categorias).sort((a,b)=>categorias[b]-categorias[a]).slice(0,5);
-    const content=document.getElementById('technician-detail-content');
-    content.innerHTML=`<div class="detail-grid"><div class="detail-item"><span class="label">Total de Chamados</span><span class="value">${rows.length}</span></div><div class="detail-item"><span class="label">SLA</span><span class="value" style="color:${slaPct>=85?'var(--success)':'var(--warn)'}">${slaPct}%</span></div><div class="detail-item"><span class="label">Dentro do SLA</span><span class="value">${dentroSLA}</span></div><div class="detail-item"><span class="label">Fora do SLA</span><span class="value">${nonBacklog.length-dentroSLA}</span></div><div class="detail-item"><span class="label">Backlog</span><span class="value">${backlog}</span></div><div class="detail-item"><span class="label">Horas Trabalhadas</span><span class="value">${totalHoras.toFixed(1)}h</span></div><div class="detail-item"><span class="label">Média CSAT</span><span class="value" style="color:var(--purple); cursor:pointer;" onclick="closeModal('modal-technician-detail'); openTechEvaluatedTickets('${escapeStr(techKey)}')">⭐ ${csatAvg}</span></div><div class="detail-item"><span class="label">Clientes Atendidos</span><span class="value">${clients.length}</span></div><div class="detail-item"><span class="label">Top Categorias</span><span class="value">${topCats.map(c=>`${c} (${categorias[c]})`).join(', ')}</span></div></div><div style="margin-top:16px;"><h4 style="font-weight:600; margin-bottom:8px;">Clientes atendidos:</h4><div style="display:flex; flex-wrap:wrap; gap:8px;">${clients.map(c=>`<span style="background:rgba(227, 240, 255, 0.3); backdrop-filter:blur(4px); padding:4px 16px; border-radius:40px; cursor:pointer; border:1px solid var(--glass-border);" onclick="openClientDetail('${escapeStr(c)}')">🏢 ${cleanEntityName(c)}</span>`).join('')}${clients.length===0?'<span style="color:var(--text-muted);">Nenhum cliente registrado</span>':''}</div></div><div style="margin-top:16px;"><button class="btn-secondary" onclick="closeModal('modal-technician-detail'); document.getElementById('panel-tecnicos').scrollIntoView();">Voltar para Técnicos</button></div>`;
-    modal.style.display='block'; document.body.style.overflow='hidden';
+    const rows = currentFiltered.filter(d => d.tecnico === techKey);
+    if (rows.length === 0) {
+        alert('Técnico não encontrado no período filtrado.');
+        return;
+    }
+    const modal = document.getElementById('modal-technician-detail');
+    document.getElementById('technician-detail-title').innerText = `Técnico: ${techKey} (${rows.length} chamados)`;
+
+    // Cálculo das métricas
+    const horasPorChamadoTech = {};
+    rows.forEach(d => { if (!horasPorChamadoTech[d.id]) horasPorChamadoTech[d.id] = d.duracao || 0; });
+    const totalHoras = Object.values(horasPorChamadoTech).reduce((a, b) => a + b, 0);
+    const dentroSLA = rows.filter(d => d.withinSLA === true).length;
+    const nonBacklog = rows.filter(d => !d.isBacklog);
+    const slaPct = nonBacklog.length > 0 ? ((dentroSLA / nonBacklog.length) * 100).toFixed(1) : "100.0";
+    const backlog = rows.filter(d => d.isBacklog).length;
+    const csatArr = rows.filter(d => d.csat !== null).map(d => d.csat);
+    const csatAvg = csatArr.length > 0 ? (csatArr.reduce((a, b) => a + b, 0) / csatArr.length).toFixed(2) : 'N/A';
+    const clients = [...new Set(rows.map(d => d.entidade))];
+    const categorias = {};
+    rows.forEach(d => categorias[d.categoria] = (categorias[d.categoria] || 0) + 1);
+    const topCats = Object.keys(categorias).sort((a, b) => categorias[b] - categorias[a]).slice(0, 5);
+
+    // Constrói o conteúdo do modal
+    const content = document.getElementById('technician-detail-content');
+    content.innerHTML = `
+        <div class="detail-grid">
+            <div class="detail-item"><span class="label">Total de Chamados</span><span class="value">${rows.length}</span></div>
+            <div class="detail-item"><span class="label">SLA</span><span class="value" style="color:${slaPct>=85?'var(--success)':'var(--warn)'}">${slaPct}%</span></div>
+            <div class="detail-item"><span class="label">Dentro do SLA</span><span class="value">${dentroSLA}</span></div>
+            <div class="detail-item"><span class="label">Fora do SLA</span><span class="value">${nonBacklog.length - dentroSLA}</span></div>
+            <div class="detail-item"><span class="label">Backlog</span><span class="value">${backlog}</span></div>
+            <div class="detail-item"><span class="label">Horas Trabalhadas</span><span class="value">${totalHoras.toFixed(1)}h</span></div>
+            <div class="detail-item"><span class="label">Média CSAT</span><span class="value" style="color:var(--purple); cursor:pointer;" onclick="closeModal('modal-technician-detail'); openTechEvaluatedTickets('${escapeStr(techKey)}')">⭐ ${csatAvg}</span></div>
+            <div class="detail-item"><span class="label">Clientes Atendidos</span><span class="value">${clients.length}</span></div>
+            <div class="detail-item"><span class="label">Top Categorias</span><span class="value">${topCats.map(c => `${c} (${categorias[c]})`).join(', ')}</span></div>
+        </div>
+
+        <!-- Clientes Atendidos (cards clicáveis) -->
+        <div style="margin-top:16px;">
+            <h4 style="font-weight:600; margin-bottom:8px;">Clientes atendidos:</h4>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                ${clients.map(c => `<span style="background:rgba(227, 240, 255, 0.3); backdrop-filter:blur(4px); padding:4px 16px; border-radius:40px; cursor:pointer; border:1px solid var(--glass-border);" onclick="openClientDetail('${escapeStr(c)}')">🏢 ${cleanEntityName(c)}</span>`).join('')}
+                ${clients.length === 0 ? '<span style="color:var(--text-muted);">Nenhum cliente registrado</span>' : ''}
+            </div>
+        </div>
+
+        <!-- NOVO PAINEL: Chamados Atendidos -->
+        <div style="margin-top:24px;">
+            <h4 style="font-weight:600; margin-bottom:12px;">📋 Chamados Atendidos (${rows.length})</h4>
+            <div class="modern-table-container" id="tech-tickets-table-container">
+                <table class="modern-table" id="tech-tickets-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Título</th>
+                            <th>Data da Solução</th>
+                            <th>Nota</th>
+                            <th>Requerente</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tech-tickets-tbody"></tbody>
+                </table>
+            </div>
+            <div class="pagination-container" id="tech-tickets-pagination">
+                <span class="info" id="tech-tickets-info">Mostrando 0 de 0</span>
+                <div class="pagination-buttons" id="tech-tickets-buttons"></div>
+            </div>
+        </div>
+
+        <div style="margin-top:16px;">
+            <button class="btn-secondary" onclick="closeModal('modal-technician-detail'); document.getElementById('panel-tecnicos').scrollIntoView();">Voltar para Técnicos</button>
+        </div>
+    `;
+
+    // --- Configura a tabela de chamados com paginação ---
+    const tbody = document.getElementById('tech-tickets-tbody');
+    const info = document.getElementById('tech-tickets-info');
+    const buttons = document.getElementById('tech-tickets-buttons');
+    const pageSize = 50;
+    let currentPage = 0;
+    const totalPages = Math.ceil(rows.length / pageSize);
+
+    function renderTechTicketsPage(page) {
+        currentPage = page;
+        const start = page * pageSize;
+        const end = Math.min(start + pageSize, rows.length);
+        const pageData = rows.slice(start, end);
+        tbody.innerHTML = '';
+        if (pageData.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:20px; color:var(--text-muted);">Nenhum chamado encontrado.</td></tr>`;
+        } else {
+            pageData.forEach(d => {
+                const tr = document.createElement('tr');
+                tr.className = 'clickable-row';
+                tr.setAttribute('onclick', `openTicketDetail('${escapeStr(d.id)}')`);
+                const dataSolucao = d.dataSolucao ? `${d.dataSolucao.dia}/${d.dataSolucao.mes}/${d.dataSolucao.ano}` : 'ABERTO';
+                const nota = d.csat !== null ? `⭐ ${d.csat}` : '—';
+                tr.innerHTML = `
+                    <td style="font-family:'JetBrains Mono';">${d.id}</td>
+                    <td>${cleanEntityName(d.entidade)}</td>
+                    <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${d.titulo}">${d.titulo}</td>
+                    <td>${dataSolucao}</td>
+                    <td style="font-weight:600; color:${d.csat !== null ? 'var(--success)' : 'var(--text-muted)'};">${nota}</td>
+                    <td>${d.requerente}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+        info.innerText = `Mostrando ${rows.length > 0 ? start + 1 : 0}–${end} de ${rows.length}`;
+        buttons.innerHTML = `
+            <button onclick="renderTechTicketsPage(${currentPage - 1})" ${currentPage === 0 ? 'disabled' : ''}>◀</button>
+            <span style="padding:4px 12px; font-weight:600;">${totalPages > 0 ? currentPage + 1 : 0} / ${totalPages || 1}</span>
+            <button onclick="renderTechTicketsPage(${currentPage + 1})" ${currentPage >= totalPages - 1 ? 'disabled' : ''}>▶</button>
+        `;
+    }
+
+    renderTechTicketsPage(0);
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
 }
+// ================================================================
 
 function openTechEvaluatedTickets(techKey) {
     const evaluated=currentFiltered.filter(d=>d.tecnico===techKey && d.csat!==null);
@@ -3176,7 +3286,6 @@ function addPeriodHeaderToExport(container) {
     return header;
 }
 
-// FUNÇÃO CORRIGIDA PARA GERAR PDF COM TODOS OS DADOS
 function generateFullDataPDF(title, data, columns, filename) {
     if (!data || data.length === 0) {
         alert('Não há dados para exportar.');
@@ -3197,7 +3306,6 @@ function generateFullDataPDF(title, data, columns, filename) {
     y += 6;
     doc.setFontSize(8);
 
-    // Definir larguras fixas para cada coluna (em mm)
     const colWidths = columns.map(col => Math.max(col.length * 2.5, 20));
     const totalWidth = colWidths.reduce((a,b) => a+b, 0);
     const maxWidth = pageWidth - 2*margin;
@@ -3208,10 +3316,8 @@ function generateFullDataPDF(title, data, columns, filename) {
         }
     }
 
-    // Função para desenhar uma linha (cabeçalho ou dados)
     function drawRow(rowData, isHeader = false) {
         let x = margin;
-        // Calcular altura máxima da linha (considerando quebra de texto)
         let maxLines = 1;
         const linesPerCol = rowData.map((text, idx) => {
             const lines = doc.splitTextToSize(text, colWidths[idx] - 1);
@@ -3220,16 +3326,13 @@ function generateFullDataPDF(title, data, columns, filename) {
         maxLines = Math.max(...linesPerCol, 1);
         const rowHeight = maxLines * (isHeader ? 4 : 3.5) + 2;
 
-        // Verificar se precisa de nova página
         if (y + rowHeight > doc.internal.pageSize.getHeight() - 10) {
             doc.addPage();
             y = 20;
-            // Reimprimir cabeçalho na nova página
             const headerRow = columns.map(col => col.replace(/_/g, ' ').toUpperCase());
             drawRow(headerRow, true);
         }
 
-        // Desenhar cada coluna
         for (let i = 0; i < rowData.length; i++) {
             const text = String(rowData[i] || '');
             const lines = doc.splitTextToSize(text, colWidths[i] - 1);
@@ -3239,22 +3342,18 @@ function generateFullDataPDF(title, data, columns, filename) {
             x += colWidths[i];
         }
         y += rowHeight;
-        // Linha separadora após cabeçalho
         if (isHeader) {
             doc.line(margin, y-1, pageWidth-margin, y-1);
         }
     }
 
-    // Cabeçalho
     const headerRow = columns.map(col => col.replace(/_/g, ' ').toUpperCase());
     drawRow(headerRow, true);
 
-    // Dados
     for (const row of data) {
         const rowValues = columns.map(col => {
             let val = row[col];
             if (val === undefined || val === null) val = '';
-            // Formatação especial para campos
             if (col === 'dataAbertura' && row.dataAbertura && typeof row.dataAbertura === 'object') {
                 val = `${row.dataAbertura.dia}/${row.dataAbertura.mes}/${row.dataAbertura.ano}`;
             } else if (col === 'dataSolucao' && row.dataSolucao && typeof row.dataSolucao === 'object') {
@@ -3276,7 +3375,6 @@ function generateFullDataPDF(title, data, columns, filename) {
         drawRow(rowValues, false);
     }
 
-    // Rodapé com total
     doc.setFontSize(8);
     doc.text(`Total de registros: ${data.length}`, margin, doc.internal.pageSize.getHeight() - 10);
 
