@@ -2657,7 +2657,6 @@ function renderPorChamadoDashboard() {
     });
 }
 
-// ALTERAÇÃO: função que abre chamados por categoria USANDO modal-category-tickets (com paginação)
 function openTicketsByCategoryWithFilter(category, client) {
     let tickets = currentFiltered.filter(d => d.categoria === category);
     if (client && client !== "Todos") {
@@ -2667,7 +2666,6 @@ function openTicketsByCategoryWithFilter(category, client) {
         alert('Nenhum chamado encontrado para esta categoria no período filtrado.');
         return;
     }
-    // Armazena os dados completos para o PDF
     window._currentTicketListData = tickets;
     window._currentTicketListTitle = `Chamados da categoria: ${category}`;
 
@@ -2911,7 +2909,6 @@ function openClientUniversalModal(clientKey, mode) {
             const catPct=total>0?((vol/total)*100).toFixed(1):"0.0";
             const tr=document.createElement('tr');
             tr.className='clickable-row';
-            // ALTERAÇÃO: chama a função que usa modal-category-tickets
             tr.setAttribute('onclick', `openTicketsByCategoryWithFilter('${escapeStr(cat)}', '${escapeStr(clientKey)}')`);
             tr.innerHTML=`<td style="font-family:'JetBrains Mono'; font-weight:600;">${vol}</td><td>${cat}</td><td style="font-family:'JetBrains Mono'; color:var(--blue-primary);">${catPct}%</td>`;
             tbodyCats.appendChild(tr);
@@ -3158,7 +3155,7 @@ function removeUser(username) {
 }
 
 // ================================================================
-// 7. EXPORTAÇÕES
+// 7. EXPORTAÇÕES (CORRIGIDAS)
 // ================================================================
 function getPeriodLabel() {
     const from=document.getElementById('filter-from').value; const to=document.getElementById('filter-to').value;
@@ -3179,6 +3176,7 @@ function addPeriodHeaderToExport(container) {
     return header;
 }
 
+// FUNÇÃO CORRIGIDA PARA GERAR PDF COM TODOS OS DADOS
 function generateFullDataPDF(title, data, columns, filename) {
     if (!data || data.length === 0) {
         alert('Não há dados para exportar.');
@@ -3199,6 +3197,7 @@ function generateFullDataPDF(title, data, columns, filename) {
     y += 6;
     doc.setFontSize(8);
 
+    // Definir larguras fixas para cada coluna (em mm)
     const colWidths = columns.map(col => Math.max(col.length * 2.5, 20));
     const totalWidth = colWidths.reduce((a,b) => a+b, 0);
     const maxWidth = pageWidth - 2*margin;
@@ -3209,34 +3208,56 @@ function generateFullDataPDF(title, data, columns, filename) {
         }
     }
 
+    // Função para desenhar uma linha (cabeçalho ou dados)
     function drawRow(rowData, isHeader = false) {
         let x = margin;
-        const rowHeight = isHeader ? 6 : 5;
+        // Calcular altura máxima da linha (considerando quebra de texto)
+        let maxLines = 1;
+        const linesPerCol = rowData.map((text, idx) => {
+            const lines = doc.splitTextToSize(text, colWidths[idx] - 1);
+            return lines.length;
+        });
+        maxLines = Math.max(...linesPerCol, 1);
+        const rowHeight = maxLines * (isHeader ? 4 : 3.5) + 2;
+
+        // Verificar se precisa de nova página
+        if (y + rowHeight > doc.internal.pageSize.getHeight() - 10) {
+            doc.addPage();
+            y = 20;
+            // Reimprimir cabeçalho na nova página
+            const headerRow = columns.map(col => col.replace(/_/g, ' ').toUpperCase());
+            drawRow(headerRow, true);
+        }
+
+        // Desenhar cada coluna
         for (let i = 0; i < rowData.length; i++) {
-            doc.setFontSize(isHeader ? 9 : 8);
-            doc.setFont(undefined, isHeader ? 'bold' : 'normal');
             const text = String(rowData[i] || '');
             const lines = doc.splitTextToSize(text, colWidths[i] - 1);
+            doc.setFontSize(isHeader ? 9 : 8);
+            doc.setFont(undefined, isHeader ? 'bold' : 'normal');
             doc.text(lines, x, y + (isHeader ? 3 : 2));
             x += colWidths[i];
         }
         y += rowHeight;
+        // Linha separadora após cabeçalho
         if (isHeader) {
             doc.line(margin, y-1, pageWidth-margin, y-1);
         }
     }
 
+    // Cabeçalho
     const headerRow = columns.map(col => col.replace(/_/g, ' ').toUpperCase());
     drawRow(headerRow, true);
 
-    let rowCount = 0;
+    // Dados
     for (const row of data) {
         const rowValues = columns.map(col => {
             let val = row[col];
             if (val === undefined || val === null) val = '';
-            if (col === 'dataAbertura' && row.dataAbertura) {
+            // Formatação especial para campos
+            if (col === 'dataAbertura' && row.dataAbertura && typeof row.dataAbertura === 'object') {
                 val = `${row.dataAbertura.dia}/${row.dataAbertura.mes}/${row.dataAbertura.ano}`;
-            } else if (col === 'dataSolucao' && row.dataSolucao) {
+            } else if (col === 'dataSolucao' && row.dataSolucao && typeof row.dataSolucao === 'object') {
                 val = `${row.dataSolucao.dia}/${row.dataSolucao.mes}/${row.dataSolucao.ano}`;
             } else if (col === 'entidade') {
                 val = cleanEntityName(val);
@@ -3247,18 +3268,15 @@ function generateFullDataPDF(title, data, columns, filename) {
             } else if (col === 'sla') {
                 if (row.isBacklog) val = 'BACKLOG';
                 else val = row.withinSLA === true ? 'DENTRO' : 'FORA';
+            } else if (col === 'titulo' && val.length > 30) {
+                val = val.substring(0, 27) + '...';
             }
             return val;
         });
         drawRow(rowValues, false);
-        rowCount++;
-        if (y > doc.internal.pageSize.getHeight() - 10) {
-            doc.addPage();
-            y = 20;
-            drawRow(headerRow, true);
-        }
     }
 
+    // Rodapé com total
     doc.setFontSize(8);
     doc.text(`Total de registros: ${data.length}`, margin, doc.internal.pageSize.getHeight() - 10);
 
