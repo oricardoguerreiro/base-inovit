@@ -1141,11 +1141,6 @@
             background-clip: text;
         }
 
-        /* ALTERAÇÃO: z-index maior para o modal de categorias sobrepor o universal */
-        #modal-category-tickets {
-            z-index: 600;
-        }
-
         /* ===== LOGOUT CONFIRM ===== */
         #logout-confirm-modal {
             display: none;
@@ -2613,10 +2608,11 @@ function renderClienteDashboard() {
 }
 
 function renderPorChamadoDashboard() {
-    const filterClient=document.getElementById('select-chamado-client').value;
-    let localSet=currentFiltered;
-    if(filterClient && filterClient!=="Todos") localSet=currentFiltered.filter(d=>d.entidade===filterClient);
-    const tbody=document.querySelector('#table-top-categories tbody'); tbody.innerHTML='';
+    const filterClient = document.getElementById('select-chamado-client').value;
+    let localSet = currentFiltered;
+    if (filterClient && filterClient !== "Todos") localSet = currentFiltered.filter(d => d.entidade === filterClient);
+    const tbody = document.querySelector('#table-top-categories tbody');
+    tbody.innerHTML = '';
     if(filterClient && filterClient!=="Todos") allTicketsData=currentFiltered.filter(d=>d.entidade===filterClient);
     else allTicketsData=currentFiltered.slice();
     allTicketsCurrentPage=0; renderAllPeriodTickets();
@@ -2624,10 +2620,87 @@ function renderPorChamadoDashboard() {
     localSet.forEach(d=>{ if(d.dataAbertura && d.dataAbertura.dateObj){ const dayIndex=d.dataAbertura.dateObj.getDay(); weekdayCounts[dayIndex]++; } });
     const maxDayVol=Math.max(...weekdayCounts)||1;
     for(let i=0;i<7;i++){ const bar=document.getElementById(`bar-day-${i}`); const valSpan=document.getElementById(`bar-val-${i}`); if(bar){ const pctHeight=(weekdayCounts[i]/maxDayVol)*100; bar.style.height=`${Math.max(pctHeight*0.8,2)}%`; bar.style.backgroundColor=weekdayCounts[i]>0?'var(--blue-primary)':'#d4e0e8'; if(valSpan){ valSpan.textContent=weekdayCounts[i]>0?weekdayCounts[i]:'0'; valSpan.style.color=weekdayCounts[i]>0?'var(--text-primary)':'var(--text-muted)'; } } }
-    const catMap={}; localSet.forEach(d=>catMap[d.categoria]=(catMap[d.categoria]||0)+1);
-    const totalAcoes=localSet.length;
-    const sortedCats=Object.keys(catMap).sort((a,b)=>catMap[b]-catMap[a]).slice(0,20);
-    sortedCats.forEach((cat,index)=>{ const vol=catMap[cat]; const pct=totalAcoes>0?((vol/totalAcoes)*100).toFixed(1):"0.0"; let grau="Baixo", badgeClass="success"; if(vol>150){ grau="Crítico"; badgeClass="danger"; } else if(vol>50){ grau="Moderado"; badgeClass="warn"; } const tr=document.createElement('tr'); tr.innerHTML=`<td style="font-family:'JetBrains Mono'; font-weight:600;">#${index+1}</td><td>${cat}</td><td style="font-family:'JetBrains Mono';">${vol}</td><td>${pct}%</td><td><span class="status-badge ${badgeClass}">${grau}</span></td>`; tbody.appendChild(tr); });
+    const catMap = {};
+    localSet.forEach(d => catMap[d.categoria] = (catMap[d.categoria] || 0) + 1);
+    const totalAcoes = localSet.length;
+    const sortedCats = Object.keys(catMap).sort((a, b) => catMap[b] - catMap[a]).slice(0, 20);
+    sortedCats.forEach((cat, index) => {
+        const vol = catMap[cat];
+        const pct = totalAcoes > 0 ? ((vol / totalAcoes) * 100).toFixed(1) : "0.0";
+        let grau = "Baixo", badgeClass = "success";
+        if (vol > 150) { grau = "Crítico"; badgeClass = "danger"; } else if (vol > 50) { grau = "Moderado"; badgeClass = "warn"; }
+        const tr = document.createElement('tr');
+        tr.className = 'clickable-row';
+        tr.setAttribute('onclick', `openTicketsByCategoryWithFilter('${escapeStr(cat)}', '${escapeStr(filterClient)}')`);
+        tr.innerHTML = `
+            <td style="font-family:'JetBrains Mono'; font-weight:600;">#${index+1}</td>
+            <td>${cat}</td>
+            <td style="font-family:'JetBrains Mono';">${vol}</td>
+            <td>${pct}%</td>
+            <td><span class="status-badge ${badgeClass}">${grau}</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// ALTERAÇÃO: função corrigida para abrir chamados por categoria (atualiza variáveis globais)
+function openTicketsByCategoryWithFilter(category, client) {
+    let tickets = currentFiltered.filter(d => d.categoria === category);
+    if (client && client !== "Todos") {
+        tickets = tickets.filter(d => d.entidade === client);
+    }
+    if (tickets.length === 0) {
+        alert('Nenhum chamado encontrado para esta categoria no período filtrado.');
+        return;
+    }
+    // Armazena os dados completos para o PDF
+    window._currentTicketListData = tickets;
+    window._currentTicketListTitle = `Chamados da categoria: ${category}`;
+
+    const modal = document.getElementById('modal-ticket-list');
+    document.getElementById('ticket-list-title').innerText = `Chamados da categoria: ${category} (${tickets.length})`;
+    const thead = document.getElementById('ticket-list-thead');
+    thead.innerHTML = '<th>ID</th><th>Cliente</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Técnico</th><th>Equipe</th><th>SLA</th>';
+    const tbody = document.getElementById('ticket-list-tbody');
+    const pageSize = 50;
+    let currentPage = 0;
+    const totalPages = Math.ceil(tickets.length / pageSize);
+    const renderPage = (page) => {
+        currentPage = page;
+        const start = page * pageSize;
+        const end = Math.min(start + pageSize, tickets.length);
+        const pageData = tickets.slice(start, end);
+        tbody.innerHTML = '';
+        pageData.forEach(d => {
+            const tr = document.createElement('tr');
+            tr.className = 'clickable-row';
+            tr.setAttribute('onclick', `openTicketDetail('${escapeStr(d.id)}')`);
+            let badgeClass = d.withinSLA === true ? 'success' : 'danger';
+            let badgeLabel = d.withinSLA === true ? 'DENTRO' : 'FORA';
+            if (d.isBacklog) { badgeClass = 'warn'; badgeLabel = 'BACKLOG'; }
+            tr.innerHTML = `
+                <td style="font-family:'JetBrains Mono';">${d.id}</td>
+                <td>${cleanEntityName(d.entidade)}</td>
+                <td style="max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${d.titulo}">${d.titulo}</td>
+                <td>${d.dataAbertura.dia}/${d.dataAbertura.mes}/${d.dataAbertura.ano}</td>
+                <td>${d.dataSolucao?`${d.dataSolucao.dia}/${d.dataSolucao.mes}/${d.dataSolucao.ano}`:'ABERTO'}</td>
+                <td>${d.tecnico}</td>
+                <td>${d.equipe}</td>
+                <td><span class="status-badge ${badgeClass}">${badgeLabel}</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+        document.getElementById('ticket-list-info').innerText = `Mostrando ${start+1}–${end} de ${tickets.length}`;
+        const btnContainer = document.getElementById('ticket-list-buttons');
+        btnContainer.innerHTML = `
+            <button onclick="renderPage(${currentPage-1})" ${currentPage===0?'disabled':''}>◀</button>
+            <span style="padding:4px 12px; font-weight:600;">${currentPage+1} / ${totalPages||1}</span>
+            <button onclick="renderPage(${currentPage+1})" ${currentPage>=totalPages-1?'disabled':''}>▶</button>
+        `;
+    };
+    renderPage(0);
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
 }
 
 function renderTecnicosDashboard() {
@@ -2731,7 +2804,13 @@ function allTicketsGoToPage(page){ const totalPages=Math.ceil(allTicketsData.len
 // ================================================================
 // 5. MODAIS E INTERAÇÕES (COMPLETO)
 // ================================================================
+// Variável global para armazenar os dados da lista atual do modal
+window._currentTicketListData = [];
+window._currentTicketListTitle = '';
+
 function openTicketList(title, dataSource, columns, clickable=true, rowClickCallback=null) {
+    window._currentTicketListTitle = title;
+    window._currentTicketListData = dataSource;
     const modal=document.getElementById('modal-ticket-list');
     document.getElementById('ticket-list-title').innerText=title;
     const thead=document.getElementById('ticket-list-thead');
@@ -2739,7 +2818,9 @@ function openTicketList(title, dataSource, columns, clickable=true, rowClickCall
     const pageSize=50; let currentPage=0; const totalPages=Math.ceil(dataSource.length/pageSize);
     function renderPage(page){ currentPage=page; const start=page*pageSize; const end=Math.min(start+pageSize,dataSource.length); const pageData=dataSource.slice(start,end); const tbody=document.getElementById('ticket-list-tbody'); tbody.innerHTML=''; if(pageData.length===0){ tbody.innerHTML=`<tr><td colspan="${columns.length}" class="text-center" style="padding:40px; color:var(--text-muted);">Nenhum registro encontrado.</td></tr>`; } else { pageData.forEach(row=>{ const tr=document.createElement('tr'); if(clickable && row.id){ tr.className='clickable-row'; let onclickAction = `openTicketDetail('${escapeStr(row.id)}')`; if (rowClickCallback) { onclickAction = rowClickCallback(row); } tr.setAttribute('onclick', onclickAction); } const cells=columns.map(col=>{ let val=row[col]!==undefined?row[col]:''; if(col==='sla'){ if(row.isBacklog) return '<span class="status-badge warn">BACKLOG</span>'; return row.withinSLA===true?'<span class="status-badge success">DENTRO</span>':'<span class="status-badge danger">FORA</span>'; } if(col==='dataAbertura' && row.dataAbertura) return `${row.dataAbertura.dia}/${row.dataAbertura.mes}/${row.dataAbertura.ano}`; if(col==='dataSolucao' && row.dataSolucao) return `${row.dataSolucao.dia}/${row.dataSolucao.mes}/${row.dataSolucao.ano}`; if(col==='entidade') return cleanEntityName(row.entidade); if(col==='csat') return row.csat!==null?`⭐ ${row.csat}`:'—'; if(col==='duracao') return (row.duracao||0).toFixed(1)+'h'; return val; }); tr.innerHTML=cells.map(c=>`<td>${c}</td>`).join(''); tbody.appendChild(tr); }); } document.getElementById('ticket-list-info').innerText=`Mostrando ${start+1}–${end} de ${dataSource.length}`; const btnContainer=document.getElementById('ticket-list-buttons'); btnContainer.innerHTML=`<button onclick="renderTicketPage(${currentPage-1})" ${currentPage===0?'disabled':''}>◀</button><span style="padding:4px 12px; font-weight:600;">${currentPage+1} / ${totalPages||1}</span><button onclick="renderTicketPage(${currentPage+1})" ${currentPage>=totalPages-1?'disabled':''}>▶</button>`; }
     window.renderTicketPage=function(page){ if(page<0 || page>=totalPages) return; renderPage(page); };
-    renderPage(0); modal.style.display='block'; document.body.style.overflow='hidden';
+    renderPage(0);
+    modal.style.display='block';
+    document.body.style.overflow='hidden';
 }
 
 function openTicketDetail(ticketId) {
@@ -2801,7 +2882,6 @@ function openClientUniversalModal(clientKey, mode) {
         document.getElementById('modal-table-title').innerText="Top 10 Categorias mais recorrentes";
         document.getElementById('modal-client-requester-section').style.display='block';
         document.getElementById('modal-client-weekday-chart-container').style.display='block';
-        // REMOVIDO: modal-client-evaluated-section
         const clientTechMap={}; clientRows.forEach(d=>{ if(d.tecnico) clientTechMap[d.tecnico]=(clientTechMap[d.tecnico]||0)+1; });
         if(Object.keys(clientTechMap).length>0){ Object.keys(clientTechMap).sort((a,b)=>clientTechMap[b]-clientTechMap[a]).forEach(techName=>{ const techCard=document.createElement('div'); techCard.style.background='rgba(227, 240, 255, 0.3)'; techCard.style.backdropFilter='blur(4px)'; techCard.style.border='1px solid var(--glass-border)'; techCard.style.borderRadius='var(--radius-sm)'; techCard.style.padding='10px 16px'; techCard.style.display='flex'; techCard.style.justifyContent='space-between'; techCard.innerHTML=`<span style="font-weight:600;">👨‍💻 ${techName}</span><span style="font-family:'JetBrains Mono'; font-weight:600; color:var(--blue-primary);">${clientTechMap[techName]} chamados</span>`; teamsContainer.appendChild(techCard); }); } else { teamsContainer.innerHTML='<div style="font-size:13px; color:var(--text-muted);">Nenhum técnico associado.</div>'; }
         const reqCountMap={}; clientRows.forEach(d=>reqCountMap[d.requerente]=(reqCountMap[d.requerente]||0)+1);
@@ -2826,8 +2906,8 @@ function openClientUniversalModal(clientKey, mode) {
             const catPct=total>0?((vol/total)*100).toFixed(1):"0.0";
             const tr=document.createElement('tr');
             tr.className='clickable-row';
-            // ALTERAÇÃO: abre o modal de categorias sobrepondo o universal
-            tr.setAttribute('onclick', `openTicketsByCategory('${escapeStr(clientKey)}','${escapeStr(cat)}')`);
+            // ALTERAÇÃO: usa a função que respeita o período (já usa currentFiltered)
+            tr.setAttribute('onclick', `openTicketsByCategoryWithFilter('${escapeStr(cat)}', '${escapeStr(clientKey)}')`);
             tr.innerHTML=`<td style="font-family:'JetBrains Mono'; font-weight:600;">${vol}</td><td>${cat}</td><td style="font-family:'JetBrains Mono'; color:var(--blue-primary);">${catPct}%</td>`;
             tbodyCats.appendChild(tr);
         });
@@ -2850,41 +2930,16 @@ function openClientUniversalModal(clientKey, mode) {
     document.getElementById('modal-client-universal').style.display='block'; document.body.style.overflow='hidden';
 }
 
-// ALTERAÇÃO: função para abrir chamados por categoria (sobrepõe o universal)
-function openTicketsByCategory(clientKey, category) {
-    // Usa currentFiltered para respeitar o período filtrado
-    const tickets = currentFiltered.filter(d => d.entidade === clientKey && d.categoria === category);
-    if (tickets.length === 0) {
-        alert('Nenhum chamado encontrado para esta categoria no período filtrado.');
-        return;
-    }
-    const modal = document.getElementById('modal-category-tickets');
-    document.getElementById('category-tickets-title').innerText = `Chamados da categoria: ${category} (${tickets.length})`;
-    const tbody = document.getElementById('category-tickets-tbody');
-    tbody.innerHTML = '';
-    tickets.forEach(d => {
-        const tr = document.createElement('tr');
-        tr.className = 'clickable-row';
-        tr.setAttribute('onclick', `openTicketDetail('${escapeStr(d.id)}')`);
-        tr.innerHTML = `
-            <td style="font-family:'JetBrains Mono';">${d.id}</td>
-            <td>${d.titulo}</td>
-            <td>${d.dataAbertura.dia}/${d.dataAbertura.mes}/${d.dataAbertura.ano}</td>
-            <td>${d.dataSolucao?`${d.dataSolucao.dia}/${d.dataSolucao.mes}/${d.dataSolucao.ano}`:'ABERTO'}</td>
-            <td>${d.tecnico}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-    modal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-}
-
 function openClientTicketsWithTime(clientKey) {
     const tickets = globalData.filter(d => d.entidade === clientKey);
     if (tickets.length === 0) {
         alert('Nenhum chamado encontrado para este cliente.');
         return;
     }
+    // Armazena dados para o PDF
+    window._currentTicketListData = tickets;
+    window._currentTicketListTitle = `Chamados de ${cleanEntityName(clientKey)} com tempo de atendimento`;
+
     const modal = document.getElementById('modal-client-tickets-time');
     document.getElementById('client-tickets-time-title').innerText = `Chamados de ${cleanEntityName(clientKey)} (${tickets.length})`;
     const tbody = document.getElementById('client-tickets-time-tbody');
@@ -2990,7 +3045,6 @@ function openGlobalDrilldown(type) {
                 const horas=Object.values(horasPorChamado).reduce((a,b)=>a+b,0);
                 return {id:c, entidade:c, total:rows.length, horas:horas.toFixed(1)};
             }).sort((a,b)=>b.total-a.total);
-            // ALTERAÇÃO: Agora redireciona para a Visão Universal do Cliente
             openTicketList('🏢 Clientes Ativos', clientData, ['entidade','total','horas'], true, (row) => `openClientUniversalModal('${escapeStr(row.id)}', 'cliente')`);
             break;
         }
@@ -3011,7 +3065,6 @@ function openGlobalDrilldown(type) {
                 const pct=total>0?(dentro/total*100).toFixed(1):"0.0";
                 return {id:t, tecnico:t, total:total, sla:pct+'%', horas:horas.toFixed(1)};
             }).sort((a,b)=>b.total-a.total);
-            // ALTERAÇÃO: Agora redireciona para o detalhe do técnico
             openTicketList('👨‍💻 Técnicos', techData, ['tecnico','total','sla','horas'], true, (row) => `openTechnicianDetail('${escapeStr(row.id)}')`);
             break;
         }
@@ -3101,13 +3154,14 @@ function removeUser(username) {
 }
 
 // ================================================================
-// 7. EXPORTAÇÕES
+// 7. EXPORTAÇÕES (modificadas para incluir todos os dados)
 // ================================================================
+
 function getPeriodLabel() {
     const from=document.getElementById('filter-from').value; const to=document.getElementById('filter-to').value;
     if(from && to) return `Período: ${from} até ${to}`; if(from) return `Período: a partir de ${from}`; if(to) return `Período: até ${to}`; return 'Período: Todo o histórico';
 }
-// ALTERAÇÃO: adiciona a logo na barra de período (JPG/PDF)
+
 function addPeriodHeaderToExport(container) {
     const old=container.querySelector('.export-period-header');
     if(old) old.remove();
@@ -3121,6 +3175,158 @@ function addPeriodHeaderToExport(container) {
     container.prepend(header);
     return header;
 }
+
+function generateFullDataPDF(title, data, columns, filename) {
+    if (!data || data.length === 0) {
+        alert('Não há dados para exportar.');
+        return;
+    }
+    showLoadingOverlay('GERANDO PDF COMPLETO...');
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('landscape', 'mm', 'a4');
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 10;
+    let y = 20;
+
+    doc.setFontSize(16);
+    doc.text(title, margin, y);
+    y += 8;
+    doc.setFontSize(10);
+    doc.text(getPeriodLabel(), margin, y);
+    y += 6;
+    doc.setFontSize(8);
+
+    const colWidths = columns.map(col => Math.max(col.length * 2.5, 20));
+    const totalWidth = colWidths.reduce((a,b) => a+b, 0);
+    const maxWidth = pageWidth - 2*margin;
+    if (totalWidth > maxWidth) {
+        const factor = maxWidth / totalWidth;
+        for (let i = 0; i < colWidths.length; i++) {
+            colWidths[i] = colWidths[i] * factor;
+        }
+    }
+
+    function drawRow(rowData, isHeader = false) {
+        let x = margin;
+        const rowHeight = isHeader ? 6 : 5;
+        for (let i = 0; i < rowData.length; i++) {
+            doc.setFontSize(isHeader ? 9 : 8);
+            doc.setFont(undefined, isHeader ? 'bold' : 'normal');
+            const text = String(rowData[i] || '');
+            const lines = doc.splitTextToSize(text, colWidths[i] - 1);
+            doc.text(lines, x, y + (isHeader ? 3 : 2));
+            x += colWidths[i];
+        }
+        y += rowHeight;
+        if (isHeader) {
+            doc.line(margin, y-1, pageWidth-margin, y-1);
+        }
+    }
+
+    const headerRow = columns.map(col => col.replace(/_/g, ' ').toUpperCase());
+    drawRow(headerRow, true);
+
+    let rowCount = 0;
+    for (const row of data) {
+        const rowValues = columns.map(col => {
+            let val = row[col];
+            if (val === undefined || val === null) val = '';
+            if (col === 'dataAbertura' && row.dataAbertura) {
+                val = `${row.dataAbertura.dia}/${row.dataAbertura.mes}/${row.dataAbertura.ano}`;
+            } else if (col === 'dataSolucao' && row.dataSolucao) {
+                val = `${row.dataSolucao.dia}/${row.dataSolucao.mes}/${row.dataSolucao.ano}`;
+            } else if (col === 'entidade') {
+                val = cleanEntityName(val);
+            } else if (col === 'csat' && val !== null && val !== '') {
+                val = `⭐ ${val}`;
+            } else if (col === 'duracao') {
+                val = `${(parseFloat(val)||0).toFixed(1)}h`;
+            } else if (col === 'sla') {
+                if (row.isBacklog) val = 'BACKLOG';
+                else val = row.withinSLA === true ? 'DENTRO' : 'FORA';
+            }
+            return val;
+        });
+        drawRow(rowValues, false);
+        rowCount++;
+        if (y > doc.internal.pageSize.getHeight() - 10) {
+            doc.addPage();
+            y = 20;
+            drawRow(headerRow, true);
+        }
+    }
+
+    doc.setFontSize(8);
+    doc.text(`Total de registros: ${data.length}`, margin, doc.internal.pageSize.getHeight() - 10);
+
+    doc.save(filename);
+    hideLoadingOverlay();
+}
+
+function exportPanelToPDF(panelId, filenameLabel, styleMode) {
+    const el=document.getElementById(panelId);
+    if(!el) return;
+
+    let fullData = null;
+    let columns = null;
+    let title = '';
+
+    if (panelId === 'panel-chamado') {
+        fullData = allTicketsData;
+        columns = ['id', 'entidade', 'titulo', 'dataAbertura', 'dataSolucao', 'tecnico', 'equipe', 'sla'];
+        title = 'Relação Integral de Todos os Chamados do Período';
+    } else if (panelId === 'modal-ticket-list' || panelId === 'modal-category-tickets' || panelId === 'modal-client-tickets-time') {
+        fullData = window._currentTicketListData || [];
+        const thead = document.getElementById('ticket-list-thead');
+        if (thead) {
+            columns = Array.from(thead.querySelectorAll('th')).map(th => th.innerText.trim().toLowerCase().replace(/ /g, '_'));
+        }
+        title = window._currentTicketListTitle || 'Lista de Chamados';
+    }
+
+    if (fullData && fullData.length > 0 && columns && columns.length > 0) {
+        const fieldMap = {
+            'id': 'id',
+            'cliente': 'entidade',
+            'título': 'titulo',
+            'titulo': 'titulo',
+            'abertura': 'dataAbertura',
+            'solução': 'dataSolucao',
+            'técnico': 'tecnico',
+            'equipe': 'equipe',
+            'sla': 'sla',
+            'status': 'status',
+            'duração': 'duracao',
+            'horas': 'duracao'
+        };
+        const mappedCols = columns.map(col => fieldMap[col] || col);
+        const sample = fullData[0] || {};
+        const validCols = mappedCols.filter(col => col in sample || col === 'sla');
+        if (validCols.length > 0) {
+            generateFullDataPDF(title, fullData, validCols, `INOVIT_${filenameLabel}_completo.pdf`);
+            return;
+        }
+    }
+
+    // Fallback: captura de tela
+    showLoadingOverlay('GERANDO PDF...');
+    const header=addPeriodHeaderToExport(el);
+    const ignored=el.querySelectorAll('[data-html2canvas-ignore="true"]');
+    ignored.forEach(item=>item.removeAttribute('data-html2canvas-ignore'));
+    const origHeight=el.style.height; const origOverflow=el.style.overflow;
+    el.style.height='auto'; el.style.overflow='visible';
+    const restore=replaceGradientsWithSolidColor(el);
+    html2canvas(el,{ allowTaint:true, useCORS:true, backgroundColor:'#eef3f6', scale:2, logging:false, windowWidth:el.scrollWidth, windowHeight:el.scrollHeight, x:0, y:0, scrollX:0, scrollY:0 })
+        .then(canvas=>{ restore(); el.style.height=origHeight; el.style.overflow=origOverflow; ignored.forEach(item=>item.setAttribute('data-html2canvas-ignore','true')); if(header) header.remove(); const imgData=canvas.toDataURL('image/jpeg',0.95); const {jsPDF}=window.jspdf; const pdf=new jsPDF('p','mm','a4'); const pageWidth=210; const imgWidth=pageWidth; const imgHeight=(canvas.height*imgWidth)/canvas.width; let heightLeft=imgHeight; let position=0; pdf.setFillColor(238,243,246); pdf.rect(0,0,pageWidth,297,"F"); pdf.addImage(imgData,'JPEG',0,position,imgWidth,imgHeight); heightLeft-=297; while(heightLeft>=0){ position=heightLeft-imgHeight; pdf.addPage(); pdf.setFillColor(238,243,246); pdf.rect(0,0,pageWidth,297,"F"); pdf.addImage(imgData,'JPEG',0,position,imgWidth,imgHeight); heightLeft-=297; } pdf.save(`INOVIT_${filenameLabel}.pdf`); hideLoadingOverlay(); })
+        .catch(err=>{ restore(); el.style.height=origHeight; el.style.overflow=origOverflow; if(header) header.remove(); hideLoadingOverlay(); alert('Erro ao gerar PDF: '+err.message); });
+}
+
+function openExportPdfPopup(panelId, filenameLabel){
+    activePdfPanelId=panelId;
+    activePdfFilenameLabel=filenameLabel;
+    exportPanelToPDF(panelId, filenameLabel, 'color');
+}
+
 function exportPanelToJPG(panelId, filenameLabel) {
     const el=document.getElementById(panelId); if(!el) return; showLoadingOverlay('GERANDO JPG...');
     const header=addPeriodHeaderToExport(el); const ignored=el.querySelectorAll('[data-html2canvas-ignore="true"]'); ignored.forEach(item=>item.removeAttribute('data-html2canvas-ignore'));
@@ -3130,16 +3336,7 @@ function exportPanelToJPG(panelId, filenameLabel) {
         .then(canvas=>{ restore(); el.style.height=origHeight; el.style.overflow=origOverflow; ignored.forEach(item=>item.setAttribute('data-html2canvas-ignore','true')); if(header) header.remove(); const a=document.createElement('a'); a.download=`INOVIT_${filenameLabel}.jpg`; a.href=canvas.toDataURL('image/jpeg',0.95); a.click(); hideLoadingOverlay(); })
         .catch(err=>{ restore(); el.style.height=origHeight; el.style.overflow=origOverflow; if(header) header.remove(); hideLoadingOverlay(); alert('Erro ao gerar JPG: '+err.message); });
 }
-function openExportPdfPopup(panelId, filenameLabel){ activePdfPanelId=panelId; activePdfFilenameLabel=filenameLabel; exportPanelToPDF(panelId, filenameLabel, 'color'); }
-function exportPanelToPDF(panelId, filenameLabel, styleMode) {
-    const el=document.getElementById(panelId); if(!el) return; showLoadingOverlay('GERANDO PDF...');
-    const header=addPeriodHeaderToExport(el); const ignored=el.querySelectorAll('[data-html2canvas-ignore="true"]'); ignored.forEach(item=>item.removeAttribute('data-html2canvas-ignore'));
-    const origHeight=el.style.height; const origOverflow=el.style.overflow; el.style.height='auto'; el.style.overflow='visible';
-    const restore=replaceGradientsWithSolidColor(el);
-    html2canvas(el,{ allowTaint:true, useCORS:true, backgroundColor:'#eef3f6', scale:2, logging:false, windowWidth:el.scrollWidth, windowHeight:el.scrollHeight, x:0, y:0, scrollX:0, scrollY:0 })
-        .then(canvas=>{ restore(); el.style.height=origHeight; el.style.overflow=origOverflow; ignored.forEach(item=>item.setAttribute('data-html2canvas-ignore','true')); if(header) header.remove(); const imgData=canvas.toDataURL('image/jpeg',0.95); const {jsPDF}=window.jspdf; const pdf=new jsPDF('p','mm','a4'); const pageWidth=210; const imgWidth=pageWidth; const imgHeight=(canvas.height*imgWidth)/canvas.width; let heightLeft=imgHeight; let position=0; pdf.setFillColor(238,243,246); pdf.rect(0,0,pageWidth,297,"F"); pdf.addImage(imgData,'JPEG',0,position,imgWidth,imgHeight); heightLeft-=297; while(heightLeft>=0){ position=heightLeft-imgHeight; pdf.addPage(); pdf.setFillColor(238,243,246); pdf.rect(0,0,pageWidth,297,"F"); pdf.addImage(imgData,'JPEG',0,position,imgWidth,imgHeight); heightLeft-=297; } pdf.save(`INOVIT_${filenameLabel}.pdf`); hideLoadingOverlay(); })
-        .catch(err=>{ restore(); el.style.height=origHeight; el.style.overflow=origOverflow; if(header) header.remove(); hideLoadingOverlay(); alert('Erro ao gerar PDF: '+err.message); });
-}
+
 function exportCSV() {
     if(currentFiltered.length===0){ alert('Não há dados filtrados para exportar.'); return; }
     const seen=new Set(); const uniqueRows=currentFiltered.filter(d=>{ if(seen.has(d.id)) return false; seen.add(d.id); return true; });
@@ -3217,7 +3414,6 @@ function closePermEdit(){ document.getElementById('perm-edit-modal').style.displ
 const DECISORES_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt';
 const GERAL_CSV_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt';
 
-// --- Função auxiliar: extrai email e telefone ---
 function extrairEmailTelefone(texto) {
     let email = '';
     let resto = texto;
@@ -3243,7 +3439,6 @@ function extrairEmailTelefone(texto) {
     return { email, telefone, resto };
 }
 
-// --- Separa nome e cliente ---
 function separarNomeCliente(resto) {
     let nome = resto;
     let cliente = '';
@@ -3267,7 +3462,6 @@ function separarNomeCliente(resto) {
     return { nome, cliente };
 }
 
-// --- Parsing decisores ---
 function parseDecisoresLine(line) {
     if (!line.trim()) return null;
     const { email, telefone, resto } = extrairEmailTelefone(line);
@@ -3277,12 +3471,10 @@ function parseDecisoresLine(line) {
     return { nome, cliente, telefone, email };
 }
 
-// --- Parsing geral (usa a mesma lógica) ---
 function parseGeralLine(line) {
     return parseDecisoresLine(line);
 }
 
-// --- Funções loadDecisores e loadGeral (com cache) ---
 function loadDecisores() {
     let data = localStorage.getItem('crm_decisores');
     if (data) {
@@ -3357,7 +3549,6 @@ function loadGeral() {
         });
 }
 
-// --- Função de reset (limpa localStorage e recarrega) ---
 function resetCrmData() {
     if (!confirm('Isso vai descartar todas as alterações salvas e recarregar os dados originais do GitHub. Continuar?')) return;
     localStorage.removeItem('crm_decisores');
@@ -3365,7 +3556,6 @@ function resetCrmData() {
     location.reload();
 }
 
-// --- Função para baixar arquivo TXT ---
 function downloadTxt(data, filename) {
     const lines = data.map(row => `${row.nome} | ${row.cliente} | ${row.whatsapp} | ${row.email}`).join('\n');
     const blob = new Blob([lines], { type: 'text/plain;charset=utf-8' });
@@ -3379,7 +3569,6 @@ function downloadTxt(data, filename) {
     URL.revokeObjectURL(url);
 }
 
-// --- Salvar decisores (localStorage + export TXT) ---
 function saveDecisores() {
     const tbody = document.getElementById('crm-table-body');
     const rows = tbody.querySelectorAll('tr');
@@ -3401,7 +3590,6 @@ function saveDecisores() {
     renderCrmTable();
 }
 
-// --- Salvar geral (localStorage + export TXT) ---
 function saveGeral() {
     const tbody = document.getElementById('crm-table-body');
     const rows = tbody.querySelectorAll('tr');
@@ -3427,7 +3615,6 @@ function saveGeral() {
     }
 }
 
-// --- Função para copiar linha ---
 function copyCrmRow(btn) {
     const tr = btn.closest('tr');
     const inputs = tr.querySelectorAll('input');
