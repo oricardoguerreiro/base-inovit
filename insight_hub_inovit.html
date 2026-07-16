@@ -1806,6 +1806,11 @@
         .chart-card canvas {
             filter: drop-shadow(0 2px 8px rgba(0,0,0,0.02));
         }
+
+        /* ALTERAÇÃO: z-index maior para o modal de categorias sobrepor o universal */
+        #modal-category-tickets {
+            z-index: 600;
+        }
     </style>
 </head>
 <body>
@@ -2087,14 +2092,17 @@
 
 <!-- ===== MODAIS ===== -->
 <div id="modal-ticket-list" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="ticket-list-title">Lista de Chamados</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-ticket-list','Lista_Chamados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-ticket-list','Lista_Chamados')">PDF</button><button class="modal-close" onclick="closeModal('modal-ticket-list')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="ticket-list-table"><thead id="ticket-list-thead"></thead><tbody id="ticket-list-tbody"></tbody></table></div><div class="pagination-container" id="ticket-list-pagination"><span class="info" id="ticket-list-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="ticket-list-buttons"></div></div></div></div>
+
+<!-- ALTERAÇÃO: Modal de categorias com paginação e z-index maior -->
+<div id="modal-category-tickets" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="category-tickets-title">Chamados por Categoria</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-category-tickets','Categoria_Chamados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-category-tickets','Categoria_Chamados')">PDF</button><button class="modal-close" onclick="closeModal('modal-category-tickets')">Fechar</button></div></div>
+<div class="modern-table-container"><table class="modern-table" id="category-tickets-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Técnico</th></tr></thead><tbody id="category-tickets-tbody"></tbody></table></div>
+<div class="pagination-container" id="category-tickets-pagination"><span class="info" id="category-tickets-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="category-tickets-buttons"></div></div></div></div>
+
 <div id="modal-ticket-detail" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="ticket-detail-title">Detalhes do Chamado</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-ticket-detail','Detalhe_Chamado')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-ticket-detail','Detalhe_Chamado')">PDF</button><button class="modal-close" onclick="closeModal('modal-ticket-detail')">Fechar</button></div></div><div id="ticket-detail-content"></div></div></div>
 <div id="modal-client-detail" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="client-detail-title">Detalhes do Cliente</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-client-detail','Detalhe_Cliente')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-client-detail','Detalhe_Cliente')">PDF</button><button class="modal-close" onclick="closeModal('modal-client-detail')">Fechar</button></div></div><div id="client-detail-content"></div></div></div>
 <div id="modal-technician-detail" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="technician-detail-title">Detalhes do Técnico</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-technician-detail','Detalhe_Tecnico')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-technician-detail','Detalhe_Tecnico')">PDF</button><button class="modal-close" onclick="closeModal('modal-technician-detail')">Fechar</button></div></div><div id="technician-detail-content"></div></div></div>
 <div id="modal-tech-evaluated" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="tech-evaluated-title">Chamados Avaliados pelo Técnico</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-tech-evaluated','Tecnico_Avaliados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-tech-evaluated','Tecnico_Avaliados')">PDF</button><button class="modal-close" onclick="closeModal('modal-tech-evaluated')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="tech-evaluated-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Abertura</th><th>Solução</th><th>CSAT</th></tr></thead><tbody id="tech-evaluated-tbody"></tbody></table></div><div class="pagination-container" id="tech-evaluated-pagination"><span class="info" id="tech-evaluated-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="tech-evaluated-buttons"></div></div></div></div>
 <div id="modal-backlog-isolated" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-backlog-isolated-title">Chamados de Backlog Mapeados</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-backlog-isolated','Backlog_Isolado')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-backlog-isolated','Backlog_Isolado')">PDF</button><button class="modal-close" onclick="closeModal('modal-backlog-isolated')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="table-backlog-isolated-rows"><thead><tr><th>ID</th><th>Entidade</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Técnico</th><th>Equipe</th><th>Status</th></tr></thead><tbody></tbody></table></div></div></div>
-
-<!-- Modal para listar chamados por categoria (sobrepõe o universal) -->
-<div id="modal-category-tickets" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="category-tickets-title">Chamados por Categoria</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-category-tickets','Categoria_Chamados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-category-tickets','Categoria_Chamados')">PDF</button><button class="modal-close" onclick="closeModal('modal-category-tickets')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="category-tickets-table"><thead><tr><th>ID</th><th>Título</th><th>Data Abertura</th><th>Data Solução</th><th>Técnico</th></tr></thead><tbody id="category-tickets-tbody"></tbody></table></div></div></div>
 
 <!-- Modal para listar chamados por cliente com tempo -->
 <div id="modal-client-tickets-time" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="client-tickets-time-title">Chamados do Cliente com Tempo de Atendimento</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-client-tickets-time','Cliente_Tempo')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-client-tickets-time','Cliente_Tempo')">PDF</button><button class="modal-close" onclick="closeModal('modal-client-tickets-time')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="client-tickets-time-table"><thead><tr><th>ID</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Duração (h)</th><th>Técnico</th></tr></thead><tbody id="client-tickets-time-tbody"></tbody></table></div></div></div>
@@ -2280,7 +2288,6 @@ function doLogin() {
         loadDataFromDrive();
         applyPermissionsToSidebar();
         renderUserManagement();
-        // Carregar dados CRM
         loadCrmData();
     } else {
         errorEl.textContent='Usuário ou senha inválidos.';
@@ -2378,7 +2385,7 @@ function switchSection(sectionKey, btnEl) {
 }
 
 // ================================================================
-// 3. CARREGAMENTO E PROCESSAMENTO DOS DADOS (BACKLOG REVISADO)
+// 3. CARREGAMENTO E PROCESSAMENTO DOS DADOS
 // ================================================================
 const DRIVE_DOWNLOAD_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/base.csv';
 let globalData = [];
@@ -2516,7 +2523,7 @@ function applyFilters() {
 function renderAllPanels() { renderGlobalDashboard(); renderClienteDashboard(); renderPorChamadoDashboard(); renderTecnicosDashboard(); renderBacklogDashboard(); }
 
 // ================================================================
-// 4. RENDERIZAÇÃO DOS PAINÉIS (COMPLETO)
+// 4. RENDERIZAÇÃO DOS PAINÉIS
 // ================================================================
 
 function renderGlobalDashboard() {
@@ -2643,7 +2650,7 @@ function renderPorChamadoDashboard() {
     });
 }
 
-// ALTERAÇÃO: função corrigida para abrir chamados por categoria (atualiza variáveis globais)
+// ALTERAÇÃO: função que abre chamados por categoria USANDO modal-category-tickets (com paginação)
 function openTicketsByCategoryWithFilter(category, client) {
     let tickets = currentFiltered.filter(d => d.categoria === category);
     if (client && client !== "Todos") {
@@ -2657,15 +2664,14 @@ function openTicketsByCategoryWithFilter(category, client) {
     window._currentTicketListData = tickets;
     window._currentTicketListTitle = `Chamados da categoria: ${category}`;
 
-    const modal = document.getElementById('modal-ticket-list');
-    document.getElementById('ticket-list-title').innerText = `Chamados da categoria: ${category} (${tickets.length})`;
-    const thead = document.getElementById('ticket-list-thead');
-    thead.innerHTML = '<th>ID</th><th>Cliente</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Técnico</th><th>Equipe</th><th>SLA</th>';
-    const tbody = document.getElementById('ticket-list-tbody');
+    const modal = document.getElementById('modal-category-tickets');
+    document.getElementById('category-tickets-title').innerText = `Chamados da categoria: ${category} (${tickets.length})`;
+    const tbody = document.getElementById('category-tickets-tbody');
     const pageSize = 50;
     let currentPage = 0;
     const totalPages = Math.ceil(tickets.length / pageSize);
-    const renderPage = (page) => {
+
+    function renderPage(page) {
         currentPage = page;
         const start = page * pageSize;
         const end = Math.min(start + pageSize, tickets.length);
@@ -2675,9 +2681,6 @@ function openTicketsByCategoryWithFilter(category, client) {
             const tr = document.createElement('tr');
             tr.className = 'clickable-row';
             tr.setAttribute('onclick', `openTicketDetail('${escapeStr(d.id)}')`);
-            let badgeClass = d.withinSLA === true ? 'success' : 'danger';
-            let badgeLabel = d.withinSLA === true ? 'DENTRO' : 'FORA';
-            if (d.isBacklog) { badgeClass = 'warn'; badgeLabel = 'BACKLOG'; }
             tr.innerHTML = `
                 <td style="font-family:'JetBrains Mono';">${d.id}</td>
                 <td>${cleanEntityName(d.entidade)}</td>
@@ -2685,19 +2688,17 @@ function openTicketsByCategoryWithFilter(category, client) {
                 <td>${d.dataAbertura.dia}/${d.dataAbertura.mes}/${d.dataAbertura.ano}</td>
                 <td>${d.dataSolucao?`${d.dataSolucao.dia}/${d.dataSolucao.mes}/${d.dataSolucao.ano}`:'ABERTO'}</td>
                 <td>${d.tecnico}</td>
-                <td>${d.equipe}</td>
-                <td><span class="status-badge ${badgeClass}">${badgeLabel}</span></td>
             `;
             tbody.appendChild(tr);
         });
-        document.getElementById('ticket-list-info').innerText = `Mostrando ${start+1}–${end} de ${tickets.length}`;
-        const btnContainer = document.getElementById('ticket-list-buttons');
+        document.getElementById('category-tickets-info').innerText = `Mostrando ${start+1}–${end} de ${tickets.length}`;
+        const btnContainer = document.getElementById('category-tickets-buttons');
         btnContainer.innerHTML = `
             <button onclick="renderPage(${currentPage-1})" ${currentPage===0?'disabled':''}>◀</button>
             <span style="padding:4px 12px; font-weight:600;">${currentPage+1} / ${totalPages||1}</span>
             <button onclick="renderPage(${currentPage+1})" ${currentPage>=totalPages-1?'disabled':''}>▶</button>
         `;
-    };
+    }
     renderPage(0);
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden';
@@ -2719,7 +2720,6 @@ function renderTecnicosDashboard() {
     });
 }
 
-// ===== PRODUTIVIDADE =====
 function renderProdutividadeDashboard() {
     const fromEl=document.getElementById('filter-from');
     const toEl=document.getElementById('filter-to');
@@ -2772,7 +2772,6 @@ function renderProdutividadeDashboard() {
     if (sortedTechQtd.length===0) listTechQtd.innerHTML='<li style="color:var(--text-muted); text-align:center; padding:12px;">Nenhum dado</li>';
 }
 
-// ===== BACKLOG (REVISADO) =====
 function renderBacklogDashboard() {
     const summaryGrid=document.getElementById('grid-backlog-summary-cards'); summaryGrid.innerHTML='';
     const backlogRows=currentFiltered.filter(d=>d.isBacklog);
@@ -2787,7 +2786,6 @@ function renderBacklogDashboard() {
     filterBacklogSummaryCards();
 }
 
-// ===== TABELA RELAÇÃO INTEGRAL =====
 function renderAllPeriodTickets() {
     const tbody=document.getElementById('all-tickets-tbody'); if(!tbody) return;
     const total=allTicketsData.length; const totalPages=Math.ceil(total/allTicketsPageSize);
@@ -2802,9 +2800,8 @@ function renderAllPeriodTickets() {
 function allTicketsGoToPage(page){ const totalPages=Math.ceil(allTicketsData.length/allTicketsPageSize); if(page<0 || page>=totalPages) return; allTicketsCurrentPage=page; renderAllPeriodTickets(); }
 
 // ================================================================
-// 5. MODAIS E INTERAÇÕES (COMPLETO)
+// 5. MODAIS E INTERAÇÕES
 // ================================================================
-// Variável global para armazenar os dados da lista atual do modal
 window._currentTicketListData = [];
 window._currentTicketListTitle = '';
 
@@ -2906,7 +2903,7 @@ function openClientUniversalModal(clientKey, mode) {
             const catPct=total>0?((vol/total)*100).toFixed(1):"0.0";
             const tr=document.createElement('tr');
             tr.className='clickable-row';
-            // ALTERAÇÃO: usa a função que respeita o período (já usa currentFiltered)
+            // ALTERAÇÃO: chama a função que usa modal-category-tickets
             tr.setAttribute('onclick', `openTicketsByCategoryWithFilter('${escapeStr(cat)}', '${escapeStr(clientKey)}')`);
             tr.innerHTML=`<td style="font-family:'JetBrains Mono'; font-weight:600;">${vol}</td><td>${cat}</td><td style="font-family:'JetBrains Mono'; color:var(--blue-primary);">${catPct}%</td>`;
             tbodyCats.appendChild(tr);
@@ -2936,7 +2933,6 @@ function openClientTicketsWithTime(clientKey) {
         alert('Nenhum chamado encontrado para este cliente.');
         return;
     }
-    // Armazena dados para o PDF
     window._currentTicketListData = tickets;
     window._currentTicketListTitle = `Chamados de ${cleanEntityName(clientKey)} com tempo de atendimento`;
 
@@ -3154,9 +3150,8 @@ function removeUser(username) {
 }
 
 // ================================================================
-// 7. EXPORTAÇÕES (modificadas para incluir todos os dados)
+// 7. EXPORTAÇÕES
 // ================================================================
-
 function getPeriodLabel() {
     const from=document.getElementById('filter-from').value; const to=document.getElementById('filter-to').value;
     if(from && to) return `Período: ${from} até ${to}`; if(from) return `Período: a partir de ${from}`; if(to) return `Período: até ${to}`; return 'Período: Todo o histórico';
@@ -3277,7 +3272,7 @@ function exportPanelToPDF(panelId, filenameLabel, styleMode) {
         title = 'Relação Integral de Todos os Chamados do Período';
     } else if (panelId === 'modal-ticket-list' || panelId === 'modal-category-tickets' || panelId === 'modal-client-tickets-time') {
         fullData = window._currentTicketListData || [];
-        const thead = document.getElementById('ticket-list-thead');
+        const thead = document.getElementById(panelId === 'modal-category-tickets' ? 'category-tickets-table' : 'ticket-list-table');
         if (thead) {
             columns = Array.from(thead.querySelectorAll('th')).map(th => th.innerText.trim().toLowerCase().replace(/ /g, '_'));
         }
@@ -3408,9 +3403,8 @@ function savePermEdit(){
 function closePermEdit(){ document.getElementById('perm-edit-modal').style.display='none'; editPermUsername=null; }
 
 // ================================================================
-// 10. CRM – DECISORES E GERAL (parsers corrigidos + exportação TXT)
+// 10. CRM – DECISORES E GERAL
 // ================================================================
-
 const DECISORES_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt';
 const GERAL_CSV_URL = 'https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt';
 
@@ -3635,7 +3629,6 @@ function copyCrmRow(btn) {
     }
 }
 
-// ===== Variáveis de filtro e controle da aba CRM =====
 let crmSearchTerm = '';
 let crmFilteredData = null;
 window.crmActiveTab = 'decisores';
