@@ -1141,6 +1141,16 @@
             background-clip: text;
         }
 
+        /* ALTERAÇÃO: modal de categorias sobrepõe o universal */
+        #modal-category-tickets {
+            z-index: 600;
+        }
+
+        /* ALTERAÇÃO: modal de detalhe do chamado sobrepõe a lista de categorias */
+        #modal-ticket-detail {
+            z-index: 700;
+        }
+
         /* ===== LOGOUT CONFIRM ===== */
         #logout-confirm-modal {
             display: none;
@@ -1806,11 +1816,6 @@
         .chart-card canvas {
             filter: drop-shadow(0 2px 8px rgba(0,0,0,0.02));
         }
-
-        /* ALTERAÇÃO: z-index maior para o modal de categorias sobrepor o universal */
-        #modal-category-tickets {
-            z-index: 600;
-        }
     </style>
 </head>
 <body>
@@ -2093,12 +2098,14 @@
 <!-- ===== MODAIS ===== -->
 <div id="modal-ticket-list" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="ticket-list-title">Lista de Chamados</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-ticket-list','Lista_Chamados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-ticket-list','Lista_Chamados')">PDF</button><button class="modal-close" onclick="closeModal('modal-ticket-list')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="ticket-list-table"><thead id="ticket-list-thead"></thead><tbody id="ticket-list-tbody"></tbody></table></div><div class="pagination-container" id="ticket-list-pagination"><span class="info" id="ticket-list-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="ticket-list-buttons"></div></div></div></div>
 
-<!-- ALTERAÇÃO: Modal de categorias com paginação e z-index maior -->
+<!-- Modal de categorias com paginação e z-index maior -->
 <div id="modal-category-tickets" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="category-tickets-title">Chamados por Categoria</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-category-tickets','Categoria_Chamados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-category-tickets','Categoria_Chamados')">PDF</button><button class="modal-close" onclick="closeModal('modal-category-tickets')">Fechar</button></div></div>
 <div class="modern-table-container"><table class="modern-table" id="category-tickets-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Técnico</th></tr></thead><tbody id="category-tickets-tbody"></tbody></table></div>
 <div class="pagination-container" id="category-tickets-pagination"><span class="info" id="category-tickets-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="category-tickets-buttons"></div></div></div></div>
 
+<!-- Modal de detalhe do chamado – z-index 700 (sobrepõe categorias) -->
 <div id="modal-ticket-detail" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="ticket-detail-title">Detalhes do Chamado</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-ticket-detail','Detalhe_Chamado')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-ticket-detail','Detalhe_Chamado')">PDF</button><button class="modal-close" onclick="closeModal('modal-ticket-detail')">Fechar</button></div></div><div id="ticket-detail-content"></div></div></div>
+
 <div id="modal-client-detail" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="client-detail-title">Detalhes do Cliente</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-client-detail','Detalhe_Cliente')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-client-detail','Detalhe_Cliente')">PDF</button><button class="modal-close" onclick="closeModal('modal-client-detail')">Fechar</button></div></div><div id="client-detail-content"></div></div></div>
 <div id="modal-technician-detail" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="technician-detail-title">Detalhes do Técnico</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-technician-detail','Detalhe_Tecnico')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-technician-detail','Detalhe_Tecnico')">PDF</button><button class="modal-close" onclick="closeModal('modal-technician-detail')">Fechar</button></div></div><div id="technician-detail-content"></div></div></div>
 <div id="modal-tech-evaluated" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="tech-evaluated-title">Chamados Avaliados pelo Técnico</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-tech-evaluated','Tecnico_Avaliados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-tech-evaluated','Tecnico_Avaliados')">PDF</button><button class="modal-close" onclick="closeModal('modal-tech-evaluated')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="tech-evaluated-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Abertura</th><th>Solução</th><th>CSAT</th></tr></thead><tbody id="tech-evaluated-tbody"></tbody></table></div><div class="pagination-container" id="tech-evaluated-pagination"><span class="info" id="tech-evaluated-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="tech-evaluated-buttons"></div></div></div></div>
@@ -2826,7 +2833,8 @@ function openTicketDetail(ticketId) {
     document.getElementById('ticket-detail-title').innerText=`Chamado #${ticket.id}`;
     const content=document.getElementById('ticket-detail-content');
     content.innerHTML=`<div class="detail-grid"><div class="detail-item"><span class="label">ID</span><span class="value mono">${ticket.id}</span></div><div class="detail-item"><span class="label">Título</span><span class="value">${ticket.titulo}</span></div><div class="detail-item"><span class="label">Cliente / Entidade</span><span class="value">${cleanEntityName(ticket.entidade)}</span></div><div class="detail-item"><span class="label">Tipo</span><span class="value">${ticket.tipo}</span></div><div class="detail-item"><span class="label">Categoria</span><span class="value">${ticket.categoria}</span></div><div class="detail-item"><span class="label">Data Abertura</span><span class="value mono">${ticket.dataAbertura.dia}/${ticket.dataAbertura.mes}/${ticket.dataAbertura.ano}</span></div><div class="detail-item"><span class="label">Data Solução</span><span class="value mono">${ticket.dataSolucao?`${ticket.dataSolucao.dia}/${ticket.dataSolucao.mes}/${ticket.dataSolucao.ano}`:'ABERTO'}</span></div><div class="detail-item"><span class="label">Técnico</span><span class="value">${ticket.tecnico||'N/A'}</span></div><div class="detail-item"><span class="label">Equipe</span><span class="value">${ticket.equipe}</span></div><div class="detail-item"><span class="label">Requerente</span><span class="value">${ticket.requerente}</span></div><div class="detail-item"><span class="label">Status</span><span class="value">${ticket.status||'—'}</span></div><div class="detail-item"><span class="label">Duração (horas)</span><span class="value mono">${(ticket.duracao||0).toFixed(2)}h</span></div><div class="detail-item"><span class="label">CSAT</span><span class="value">${ticket.csat!==null?`⭐ ${ticket.csat}`:'Não avaliado'}</span></div><div class="detail-item"><span class="label">SLA</span><span class="value">${ticket.isBacklog?'BACKLOG (ITIL)':(ticket.withinSLA===true?'✅ DENTRO':'❌ FORA')}</span></div><div class="detail-item"><span class="label">Backlog</span><span class="value">${ticket.isBacklog?'Sim (status)':'Não'}</span></div></div>`;
-    modal.style.display='block'; document.body.style.overflow='hidden';
+    modal.style.display='block';
+    document.body.style.overflow='hidden';
 }
 
 function openClientUniversalModal(clientKey, mode) {
