@@ -57,7 +57,6 @@
       "tecnicos": true,
       "produtividade": true,
       "backlog": true,
-      "crm": true,
       "usuarios": false
     },
     "tiago": {
@@ -66,9 +65,7 @@
       "chamado": true,
       "tecnicos": true,
       "produtividade": true,
-      "backlog": true,
-      "crm": true,
-      "usuarios": false
+      "backlog": true
     }
   }
 }
