@@ -1,151 +1,4 @@
 ﻿ID;Título;Entidade;Data de abertura;Data da solução;Tarefas - Duração;Tipo;Categoria;Requerente - Requerente;Atribuído - Grupo técnico;Atribuído - Técnico;Status;Motivo de pendência;Pesquisa de satisfação - Satisfação;Última atualização
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
 25 913;Rota Agência Maceio - ViajaZap;Inovit > GRUPO BRASILEIRO;15/07/2026 07:01;15/07/2026 07:04;5 minutos;Incidente;Sistema ERP > Operação - Totalbus - Duvida do colaborador;Rafael Gomes GRUPO BRASILEIRO;Suporte N1;Leovan Serafim;Fechado;;;20/07/2026 07:26
 25 915;Halisson - Garagem Itabuna;Inovit > GRUPO BRASILEIRO;15/07/2026 07:38;15/07/2026 07:42;5 minutos;Incidente;Internet > Lentidão;Rafael Gomes GRUPO BRASILEIRO;Suporte N1;Leovan Serafim;Fechado;;;21/07/2026 06:34
 25 916;Roberto - Agência de Jitaúna;Inovit > GRUPO BRASILEIRO;15/07/2026 07:45;15/07/2026 07:49;5 minutos;Incidente;Sistema ERP > Operação - Totalbus - Duvida do colaborador;Rafael Gomes GRUPO BRASILEIRO;Suporte N1;Leovan Serafim;Fechado;;;21/07/2026 06:34
@@ -208,25 +61,25 @@
 26 406;73 9919-4626 - Itabuna;Inovit > GRUPO BRASILEIRO;29/07/2026 11:03;29/07/2026 11:29;5 minutos;Incidente;E-mail > Falha Outlook;Rafael Gomes GRUPO BRASILEIRO;Suporte N1;Leovan Serafim;Solucionado;;;29/07/2026 11:29
 26 409;Rafael Lopes - Agência Cachoeira;Inovit > GRUPO BRASILEIRO;29/07/2026 11:36;29/07/2026 11:40;5 minutos;Incidente;Maquineta de Cartão > Correção de falha na conexão;Rafael Gomes GRUPO BRASILEIRO;Suporte N1;Leovan Serafim;Solucionado;;;29/07/2026 11:40
 26 410;Agência de Porto seguro - 73 98834-8445;Inovit > GRUPO BRASILEIRO;29/07/2026 11:48;29/07/2026 11:51;5 minutos;Incidente;Sistema ERP > Operação - Totalbus - Problemas com passagem;Rafael Gomes GRUPO BRASILEIRO;Suporte N1;Leovan Serafim;Solucionado;;;29/07/2026 11:51
-29;Compartilhar e configurar impressora HP no PC trocado via NDS - +5573988383744 (29);Inovit > GRUPO BRASILEIRO;15/07/2026 10:05;21/07/2026 12:07;0 segundo;Incidente;Periférico > Impressora - Configurar;Automação INOVIT (2584);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Fechado;;;21/07/2026 12:07
+29;Compartilhar e configurar impressora HP no PC trocado via NDS - +5573988383744 (29);Inovit > GRUPO BRASILEIRO;15/07/2026 10:05;21/07/2026 12:07;0 segundo;Incidente;Periférico > Impressora - Configurar;Automação INOVIT (2584);Suporte N1<br>Suporte N3;Leovan Serafim;Fechado;;;21/07/2026 12:07
 30;Erro na cesta de compras e impressão de passagens incompletas - +5574988265399 (30);Inovit > GRUPO BRASILEIRO;15/07/2026 10:23;15/07/2026 18:32;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;MORRO DO CHAPEU VIACAO JEQUIE CIDADE SOL LTDA (2801);Suporte N1<br>Suporte N3;;Fechado;;;15/07/2026 18:32
 31;Não consigo finalizar a emissão de nota fiscal - +5573998160132 (31);Inovit > GRUPO BRASILEIRO;15/07/2026 10:24;17/07/2026 14:29;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;PORTO SEGURO RODOVIARIA EB EXPRESSO BRASILEIRO TRANSPORTES LTDA (2831);Suporte N1;;Fechado;;;17/07/2026 14:29
-32;Sem acesso ao Globus - +5573988220485 (32);Inovit > GRUPO BRASILEIRO;15/07/2026 11:27;;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Pendente;;;17/07/2026 13:13
-33;Suporte para maquininha de passagem - +5575982330889 (33);Inovit > GRUPO BRASILEIRO;15/07/2026 11:31;23/07/2026 08:24;0 segundo;Incidente;Internet > Indisponibilidade;CONCEICAO DO JACUIPE VIACAO JEQUIE CIDADE SOL LTDA (2689);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 08:45
-34;Dados móveis não estão funcionando - +5571986191395 (34);Inovit > GRUPO BRASILEIRO;15/07/2026 14:03;27/07/2026 13:36;0 segundo;Incidente;Internet > Indisponibilidade;Automação INOVIT (2584);Suporte N1;Kevin Soveral (2599);Fechado;;;27/07/2026 13:36
-35;Máquina de cartão não exibe histórico de transações - +5571993441312 (35);Inovit > GRUPO BRASILEIRO;15/07/2026 14:09;23/07/2026 16:21;0 segundo;Incidente;Periférico > Outros - Correção de falha;Automação INOVIT (2584);Suporte N1<br>Suporte N3;Kevin Soveral (2599);Fechado;;;23/07/2026 16:21
+32;Sem acesso ao Globus - +5573988220485 (32);Inovit > GRUPO BRASILEIRO;15/07/2026 11:27;;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Pendente;;;17/07/2026 13:13
+33;Suporte para maquininha de passagem - +5575982330889 (33);Inovit > GRUPO BRASILEIRO;15/07/2026 11:31;23/07/2026 08:24;0 segundo;Incidente;Internet > Indisponibilidade;CONCEICAO DO JACUIPE VIACAO JEQUIE CIDADE SOL LTDA (2689);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 08:45
+34;Dados móveis não estão funcionando - +5571986191395 (34);Inovit > GRUPO BRASILEIRO;15/07/2026 14:03;27/07/2026 13:36;0 segundo;Incidente;Internet > Indisponibilidade;Automação INOVIT (2584);Suporte N1;Kevin Soveral;Fechado;;;27/07/2026 13:36
+35;Máquina de cartão não exibe histórico de transações - +5571993441312 (35);Inovit > GRUPO BRASILEIRO;15/07/2026 14:09;23/07/2026 16:21;0 segundo;Incidente;Periférico > Outros - Correção de falha;Automação INOVIT (2584);Suporte N1<br>Suporte N3;Kevin Soveral;Fechado;;;23/07/2026 16:21
 36;Máquina parada - +5511960925939 (36);Inovit > GRUPO BRASILEIRO;15/07/2026 14:10;;0 segundo;Incidente;Hardware > Desktop - Correção de falha;Automação INOVIT (2584);Suporte N1;;Pendente;;;15/07/2026 17:10
 37;Computador voltou a funcionar após limpar contato da memória RAM - +5583999894443 (37);Inovit > GRUPO BRASILEIRO;15/07/2026 14:23;15/07/2026 15:55;0 segundo;Incidente;Hardware > Desktop - Correção de falha;Automação INOVIT (2584);Suporte N1;;Fechado;;;16/07/2026 15:55
 38;Alterar visualização da caixa de entrada no Outlook - +5573988057781 (38);Inovit > GRUPO BRASILEIRO;15/07/2026 14:28;15/07/2026 16:39;0 segundo;Incidente;E-mail > Configurar Outlook;Automação INOVIT (2584);Suporte N1;;Fechado;;;15/07/2026 17:08
 39;Impressora de passagens não está imprimindo - +5573999744071 (39);Inovit > GRUPO BRASILEIRO;15/07/2026 14:37;27/07/2026 14:16;0 segundo;Incidente;Periférico > Impressora - Correção de falha;Automação INOVIT (2584);Suporte N1;;Fechado;;;27/07/2026 14:16
 40;Ativar opção Pay by Link no TotalBus do PDV Teixeira Centro - +5573999845496 (40);Inovit > GRUPO BRASILEIRO;15/07/2026 14:46;15/07/2026 16:40;0 segundo;Incidente;Sistema ERP > Cliente - Configurar;TEIXEIRA CENTRO EXPRESSO BRASILEIRO TRANSPORTES LTDA (2876);Suporte N1<br>Suporte N3;;Fechado;;;15/07/2026 16:40
-41;Erro usuário sem permissão para frete informado ao emitir CTE - +5579998918904 (41);Inovit > GRUPO BRASILEIRO;15/07/2026 15:20;24/07/2026 12:05;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;LAGARTO ROTA TRANSPORTES RODOVIARIOS LTDA (2779);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Fechado;;;24/07/2026 12:05
-42;Solicitação do link para baixar o aplicativo SSW Mobile - +5573999006602 (42);Inovit > GRUPO BRASILEIRO;15/07/2026 15:39;21/07/2026 12:16;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;SALINAS DAS MARGARIDAS VIACAO JEQUIE CIDADE SOL LTDA (2843);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Fechado;;;21/07/2026 12:16
+41;Erro usuário sem permissão para frete informado ao emitir CTE - +5579998918904 (41);Inovit > GRUPO BRASILEIRO;15/07/2026 15:20;24/07/2026 12:05;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;LAGARTO ROTA TRANSPORTES RODOVIARIOS LTDA (2779);Suporte N1<br>Suporte N3;Leovan Serafim;Fechado;;;24/07/2026 12:05
+42;Solicitação do link para baixar o aplicativo SSW Mobile - +5573999006602 (42);Inovit > GRUPO BRASILEIRO;15/07/2026 15:39;21/07/2026 12:16;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;SALINAS DAS MARGARIDAS VIACAO JEQUIE CIDADE SOL LTDA (2843);Suporte N1<br>Suporte N3;Leovan Serafim;Fechado;;;21/07/2026 12:16
 43;Cadastro para receber comissões - +5579998330277 (43);Inovit > GRUPO BRASILEIRO;15/07/2026 15:44;15/07/2026 16:16;0 segundo;Incidente;Sistema ERP > GLPI - Criar | Desativar | Excluir usuário;ITABAIANA ROTA TRANSPORTES RODOVIARIOS LTDA (2740);Suporte N1<br>Suporte N3;;Fechado;;;16/07/2026 16:16
-44;Sem internet para trabalhar por falta de pagamento - +5575983279737 (44);Inovit > GRUPO BRASILEIRO;15/07/2026 16:58;;0 segundo;Incidente;Internet > Indisponibilidade;TERRA NOVA VIACAO JEQUIE CIDADE SOL LTDA (2944);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Pendente;;;17/07/2026 13:15
+44;Sem internet para trabalhar por falta de pagamento - +5575983279737 (44);Inovit > GRUPO BRASILEIRO;15/07/2026 16:58;;0 segundo;Incidente;Internet > Indisponibilidade;TERRA NOVA VIACAO JEQUIE CIDADE SOL LTDA (2944);Suporte N1<br>Suporte N3;Leovan Serafim;Pendente;;;17/07/2026 13:15
 45;Tela em branco na máquina de vendas manual - +5573981317288 (45);Inovit > GRUPO BRASILEIRO;16/07/2026 06:23;16/07/2026 10:31;0 segundo;Incidente;Periférico > Outros - Correção de falha;ITAGIBA VIACAO JEQUIE CIDADESOL LTDA (2962);Suporte N1;;Fechado;;;16/07/2026 10:31
-46;Lentidão ao manusear o computador - +5573988472129 (46);Inovit > GRUPO BRASILEIRO;16/07/2026 09:08;24/07/2026 09:38;0 segundo;Incidente;Sistema operacional > Máquina lenta;ITAQUARA VIACAO JEQUIE CIDADE SOL (2760);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Fechado;;;24/07/2026 09:38
-47;Solicitação de check-in - +5573988373735 (47);Inovit > GRUPO BRASILEIRO;16/07/2026 10:32;17/07/2026 13:26;0 segundo;Incidente;Solicitação de transporte;BOM DESPACHO RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2657);Suporte N1;Leovan Serafim (2600);Fechado;;;17/07/2026 13:26
+46;Lentidão ao manusear o computador - +5573988472129 (46);Inovit > GRUPO BRASILEIRO;16/07/2026 09:08;24/07/2026 09:38;0 segundo;Incidente;Sistema operacional > Máquina lenta;ITAQUARA VIACAO JEQUIE CIDADE SOL (2760);Suporte N1<br>Suporte N3;Leovan Serafim;Fechado;;;24/07/2026 09:38
+47;Solicitação de check-in - +5573988373735 (47);Inovit > GRUPO BRASILEIRO;16/07/2026 10:32;17/07/2026 13:26;0 segundo;Incidente;Solicitação de transporte;BOM DESPACHO RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2657);Suporte N1;Leovan Serafim;Fechado;;;17/07/2026 13:26
 48;Notebook muito lento e com lentidão geral - +5574999180365 (48);Inovit > GRUPO BRASILEIRO;16/07/2026 11:01;;0 segundo;Incidente;Sistema operacional > Máquina lenta;BARRA DO MENDES VIACAO JEQUIE CIDADE SOL LTDA (2648);Suporte N1;;Pendente;;;17/07/2026 11:39
 49;Computador não abre o aplicativo de vendas de passagem - +5571999359537 (49);Inovit > GRUPO BRASILEIRO;16/07/2026 11:48;16/07/2026 12:13;0 segundo;Incidente;Antivírus > Cliente - Desinstalar;SALINAS DAS MARGARIDAS VIACAO JEQUIE CIDADE SOL LTDA (2843);Suporte N1;;Fechado;;;16/07/2026 12:13
 50;Problemas no login do sistema Rota - +5575998702269 (50);Inovit > GRUPO BRASILEIRO;16/07/2026 11:53;16/07/2026 14:36;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;;Fechado;;;16/07/2026 14:36
@@ -237,122 +90,122 @@
 55;Não consigo imprimir, o sistema fecha ao tentar imprimir - +5573988220474 (55);Inovit > GRUPO BRASILEIRO;16/07/2026 15:58;;0 segundo;Incidente;Periférico > Impressora - Correção de falha;ITABUNA - RODOVIARIA ITABUNA - RODOVIARIA (2604);Suporte N1;;Pendente;;;16/07/2026 16:13
 56;Liberar opção de venda em aberto no usuário 073001 - +5573999845496 (56);Inovit > GRUPO BRASILEIRO;16/07/2026 16:09;;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;TEIXEIRA CENTRO EXPRESSO BRASILEIRO TRANSPORTES LTDA (2876);Suporte N1;;Pendente;;;17/07/2026 08:55
 57;Suspeita de vírus no PC - +5573988282696 (57);Inovit > GRUPO BRASILEIRO;17/07/2026 06:27;;0 segundo;Incidente;Antivírus > Desktop - Varredura;PORTO SEGURO FONTANA APARECIDA SANTOS DE JESUS (2830);Suporte N1<br>Suporte N3;;Pendente;;;29/07/2026 08:38
-58;Máquina não carrega função ao selecionar cartão ou Pix - +5573988749490 (58);Inovit > GRUPO BRASILEIRO;17/07/2026 07:02;18/07/2026 13:06;0 segundo;Incidente;Ponto de rede > Reparar;JAGUAQUARA VIACAO JEQUIE CIDADE SOL LTDA (2768);Suporte N1;Leovan Serafim (2600);Fechado;;;18/07/2026 13:06
+58;Máquina não carrega função ao selecionar cartão ou Pix - +5573988749490 (58);Inovit > GRUPO BRASILEIRO;17/07/2026 07:02;18/07/2026 13:06;0 segundo;Incidente;Ponto de rede > Reparar;JAGUAQUARA VIACAO JEQUIE CIDADE SOL LTDA (2768);Suporte N1;Leovan Serafim;Fechado;;;18/07/2026 13:06
 59;Aplicativo desconectou e está pedindo token - +5575991522802 (59);Inovit > GRUPO BRASILEIRO;17/07/2026 07:39;17/07/2026 13:06;0 segundo;Incidente;Serviço de rede > Correção de falha;CACHOEIRA VIACAO JEQUIE CIDADE SOL LTDA (2981);Suporte N1;;Fechado;;;29/07/2026 11:41
-60;Não consegue emitir declaração de conteúdo no sistema SSW - +5579998844729 (60);Inovit > GRUPO BRASILEIRO;17/07/2026 10:14;23/07/2026 12:34;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;ARACAJU RODOVIARIA ROTA TRANSPORTES RODOVIARIOS (2640);Suporte N1;Leovan Serafim (2600);Fechado;;;23/07/2026 12:34
+60;Não consegue emitir declaração de conteúdo no sistema SSW - +5579998844729 (60);Inovit > GRUPO BRASILEIRO;17/07/2026 10:14;23/07/2026 12:34;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;ARACAJU RODOVIARIA ROTA TRANSPORTES RODOVIARIOS (2640);Suporte N1;Leovan Serafim;Fechado;;;23/07/2026 12:34
 61;Máquina de cartão não opera Pix, crédito e débito - +5575988596933 (61);Inovit > GRUPO BRASILEIRO;17/07/2026 10:26;17/07/2026 16:23;0 segundo;Incidente;Internet > Indisponibilidade;ENCARNACAO VIACAO JEQUIE CIDADE SOL LTDA (2957);Suporte N1;;Fechado;;;17/07/2026 16:36
-62;Configurar impressora - +5575991726194 (62);Inovit > GRUPO BRASILEIRO;17/07/2026 10:30;24/07/2026 07:29;0 segundo;Incidente;Periférico > Impressora - Configurar;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Fechado;;;24/07/2026 07:29
-63;Sistema de passagem saiu da tela - +5573999101320 (63);Inovit > GRUPO BRASILEIRO;17/07/2026 11:20;17/07/2026 11:49;0 segundo;Incidente;Sistema operacional > Desktop - Configurar;MARACAS VIACAO JEQUIE CIDADE SOL (2791);Suporte N1;Leovan Serafim (2600);Fechado;;;17/07/2026 11:49
-64;Instalação do Total Blus e da impressora - +5575988721123 (64);Inovit > GRUPO BRASILEIRO;17/07/2026 11:49;24/07/2026 11:32;0 segundo;Incidente;Periférico > Impressora - Instalar;UBAIRA RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2886);Suporte N1;Leovan Serafim (2600);Fechado;;;24/07/2026 11:32
-65;Sem acesso às pastas do setor de encomendas - +5573988461627 (65);Inovit > GRUPO BRASILEIRO;17/07/2026 11:52;17/07/2026 13:18;0 segundo;Incidente;Serviço de rede > AD - Alterar Senha;Itabuna ROTA (3021);Suporte N1;Leovan Serafim (2600);Fechado;;;17/07/2026 13:19
-66;Não consigo acessar a passagem após tentativa de impressão no site - +5571992368834 (66);Inovit > GRUPO BRASILEIRO;17/07/2026 12:17;;0 segundo;Incidente;Internet > Falha acesso a site;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 07:02
+62;Configurar impressora - +5575991726194 (62);Inovit > GRUPO BRASILEIRO;17/07/2026 10:30;24/07/2026 07:29;0 segundo;Incidente;Periférico > Impressora - Configurar;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Fechado;;;24/07/2026 07:29
+63;Sistema de passagem saiu da tela - +5573999101320 (63);Inovit > GRUPO BRASILEIRO;17/07/2026 11:20;17/07/2026 11:49;0 segundo;Incidente;Sistema operacional > Desktop - Configurar;MARACAS VIACAO JEQUIE CIDADE SOL (2791);Suporte N1;Leovan Serafim;Fechado;;;17/07/2026 11:49
+64;Instalação do Total Blus e da impressora - +5575988721123 (64);Inovit > GRUPO BRASILEIRO;17/07/2026 11:49;24/07/2026 11:32;0 segundo;Incidente;Periférico > Impressora - Instalar;UBAIRA RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2886);Suporte N1;Leovan Serafim;Fechado;;;24/07/2026 11:32
+65;Sem acesso às pastas do setor de encomendas - +5573988461627 (65);Inovit > GRUPO BRASILEIRO;17/07/2026 11:52;17/07/2026 13:18;0 segundo;Incidente;Serviço de rede > AD - Alterar Senha;Itabuna ROTA (3021);Suporte N1;Leovan Serafim;Fechado;;;17/07/2026 13:19
+66;Não consigo acessar a passagem após tentativa de impressão no site - +5571992368834 (66);Inovit > GRUPO BRASILEIRO;17/07/2026 12:17;;0 segundo;Incidente;Internet > Falha acesso a site;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 07:02
 67;Não consigo realizar pagamento com cartão nem PIX - +5573988516280 (67);Inovit > GRUPO BRASILEIRO;17/07/2026 17:19;;0 segundo;Incidente;Periférico > Outros - Correção de falha;Automação INOVIT (2584);Suporte N1;;Pendente;;;24/07/2026 11:32
-68;Sistema de pagamento não está funcionando - +5573988220507 (68);Inovit > GRUPO BRASILEIRO;17/07/2026 19:18;29/07/2026 08:41;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;IPIAU RODOVIARIA ROTA TRANSPORTES RODOVIARIOS LTDA (2734);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 08:42
-69;Problema para imprimir passagens - +5573988548311 (69);Inovit > GRUPO BRASILEIRO;18/07/2026 07:21;23/07/2026 07:20;0 segundo;Incidente;Periférico > Impressora - Correção de falha;JEQUIE RODOVIARIA PROP OUVIDORIA@CIDADESOL.COM.BR (2965);Suporte N1;Leovan Serafim (2600);Fechado;;;27/07/2026 13:25
-70;Totalbus não quer entrar - +5574999716984 (70);Inovit > GRUPO BRASILEIRO;18/07/2026 07:39;24/07/2026 07:26;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;JACOBINA VIACAO JEQUIE CIDADE SOL LTDA (2767);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Fechado;;;24/07/2026 07:26
-71;Não consigo acessar o Total Bus - +5575983160684 (71);Inovit > GRUPO BRASILEIRO;18/07/2026 07:54;24/07/2026 07:23;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;SANTO AMARO VIACAO JEQUIE CIDADE SOL LTDA (2855);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Fechado;;;24/07/2026 07:23
+68;Sistema de pagamento não está funcionando - +5573988220507 (68);Inovit > GRUPO BRASILEIRO;17/07/2026 19:18;29/07/2026 08:41;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;IPIAU RODOVIARIA ROTA TRANSPORTES RODOVIARIOS LTDA (2734);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 08:42
+69;Problema para imprimir passagens - +5573988548311 (69);Inovit > GRUPO BRASILEIRO;18/07/2026 07:21;23/07/2026 07:20;0 segundo;Incidente;Periférico > Impressora - Correção de falha;JEQUIE RODOVIARIA PROP OUVIDORIA@CIDADESOL.COM.BR (2965);Suporte N1;Leovan Serafim;Fechado;;;27/07/2026 13:25
+70;Totalbus não quer entrar - +5574999716984 (70);Inovit > GRUPO BRASILEIRO;18/07/2026 07:39;24/07/2026 07:26;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;JACOBINA VIACAO JEQUIE CIDADE SOL LTDA (2767);Suporte N1<br>Suporte N3;Leovan Serafim;Fechado;;;24/07/2026 07:26
+71;Não consigo acessar o Total Bus - +5575983160684 (71);Inovit > GRUPO BRASILEIRO;18/07/2026 07:54;24/07/2026 07:23;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;SANTO AMARO VIACAO JEQUIE CIDADE SOL LTDA (2855);Suporte N1<br>Suporte N3;Leovan Serafim;Fechado;;;24/07/2026 07:23
 72;Configurar internet nova como padrão para evitar erro ao passar cartão - +5573988482529 (72);Inovit > GRUPO BRASILEIRO;18/07/2026 08:04;;0 segundo;Incidente;Gateway > Outros - Configurar;PORTO SEGURO RODOVIARIA ROTA ROTA TRANSPORTES RODOVIARIOS LTDA (2832);Suporte N1<br>Suporte N3;;Pendente;;5;29/07/2026 06:59
 73;Aplicativo não abre - +5571982608529 (73);Inovit > GRUPO BRASILEIRO;18/07/2026 16:48;18/07/2026 18:14;0 segundo;Incidente;Software > Outros - Reparar;Automação INOVIT (2584);Suporte N1<br>Suporte N3;;Fechado;;;18/07/2026 18:14
 74;Impressora não está imprimindo as passagens - +5579999473881 (74);Inovit > GRUPO BRASILEIRO;18/07/2026 20:43;;0 segundo;Incidente;Periférico > Impressora - Correção de falha;Automação INOVIT (2584);Suporte N1;;Pendente;;;27/07/2026 14:47
-75;Tarifa muda para promocional ao preencher dados do cliente no pagamento - +5575998960819 (75);Inovit > GRUPO BRASILEIRO;19/07/2026 05:01;28/07/2026 13:22;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;QUIJINGUE ROTA TRANSPORTES RODOVIARIOS LTDA (2837);Suporte N1;Leovan Serafim (2600);Fechado;;;28/07/2026 13:22
-76;Venda de passagem funcionando normalmente - +5573988220450 (76);Inovit > GRUPO BRASILEIRO;19/07/2026 07:33;;0 segundo;Incidente;Abertura de chamado;CAMACAN RODOVIARIA ROTA TRANSPORTES RODOVIARIOS LTDA (2670);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Pendente;;5;27/07/2026 08:08
+75;Tarifa muda para promocional ao preencher dados do cliente no pagamento - +5575998960819 (75);Inovit > GRUPO BRASILEIRO;19/07/2026 05:01;28/07/2026 13:22;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;QUIJINGUE ROTA TRANSPORTES RODOVIARIOS LTDA (2837);Suporte N1;Leovan Serafim;Fechado;;;28/07/2026 13:22
+76;Venda de passagem funcionando normalmente - +5573988220450 (76);Inovit > GRUPO BRASILEIRO;19/07/2026 07:33;;0 segundo;Incidente;Abertura de chamado;CAMACAN RODOVIARIA ROTA TRANSPORTES RODOVIARIOS LTDA (2670);Suporte N1<br>Suporte N3;Leovan Serafim;Pendente;;5;27/07/2026 08:08
 77;Não consigo emitir passagem - +5575988316291 (77);Inovit > GRUPO BRASILEIRO;19/07/2026 07:33;24/07/2026 11:30;0 segundo;Incidente;Periférico > Impressora - Correção de falha;Automação INOVIT (2584);Suporte N1;;Fechado;;;29/07/2026 07:02
 78;Instabilidade no sistema impede venda de passagens - +5575988649452 (78);Inovit > GRUPO BRASILEIRO;19/07/2026 07:34;;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;;Pendente;;5;29/07/2026 07:39
 79;Totalbus não emite bilhetes e apresenta erro - +557536323361 (79);Inovit > GRUPO BRASILEIRO;19/07/2026 07:37;25/07/2026 13:47;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;SANTO ANTONIO DE JESUS VIACAO JEQUIE CIDADE SOL LTDA (2856);Suporte N1;;Fechado;;;25/07/2026 13:47
-80;Erro de rejeição ao emitir passagens - +5575999139220 (80);Inovit > GRUPO BRASILEIRO;19/07/2026 07:41;;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;ITABERABA RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2743);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Pendente;;;23/07/2026 10:22
+80;Erro de rejeição ao emitir passagens - +5575999139220 (80);Inovit > GRUPO BRASILEIRO;19/07/2026 07:41;;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;ITABERABA RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2743);Suporte N1<br>Suporte N3;Leovan Serafim;Pendente;;;23/07/2026 10:22
 81;Erro aparecendo no sistema - +5573988220452 (81);Inovit > GRUPO BRASILEIRO;19/07/2026 07:44;19/07/2026 12:44;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;;Fechado;;;19/07/2026 13:06
-82;Link Pay Bay Link pago no cartão continua como ativo e não concluído - +5573988348445 (82);Inovit > GRUPO BRASILEIRO;19/07/2026 13:36;23/07/2026 16:19;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;PORTO SEGURO RODOVIARIA EB EXPRESSO BRASILEIRO TRANSPORTES LTDA (2831);Suporte N1;Kevin Soveral (2599);Fechado;;;29/07/2026 11:51
+82;Link Pay Bay Link pago no cartão continua como ativo e não concluído - +5573988348445 (82);Inovit > GRUPO BRASILEIRO;19/07/2026 13:36;23/07/2026 16:19;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;PORTO SEGURO RODOVIARIA EB EXPRESSO BRASILEIRO TRANSPORTES LTDA (2831);Suporte N1;Kevin Soveral;Fechado;;;29/07/2026 11:51
 83;Não consigo me conectar no computador - +5573981275992 (83);Inovit > GRUPO BRASILEIRO;19/07/2026 14:58;19/07/2026 16:46;0 segundo;Incidente;Internet > Indisponibilidade;PONTA DA TULHA ROTA TRANSPORTES RODOVIARIOS LTDA (2990);Suporte N1;;Fechado;;;19/07/2026 16:46
-84;Sistema de bilhete eletrônico parou de funcionar - +5573991247472 (84);Inovit > GRUPO BRASILEIRO;20/07/2026 05:37;;0 segundo;Incidente;Software > Outros - Reparar;ITABUNA - POSTO CACHOEIRA ITABUNA - POSTO CACHOEIRA (2609);Suporte N1;Leovan Serafim (2600);Pendente;;;20/07/2026 12:26
-85;Sistema exibindo dois valores - +5575991247611 (85);Inovit > GRUPO BRASILEIRO;20/07/2026 09:21;23/07/2026 12:18;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;MARCIONILIO SOUZA VIACAO JEQUIE CIDADE SOL LTDA (2794);Suporte N1;Leovan Serafim (2600);Fechado;;;23/07/2026 12:18
+84;Sistema de bilhete eletrônico parou de funcionar - +5573991247472 (84);Inovit > GRUPO BRASILEIRO;20/07/2026 05:37;;0 segundo;Incidente;Software > Outros - Reparar;ITABUNA - POSTO CACHOEIRA ITABUNA - POSTO CACHOEIRA (2609);Suporte N1;Leovan Serafim;Pendente;;;20/07/2026 12:26
+85;Sistema exibindo dois valores - +5575991247611 (85);Inovit > GRUPO BRASILEIRO;20/07/2026 09:21;23/07/2026 12:18;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;MARCIONILIO SOUZA VIACAO JEQUIE CIDADE SOL LTDA (2794);Suporte N1;Leovan Serafim;Fechado;;;23/07/2026 12:18
 86;Erro ao passar cartão - +5561996929382 (86);Inovit > GRUPO BRASILEIRO;20/07/2026 10:25;20/07/2026 10:29;0 segundo;Incidente;Internet > Indisponibilidade;SALVADOR - RDJ SHOPPING ITAIGARA SALVADOR - RDJ SHOPPING ITAIGARA (2606);Suporte N1;;Fechado;;;20/07/2026 10:46
-87;Erro ao passar cartão - +5571983605768 (87);Inovit > GRUPO BRASILEIRO;20/07/2026 11:01;20/07/2026 11:07;0 segundo;Incidente;Internet > Indisponibilidade;SALVADOR - RDJ SHOPPING ITAIGARA SALVADOR - RDJ SHOPPING ITAIGARA (2606);Suporte N1;Leovan Serafim (2600);Fechado;;;20/07/2026 11:07
-88;Instalação de programas e configuração de e-mail para usuário - +5573999781045 (88);Inovit > GRUPO BRASILEIRO;20/07/2026 11:08;23/07/2026 12:21;0 segundo;Incidente;Serviço de rede > AD - Desbloquear conta de rede;Automação INOVIT (2584);Suporte N1<br>Suporte N2;Leovan Serafim (2600);Fechado;;;23/07/2026 12:21
-89;Configurar usuário após troca da CPU - +5573991468770 (89);Inovit > GRUPO BRASILEIRO;20/07/2026 11:09;24/07/2026 10:15;0 segundo;Incidente;Sistema operacional > Desktop - Configurar;Automação INOVIT (2584);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Fechado;;;24/07/2026 10:15
+87;Erro ao passar cartão - +5571983605768 (87);Inovit > GRUPO BRASILEIRO;20/07/2026 11:01;20/07/2026 11:07;0 segundo;Incidente;Internet > Indisponibilidade;SALVADOR - RDJ SHOPPING ITAIGARA SALVADOR - RDJ SHOPPING ITAIGARA (2606);Suporte N1;Leovan Serafim;Fechado;;;20/07/2026 11:07
+88;Instalação de programas e configuração de e-mail para usuário - +5573999781045 (88);Inovit > GRUPO BRASILEIRO;20/07/2026 11:08;23/07/2026 12:21;0 segundo;Incidente;Serviço de rede > AD - Desbloquear conta de rede;Automação INOVIT (2584);Suporte N1<br>Suporte N2;Leovan Serafim;Fechado;;;23/07/2026 12:21
+89;Configurar usuário após troca da CPU - +5573991468770 (89);Inovit > GRUPO BRASILEIRO;20/07/2026 11:09;24/07/2026 10:15;0 segundo;Incidente;Sistema operacional > Desktop - Configurar;Automação INOVIT (2584);Suporte N1<br>Suporte N3;Leovan Serafim;Fechado;;;24/07/2026 10:15
 90;Solicitação para desinstalar e instalar novamente - +5573999306658 (90);Inovit > GRUPO BRASILEIRO;22/07/2026 11:27;;0 segundo;Incidente;Software > Outros - Reparar;Automação INOVIT (2584);Suporte N1;;Pendente;;;29/07/2026 11:43
 91;E-mail não carrega as mensagens - +5573999756675 (91);Inovit > GRUPO BRASILEIRO;22/07/2026 12:14;;0 segundo;Incidente;E-mail > Correção de falha;Automação INOVIT (2584);Suporte N1<br>Suporte N3;;Pendente;;5;22/07/2026 12:16
-92;Erro ao tirar passagens na maquininha - +5575981644989 (92);Inovit > GRUPO BRASILEIRO;22/07/2026 12:53;;0 segundo;Incidente;Periférico > Outros - Correção de falha;RIBEIRA DO POMBAL VIACAO JEQUIE CIDADE SOL LTDA (2935);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Pendente;;5;29/07/2026 07:32
-93;Não consegue acessar - +5574999911032 (93);Inovit > GRUPO BRASILEIRO;22/07/2026 14:07;27/07/2026 13:58;0 segundo;Incidente;Internet > Falha acesso a site;LAPAO VIACAO JEQUIE CIDADE SOL LTDA (2782);Suporte N1;Kevin Soveral (2599);Fechado;;;27/07/2026 13:59
-94;Usuário realizando testes - +5573999283502 (94);Inovit > GRUPO BRASILEIRO;22/07/2026 14:21;23/07/2026 16:20;0 segundo;Incidente;Abertura de chamado;Itabuna ROTA (3021);Suporte N1;Kevin Soveral (2599);Fechado;;;23/07/2026 16:20
+92;Erro ao tirar passagens na maquininha - +5575981644989 (92);Inovit > GRUPO BRASILEIRO;22/07/2026 12:53;;0 segundo;Incidente;Periférico > Outros - Correção de falha;RIBEIRA DO POMBAL VIACAO JEQUIE CIDADE SOL LTDA (2935);Suporte N1<br>Suporte N3;Leovan Serafim;Pendente;;5;29/07/2026 07:32
+93;Não consegue acessar - +5574999911032 (93);Inovit > GRUPO BRASILEIRO;22/07/2026 14:07;27/07/2026 13:58;0 segundo;Incidente;Internet > Falha acesso a site;LAPAO VIACAO JEQUIE CIDADE SOL LTDA (2782);Suporte N1;Kevin Soveral;Fechado;;;27/07/2026 13:59
+94;Usuário realizando testes - +5573999283502 (94);Inovit > GRUPO BRASILEIRO;22/07/2026 14:21;23/07/2026 16:20;0 segundo;Incidente;Abertura de chamado;Itabuna ROTA (3021);Suporte N1;Kevin Soveral;Fechado;;;23/07/2026 16:20
 95;Realizando teste - +5573991714946 (95);Inovit > GRUPO BRASILEIRO;22/07/2026 14:31;27/07/2026 13:49;0 segundo;Incidente;Abertura de chamado;Itabuna ROTA (3021);Suporte N1;;Fechado;;;27/07/2026 13:49
 96;Erro 0x80070005 ao selecionar impressora da sala - +5577998752141 (96);Inovit > GRUPO BRASILEIRO;22/07/2026 14:34;;0 segundo;Incidente;Periférico > Impressora - Correção de falha;Automação INOVIT (2584);Suporte N1;;Pendente;;;29/07/2026 07:06
-97;E-mail não recebe nem envia mensagens - +5573982394797 (97);Inovit > GRUPO BRASILEIRO;22/07/2026 15:14;23/07/2026 11:00;0 segundo;Incidente;E-mail > Alterar Senha;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Fechado;;;23/07/2026 11:00
-98;Emitir passagens em aberto da Caixa 065008 - +5573998160132 (98);Inovit > GRUPO BRASILEIRO;22/07/2026 15:47;27/07/2026 14:00;0 segundo;Incidente;Sistema ERP > Execução de Rotina;PORTO SEGURO RODOVIARIA EB EXPRESSO BRASILEIRO TRANSPORTES LTDA (2831);Suporte N1;Kevin Soveral (2599);Fechado;;;29/07/2026 11:05
-99;E-mail não está atualizando - +5573998046192 (99);Inovit > GRUPO BRASILEIRO;22/07/2026 17:35;23/07/2026 08:00;0 segundo;Incidente;Sistema operacional > Falha Drive;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Fechado;;;23/07/2026 08:01
-100;Maquininha não sincroniza por bilhete pendente com erro - +5573999152503 (100);Inovit > GRUPO BRASILEIRO;23/07/2026 05:55;;0 segundo;Incidente;Sistema ponto > Configurar;POSTO DA MATA RODOVIARIA GILBERTO MOREIRA DA SILVA (2833);Suporte N1;Leovan Serafim (2600);Pendente;;;27/07/2026 13:29
-101;Autorizar vendas em aberto para empresas na Nati - +5573998683922 (101);Inovit > GRUPO BRASILEIRO;23/07/2026 06:40;;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;Porto Seguro ROTA (3028);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 07:01
-102;Configurar máquina do técnico de segurança na impressora - +5577991616100 (102);Inovit > GRUPO BRASILEIRO;23/07/2026 08:39;23/07/2026 08:56;0 segundo;Incidente;Software > Outros - Instalar;Vitoria da Conquista G1 ROTA (3037);Suporte N1;Leovan Serafim (2600);Fechado;;;23/07/2026 08:56
-103;Computador da agência sem sinal de energia e não liga - +5583998114379 (103);Inovit > GRUPO BRASILEIRO;23/07/2026 09:26;;0 segundo;Incidente;Hardware > Desktop - Correção de falha;JOAO PESSOA ROTA TRANSPORTES RODOVIARIOS LTDA (2774);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 07:07
-104;Instalação de impressora - +5571996017173 (104);Inovit > GRUPO BRASILEIRO;23/07/2026 14:05;27/07/2026 14:13;0 segundo;Incidente;Periférico > Impressora - Instalar;GLORIA ROTA TRANSPORTES RODOVIARIOS LTDA (2715);Suporte N1;Kevin Soveral (2599);Fechado;;;27/07/2026 14:14
-105;Configurar a CPU - +5574998005280 (105);Inovit > GRUPO BRASILEIRO;23/07/2026 14:06;23/07/2026 16:16;0 segundo;Incidente;Sistema ERP > Cliente - Instalar;CAPIM GROSSO SUB ROTA TRANSPORTES RODOVIARIOS LTDA (2682);Suporte N1;Kevin Soveral (2599);Fechado;;;28/07/2026 14:17
-106;Configurar maquininha de cartão - +5573982508050 (106);Inovit > GRUPO BRASILEIRO;23/07/2026 14:45;;0 segundo;Incidente;Periférico > Outros - Instalar;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 08:37
+97;E-mail não recebe nem envia mensagens - +5573982394797 (97);Inovit > GRUPO BRASILEIRO;22/07/2026 15:14;23/07/2026 11:00;0 segundo;Incidente;E-mail > Alterar Senha;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Fechado;;;23/07/2026 11:00
+98;Emitir passagens em aberto da Caixa 065008 - +5573998160132 (98);Inovit > GRUPO BRASILEIRO;22/07/2026 15:47;27/07/2026 14:00;0 segundo;Incidente;Sistema ERP > Execução de Rotina;PORTO SEGURO RODOVIARIA EB EXPRESSO BRASILEIRO TRANSPORTES LTDA (2831);Suporte N1;Kevin Soveral;Fechado;;;29/07/2026 11:05
+99;E-mail não está atualizando - +5573998046192 (99);Inovit > GRUPO BRASILEIRO;22/07/2026 17:35;23/07/2026 08:00;0 segundo;Incidente;Sistema operacional > Falha Drive;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Fechado;;;23/07/2026 08:01
+100;Maquininha não sincroniza por bilhete pendente com erro - +5573999152503 (100);Inovit > GRUPO BRASILEIRO;23/07/2026 05:55;;0 segundo;Incidente;Sistema ponto > Configurar;POSTO DA MATA RODOVIARIA GILBERTO MOREIRA DA SILVA (2833);Suporte N1;Leovan Serafim;Pendente;;;27/07/2026 13:29
+101;Autorizar vendas em aberto para empresas na Nati - +5573998683922 (101);Inovit > GRUPO BRASILEIRO;23/07/2026 06:40;;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;Porto Seguro ROTA (3028);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 07:01
+102;Configurar máquina do técnico de segurança na impressora - +5577991616100 (102);Inovit > GRUPO BRASILEIRO;23/07/2026 08:39;23/07/2026 08:56;0 segundo;Incidente;Software > Outros - Instalar;Vitoria da Conquista G1 ROTA (3037);Suporte N1;Leovan Serafim;Fechado;;;23/07/2026 08:56
+103;Computador da agência sem sinal de energia e não liga - +5583998114379 (103);Inovit > GRUPO BRASILEIRO;23/07/2026 09:26;;0 segundo;Incidente;Hardware > Desktop - Correção de falha;JOAO PESSOA ROTA TRANSPORTES RODOVIARIOS LTDA (2774);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 07:07
+104;Instalação de impressora - +5571996017173 (104);Inovit > GRUPO BRASILEIRO;23/07/2026 14:05;27/07/2026 14:13;0 segundo;Incidente;Periférico > Impressora - Instalar;GLORIA ROTA TRANSPORTES RODOVIARIOS LTDA (2715);Suporte N1;Kevin Soveral;Fechado;;;27/07/2026 14:14
+105;Configurar a CPU - +5574998005280 (105);Inovit > GRUPO BRASILEIRO;23/07/2026 14:06;23/07/2026 16:16;0 segundo;Incidente;Sistema ERP > Cliente - Instalar;CAPIM GROSSO SUB ROTA TRANSPORTES RODOVIARIOS LTDA (2682);Suporte N1;Kevin Soveral;Fechado;;;28/07/2026 14:17
+106;Configurar maquininha de cartão - +5573982508050 (106);Inovit > GRUPO BRASILEIRO;23/07/2026 14:45;;0 segundo;Incidente;Periférico > Outros - Instalar;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 08:37
 107;Após queda de energia computador ficou com a tela preta - +5573988220472 (107);Inovit > GRUPO BRASILEIRO;23/07/2026 14:55;;0 segundo;Incidente;Hardware > Desktop - Correção de falha;Ilheus ROTA (3022);Suporte N1;;Pendente;;;27/07/2026 14:01
 108;Máquina de check-in não encerra embarque - +5573981372050 (108);Inovit > GRUPO BRASILEIRO;23/07/2026 15:10;;0 segundo;Incidente;Software > Outros - Reparar;Porto Seguro ROTA (3028);Suporte N1<br>Suporte N3;;Pendente;;5;28/07/2026 16:40
-109;Não consigo acessar a agência via AnyDesk - +5573999006602 (109);Inovit > GRUPO BRASILEIRO;23/07/2026 15:25;;0 segundo;Incidente;Software > Outros - Reparar;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 08:38
+109;Não consigo acessar a agência via AnyDesk - +5573999006602 (109);Inovit > GRUPO BRASILEIRO;23/07/2026 15:25;;0 segundo;Incidente;Software > Outros - Reparar;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 08:38
 110;Criação de e-mail corporativo - +5575991992329 (110);Inovit > GRUPO BRASILEIRO;23/07/2026 16:48;;0 segundo;Incidente;E-mail > Criar Conta;Automação INOVIT (2584);Suporte N1;;Pendente;;;29/07/2026 11:39
-111;Computador voltou da manutenção e não liga - +5575998599438 (111);Inovit > GRUPO BRASILEIRO;24/07/2026 07:41;28/07/2026 10:41;0 segundo;Incidente;Hardware > Desktop - Correção de falha;ESPLANADA ROTA TRANSPORTES RODOVIARIOS LTDA (2701);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Fechado;;;28/07/2026 10:41
-112;Impressora não está imprimindo - +5575981308176 (112);Inovit > GRUPO BRASILEIRO;24/07/2026 07:44;;0 segundo;Incidente;Periférico > Impressora - Correção de falha;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Pendente;;5;29/07/2026 07:33
+111;Computador voltou da manutenção e não liga - +5575998599438 (111);Inovit > GRUPO BRASILEIRO;24/07/2026 07:41;28/07/2026 10:41;0 segundo;Incidente;Hardware > Desktop - Correção de falha;ESPLANADA ROTA TRANSPORTES RODOVIARIOS LTDA (2701);Suporte N1<br>Suporte N3;Leovan Serafim;Fechado;;;28/07/2026 10:41
+112;Impressora não está imprimindo - +5575981308176 (112);Inovit > GRUPO BRASILEIRO;24/07/2026 07:44;;0 segundo;Incidente;Periférico > Impressora - Correção de falha;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Pendente;;5;29/07/2026 07:33
 113;Configurar impressora para impressão do mapa - +5575981970963 (113);Inovit > GRUPO BRASILEIRO;24/07/2026 08:04;;0 segundo;Incidente;Periférico > Impressora - Configurar;SAPEACU VIACAO JEQUIE CIDADE SOL LTDA (2862);Suporte N1;;Pendente;;;29/07/2026 07:03
 114;Problemas na conexão da maquineta de cartão - +5574999068573 (114);Inovit > GRUPO BRASILEIRO;24/07/2026 08:51;;0 segundo;Incidente;Internet > Indisponibilidade;Juazeiro ROTA (2968);Suporte N1;;Pendente;;;29/07/2026 07:02
-115;Não consegue realizar vendas pela Internet - +5574981454150 (115);Inovit > GRUPO BRASILEIRO;24/07/2026 09:11;;0 segundo;Incidente;Internet > Indisponibilidade;PONTO NOVO ROTA TRANSPORTES RODOVIARIOS LTDA (2828);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 07:12
-116;Máquina de passagens com problema - +5573988671786 (116);Inovit > GRUPO BRASILEIRO;24/07/2026 09:12;;0 segundo;Incidente;Periférico > Outros - Correção de falha;PORTO SEGURO - VALE TRANSPORTE (2932);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 07:05
-117;Solicitação de token SSW Mobile - +5575998612145 (117);Inovit > GRUPO BRASILEIRO;24/07/2026 09:16;29/07/2026 08:53;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;ITAPICURU RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2758);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 08:53
-118;Entrada de peças em transferência de Itabuna para Conquista - +5577991616100 (118);Inovit > GRUPO BRASILEIRO;24/07/2026 11:07;29/07/2026 07:34;0 segundo;Incidente;Sistema ERP > Rotina Sistema;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 07:34
-119;Necessidade de configuração após troca da impressora Bematech - +5571996293937 (119);Inovit > GRUPO BRASILEIRO;24/07/2026 11:13;28/07/2026 13:16;0 segundo;Incidente;Periférico > Impressora - Configurar;NOVA SOURE ROTA TRANSPORTES RODOVIARIOS LTDA (2812);Suporte N1;Leovan Serafim (2600);Fechado;;;28/07/2026 13:16
+115;Não consegue realizar vendas pela Internet - +5574981454150 (115);Inovit > GRUPO BRASILEIRO;24/07/2026 09:11;;0 segundo;Incidente;Internet > Indisponibilidade;PONTO NOVO ROTA TRANSPORTES RODOVIARIOS LTDA (2828);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 07:12
+116;Máquina de passagens com problema - +5573988671786 (116);Inovit > GRUPO BRASILEIRO;24/07/2026 09:12;;0 segundo;Incidente;Periférico > Outros - Correção de falha;PORTO SEGURO - VALE TRANSPORTE (2932);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 07:05
+117;Solicitação de token SSW Mobile - +5575998612145 (117);Inovit > GRUPO BRASILEIRO;24/07/2026 09:16;29/07/2026 08:53;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;ITAPICURU RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2758);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 08:53
+118;Entrada de peças em transferência de Itabuna para Conquista - +5577991616100 (118);Inovit > GRUPO BRASILEIRO;24/07/2026 11:07;29/07/2026 07:34;0 segundo;Incidente;Sistema ERP > Rotina Sistema;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 07:34
+119;Necessidade de configuração após troca da impressora Bematech - +5571996293937 (119);Inovit > GRUPO BRASILEIRO;24/07/2026 11:13;28/07/2026 13:16;0 segundo;Incidente;Periférico > Impressora - Configurar;NOVA SOURE ROTA TRANSPORTES RODOVIARIOS LTDA (2812);Suporte N1;Leovan Serafim;Fechado;;;28/07/2026 13:16
 120;Não consigo emitir a declaração de conteúdo - +5579998844729 (120);Inovit > GRUPO BRASILEIRO;24/07/2026 11:53;;0 segundo;Incidente;;Aracaju ROTA (3024);Suporte N1;;Pendente;;;24/07/2026 17:56
-121;Sem conseguir acesso ao Globus - +5573991196941 (121);Inovit > GRUPO BRASILEIRO;24/07/2026 12:53;;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;Kevin Soveral (2599);Pendente;;5;24/07/2026 17:29
+121;Sem conseguir acesso ao Globus - +5573991196941 (121);Inovit > GRUPO BRASILEIRO;24/07/2026 12:53;;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;Kevin Soveral;Pendente;;5;24/07/2026 17:29
 122;Máquina sem sinal de internet há 9 dias com caixa fechado - +5511960925939 (122);Inovit > GRUPO BRASILEIRO;24/07/2026 13:51;;0 segundo;Incidente;Internet > Indisponibilidade;ITABUNA - CNPC ITABUNA - CNPC (2605);Suporte N1<br>Suporte N3;;Pendente;;5;24/07/2026 14:40
-123;Migrar o sistema para outra máquina enquanto o PC está em manutenção - +5577988660178 (123);Inovit > GRUPO BRASILEIRO;24/07/2026 15:38;;0 segundo;Incidente;Sistema ERP > Cliente - Migrar;VITORIA DA CONQ MAXTOUR ROTA TRANSPORTES RODOVIARIOS LTDA (2898);Suporte N1;Kevin Soveral (2599);Pendente;;5;29/07/2026 08:03
+123;Migrar o sistema para outra máquina enquanto o PC está em manutenção - +5577988660178 (123);Inovit > GRUPO BRASILEIRO;24/07/2026 15:38;;0 segundo;Incidente;Sistema ERP > Cliente - Migrar;VITORIA DA CONQ MAXTOUR ROTA TRANSPORTES RODOVIARIOS LTDA (2898);Suporte N1;Kevin Soveral;Pendente;;5;29/07/2026 08:03
 124;Sistema de vendas não está abrindo - +5575999191077 (124);Inovit > GRUPO BRASILEIRO;24/07/2026 16:00;;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;RIBEIRA DO POMBAL VIACAO JEQUIE CIDADE SOL LTDA (2935);Suporte N1;;Pendente;;;24/07/2026 16:29
-125;Acesso ao app de vendas e conexão da impressora após formatação - +5574998055887 (125);Inovit > GRUPO BRASILEIRO;24/07/2026 16:14;;0 segundo;Incidente;Software > Outros - Instalar;PILAR DIST JAGUARARI ROTA TRANSPORTES RODOVIARIOS LTDA (2820);Suporte N1;Kevin Soveral (2599);Pendente;;;24/07/2026 17:21
-126;E-mail não atualiza e solicitação de análise com setor interno - +5573998046192 (126);Inovit > GRUPO BRASILEIRO;24/07/2026 17:28;25/07/2026 16:46;0 segundo;Incidente;E-mail > Correção de falha;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 07:54
-127;Máquina do Ivo está com problema - +5573988220499 (127);Inovit > GRUPO BRASILEIRO;25/07/2026 07:41;25/07/2026 08:38;0 segundo;Incidente;Periférico > Impressora - Correção de falha;VALENCA RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2893);Suporte N1;Kevin Soveral (2599);Fechado;;;25/07/2026 08:38
-128;Esqueci a senha do SSW - +5571997363690 (128);Inovit > GRUPO BRASILEIRO;25/07/2026 08:36;25/07/2026 08:48;0 segundo;Incidente;Sistema ERP > Alterar senha;POJUCA RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2825);Suporte N1;Kevin Soveral (2599);Fechado;;;25/07/2026 08:48
-129;Impressora não está imprimindo - +5573991468770 (129);Inovit > GRUPO BRASILEIRO;25/07/2026 10:02;27/07/2026 13:41;0 segundo;Incidente;Periférico > Impressora - Correção de falha;ARRAIAL DAJUDA ARCO-IRIS ARCO IRIS VIAGENS E TURISMO LTDA (2645);Suporte N1;Leovan Serafim (2600);Fechado;;;27/07/2026 13:41
-130;Computador congelando - +5571991756485 (130);Inovit > GRUPO BRASILEIRO;25/07/2026 10:59;28/07/2026 07:24;0 segundo;Incidente;Sistema operacional > Desktop - Correção de falha;SALVADOR - MARECHAL RONDON SALVADOR - MARECHAL RONDON (2632);Suporte N1;Leovan Serafim (2600);Fechado;;;28/07/2026 07:24
-131;Sem energia na agência e sem acesso à maquininha e agência digital - +5573988794066 (131);Inovit > GRUPO BRASILEIRO;25/07/2026 11:42;25/07/2026 12:30;0 segundo;Incidente;Sistema ERP > Alterar senha;CAMACAN RODOVIARIA ROTA TRANSPORTES RODOVIARIOS LTDA (2670);Suporte N1;Kevin Soveral (2599);Fechado;;;25/07/2026 13:21
-132;Usuário com ponto de venda diferente - +5573999845496 (132);Inovit > GRUPO BRASILEIRO;25/07/2026 11:43;25/07/2026 15:44;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;TEIXEIRA CENTRO EXPRESSO BRASILEIRO TRANSPORTES LTDA (2876);Suporte N1;Leovan Serafim (2600);Fechado;;;25/07/2026 15:44
+125;Acesso ao app de vendas e conexão da impressora após formatação - +5574998055887 (125);Inovit > GRUPO BRASILEIRO;24/07/2026 16:14;;0 segundo;Incidente;Software > Outros - Instalar;PILAR DIST JAGUARARI ROTA TRANSPORTES RODOVIARIOS LTDA (2820);Suporte N1;Kevin Soveral;Pendente;;;24/07/2026 17:21
+126;E-mail não atualiza e solicitação de análise com setor interno - +5573998046192 (126);Inovit > GRUPO BRASILEIRO;24/07/2026 17:28;25/07/2026 16:46;0 segundo;Incidente;E-mail > Correção de falha;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 07:54
+127;Máquina do Ivo está com problema - +5573988220499 (127);Inovit > GRUPO BRASILEIRO;25/07/2026 07:41;25/07/2026 08:38;0 segundo;Incidente;Periférico > Impressora - Correção de falha;VALENCA RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2893);Suporte N1;Kevin Soveral;Fechado;;;25/07/2026 08:38
+128;Esqueci a senha do SSW - +5571997363690 (128);Inovit > GRUPO BRASILEIRO;25/07/2026 08:36;25/07/2026 08:48;0 segundo;Incidente;Sistema ERP > Alterar senha;POJUCA RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2825);Suporte N1;Kevin Soveral;Fechado;;;25/07/2026 08:48
+129;Impressora não está imprimindo - +5573991468770 (129);Inovit > GRUPO BRASILEIRO;25/07/2026 10:02;27/07/2026 13:41;0 segundo;Incidente;Periférico > Impressora - Correção de falha;ARRAIAL DAJUDA ARCO-IRIS ARCO IRIS VIAGENS E TURISMO LTDA (2645);Suporte N1;Leovan Serafim;Fechado;;;27/07/2026 13:41
+130;Computador congelando - +5571991756485 (130);Inovit > GRUPO BRASILEIRO;25/07/2026 10:59;28/07/2026 07:24;0 segundo;Incidente;Sistema operacional > Desktop - Correção de falha;SALVADOR - MARECHAL RONDON SALVADOR - MARECHAL RONDON (2632);Suporte N1;Leovan Serafim;Fechado;;;28/07/2026 07:24
+131;Sem energia na agência e sem acesso à maquininha e agência digital - +5573988794066 (131);Inovit > GRUPO BRASILEIRO;25/07/2026 11:42;25/07/2026 12:30;0 segundo;Incidente;Sistema ERP > Alterar senha;CAMACAN RODOVIARIA ROTA TRANSPORTES RODOVIARIOS LTDA (2670);Suporte N1;Kevin Soveral;Fechado;;;25/07/2026 13:21
+132;Usuário com ponto de venda diferente - +5573999845496 (132);Inovit > GRUPO BRASILEIRO;25/07/2026 11:43;25/07/2026 15:44;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;TEIXEIRA CENTRO EXPRESSO BRASILEIRO TRANSPORTES LTDA (2876);Suporte N1;Leovan Serafim;Fechado;;;25/07/2026 15:44
 133;Não consigo editar documentos no Word - +5573998284234 (133);Inovit > GRUPO BRASILEIRO;25/07/2026 11:56;25/07/2026 12:34;0 segundo;Incidente;Software > Office - Reparar;UNA ROTA TRANSPORTES RODOVIARIA LTDA (2890);Suporte N1;;Fechado;;;25/07/2026 12:34
-134;Receita/despesa não imprime e papel não sai mesmo com fila verificada - +5573981905831 (134);Inovit > GRUPO BRASILEIRO;25/07/2026 13:19;25/07/2026 16:32;0 segundo;Incidente;Sistema ERP > Rotina Sistema;EUNAPOLIS PONTO EXPRESSO NEILZA QUINTINO DE OLIVEIRA (2705);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Fechado;;;25/07/2026 16:32
+134;Receita/despesa não imprime e papel não sai mesmo com fila verificada - +5573981905831 (134);Inovit > GRUPO BRASILEIRO;25/07/2026 13:19;25/07/2026 16:32;0 segundo;Incidente;Sistema ERP > Rotina Sistema;EUNAPOLIS PONTO EXPRESSO NEILZA QUINTINO DE OLIVEIRA (2705);Suporte N1<br>Suporte N3;Leovan Serafim;Fechado;;;25/07/2026 16:32
 135;Máquina parou de funcionar - +5573999592718 (135);Inovit > GRUPO BRASILEIRO;25/07/2026 18:13;;0 segundo;Incidente;Hardware > Desktop - Correção de falha;Teixeira de Freitas ROTA (3027);Suporte N1<br>Suporte N3;;Pendente;;5;25/07/2026 18:47
 136;Erro ao imprimir - +5575988137434 (136);Inovit > GRUPO BRASILEIRO;26/07/2026 10:38;27/07/2026 09:33;"0 segundo
-0 segundo";Incidente;Periférico > Impressora - Correção de falha;SANTO ESTEVAO RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2857);Suporte N1;Luciano Araujo (1995) <br>Kevin Soveral (2599) <br>Leovan Serafim (2600);Fechado;;;27/07/2026 09:33
-137;Viagem em aberto no sistema de controle de embarque - +5574998031413 (137);Inovit > GRUPO BRASILEIRO;26/07/2026 11:27;26/07/2026 12:44;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Juazeiro ROTA (2968);Suporte N1;Luciano Araujo (1995) <br>Kevin Soveral (2599) <br>Leovan Serafim (2600);Fechado;;;26/07/2026 12:44
-138;E-mail não recebe nem envia mensagens - +5575999923849 (138);Inovit > GRUPO BRASILEIRO;27/07/2026 07:44;;0 segundo;Incidente;E-mail > Correção de falha;Feira de Santana ROTA (3029);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 07:54
-139;Auxílio na instalação de programas no computador provisório - +5583999894443 (139);Inovit > GRUPO BRASILEIRO;27/07/2026 09:46;;0 segundo;Incidente;Software > Outros - Instalar;JOAO PESSOA ROTA TRANSPORTES RODOVIARIOS LTDA (2774);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 08:47
-140;Internet lenta no setor CCO afetando análise de videomonitoramento - +5573999781045 (140);Inovit > GRUPO BRASILEIRO;27/07/2026 09:59;;0 segundo;Incidente;Internet > Lentidão;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 07:57
-141;Aplicativo de venda desinstalou sozinho - +5575981417543 (141);Inovit > GRUPO BRASILEIRO;27/07/2026 10:30;27/07/2026 13:58;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Fechado;;;27/07/2026 13:58
+0 segundo";Incidente;Periférico > Impressora - Correção de falha;SANTO ESTEVAO RODOVIARIA VIACAO JEQUIE CIDADE SOL LTDA (2857);Suporte N1;Luciano Araujo <br>Kevin Soveral <br>Leovan Serafim;Fechado;;;27/07/2026 09:33
+137;Viagem em aberto no sistema de controle de embarque - +5574998031413 (137);Inovit > GRUPO BRASILEIRO;26/07/2026 11:27;26/07/2026 12:44;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Juazeiro ROTA (2968);Suporte N1;Luciano Araujo <br>Kevin Soveral <br>Leovan Serafim;Fechado;;;26/07/2026 12:44
+138;E-mail não recebe nem envia mensagens - +5575999923849 (138);Inovit > GRUPO BRASILEIRO;27/07/2026 07:44;;0 segundo;Incidente;E-mail > Correção de falha;Feira de Santana ROTA (3029);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 07:54
+139;Auxílio na instalação de programas no computador provisório - +5583999894443 (139);Inovit > GRUPO BRASILEIRO;27/07/2026 09:46;;0 segundo;Incidente;Software > Outros - Instalar;JOAO PESSOA ROTA TRANSPORTES RODOVIARIOS LTDA (2774);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 08:47
+140;Internet lenta no setor CCO afetando análise de videomonitoramento - +5573999781045 (140);Inovit > GRUPO BRASILEIRO;27/07/2026 09:59;;0 segundo;Incidente;Internet > Lentidão;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 07:57
+141;Aplicativo de venda desinstalou sozinho - +5575981417543 (141);Inovit > GRUPO BRASILEIRO;27/07/2026 10:30;27/07/2026 13:58;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Fechado;;;27/07/2026 13:58
 142;Solicitação de token para voltar a usar o SSW Mobile - +5574999233906 (142);Inovit > GRUPO BRASILEIRO;27/07/2026 11:13;;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;Automação INOVIT (2584);Suporte N1;;Pendente;;;29/07/2026 10:54
-143;Wshare sem acesso - +5573988333253 (143);Inovit > GRUPO BRASILEIRO;27/07/2026 11:28;27/07/2026 13:34;0 segundo;Incidente;Internet > Falha acesso a site;Eunapolis ROTA (3025);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Fechado;;;27/07/2026 13:34
-144;Problemas na emissão da DCE declaração de conteúdo eletrônico - +5579999233945 (144);Inovit > GRUPO BRASILEIRO;27/07/2026 12:16;27/07/2026 13:23;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Fechado;;;27/07/2026 13:23
+143;Wshare sem acesso - +5573988333253 (143);Inovit > GRUPO BRASILEIRO;27/07/2026 11:28;27/07/2026 13:34;0 segundo;Incidente;Internet > Falha acesso a site;Eunapolis ROTA (3025);Suporte N1<br>Suporte N3;Leovan Serafim;Fechado;;;27/07/2026 13:34
+144;Problemas na emissão da DCE declaração de conteúdo eletrônico - +5579999233945 (144);Inovit > GRUPO BRASILEIRO;27/07/2026 12:16;27/07/2026 13:23;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Fechado;;;27/07/2026 13:23
 145;Maquininha não está passando cartão - +5573981088017 (145);Inovit > GRUPO BRASILEIRO;27/07/2026 12:38;;0 segundo;Incidente;Periférico > Outros - Correção de falha;IPIAU SUB VIACAO JEQUIE CIDADE SOL LTDA (2735);Suporte N1;;Pendente;;;29/07/2026 10:56
-146;Sem acesso ao AnyDesk para atendimento iniciado por Gabriel - +5573988333253 (146);Inovit > GRUPO BRASILEIRO;27/07/2026 13:41;29/07/2026 09:07;0 segundo;Incidente;Software > Outros - Reparar;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 09:07
+146;Sem acesso ao AnyDesk para atendimento iniciado por Gabriel - +5573988333253 (146);Inovit > GRUPO BRASILEIRO;27/07/2026 13:41;29/07/2026 09:07;0 segundo;Incidente;Software > Outros - Reparar;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 09:07
 147;Configurar e-mail na nova máquina - +5571997176710 (147);Inovit > GRUPO BRASILEIRO;27/07/2026 14:02;;0 segundo;Incidente;E-mail > Configurar Outlook;Automação INOVIT (2584);Suporte N1;;Pendente;;3;29/07/2026 11:54
-148;Não consigo abrir o Totalbus - +5575988596933 (148);Inovit > GRUPO BRASILEIRO;27/07/2026 14:10;27/07/2026 15:04;0 segundo;Incidente;Sistema ERP > Alterar senha;ENCARNACAO VIACAO JEQUIE CIDADE SOL LTDA (2957);Suporte N1;Kevin Soveral (2599);Fechado;;;29/07/2026 10:42
+148;Não consigo abrir o Totalbus - +5575988596933 (148);Inovit > GRUPO BRASILEIRO;27/07/2026 14:10;27/07/2026 15:04;0 segundo;Incidente;Sistema ERP > Alterar senha;ENCARNACAO VIACAO JEQUIE CIDADE SOL LTDA (2957);Suporte N1;Kevin Soveral;Fechado;;;29/07/2026 10:42
 149;Sistema de cargas indisponível - +5574999083567 (149);Inovit > GRUPO BRASILEIRO;27/07/2026 14:37;;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;;Pendente;;;29/07/2026 11:45
-150;Não consegue abrir o sistema GLOBUS - +5579988777613 (150);Inovit > GRUPO BRASILEIRO;27/07/2026 14:52;27/07/2026 15:10;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Aracaju ROTA (3024);Suporte N1;Kevin Soveral (2599);Fechado;;;28/07/2026 15:05
-151;Configuração de nova impressora após troca - +5577981549350 (151);Inovit > GRUPO BRASILEIRO;27/07/2026 15:09;27/07/2026 18:23;0 segundo;Incidente;Periférico > Impressora - Configurar;GUANAMBI ROTA TRANSPORTES RODOVIARIOS LTDA (2718);Suporte N1;Kevin Soveral (2599);Fechado;;;27/07/2026 18:23
+150;Não consegue abrir o sistema GLOBUS - +5579988777613 (150);Inovit > GRUPO BRASILEIRO;27/07/2026 14:52;27/07/2026 15:10;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Aracaju ROTA (3024);Suporte N1;Kevin Soveral;Fechado;;;28/07/2026 15:05
+151;Configuração de nova impressora após troca - +5577981549350 (151);Inovit > GRUPO BRASILEIRO;27/07/2026 15:09;27/07/2026 18:23;0 segundo;Incidente;Periférico > Impressora - Configurar;GUANAMBI ROTA TRANSPORTES RODOVIARIOS LTDA (2718);Suporte N1;Kevin Soveral;Fechado;;;27/07/2026 18:23
 152;Estabilizador com problema após quedas de energia - +5582982260843 (152);Inovit > GRUPO BRASILEIRO;27/07/2026 15:19;;0 segundo;Incidente;Hardware > Falha Nobreak/Estabilizador;MACEIO ROTA TRANSPORTES RODOVIARIOS LTDA (2786);Suporte N1<br>Suporte N2;;Pendente;;;29/07/2026 09:34
-153;Serviço voltou ao normal - +5575991562942 (153);Inovit > GRUPO BRASILEIRO;27/07/2026 15:41;29/07/2026 08:54;0 segundo;Incidente;Abertura de chamado;BRAVO VIACAO JEQUIE CIDADE SOL LTDA (2663);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 08:54
+153;Serviço voltou ao normal - +5575991562942 (153);Inovit > GRUPO BRASILEIRO;27/07/2026 15:41;29/07/2026 08:54;0 segundo;Incidente;Abertura de chamado;BRAVO VIACAO JEQUIE CIDADE SOL LTDA (2663);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 08:54
 154;Monitor travando e com imagem muito escura para digitar - +5577988869248 (154);Inovit > GRUPO BRASILEIRO;27/07/2026 17:37;;0 segundo;Incidente;Periférico > Monitor - Correção de Falha;Vitoria da Conquista G2 ROTA (3038);Suporte N1;;Pendente;;;28/07/2026 16:28
-155;Erro ao trocar passagem por compra em moeda diferente - +5574988211602 (155);Inovit > GRUPO BRASILEIRO;27/07/2026 19:48;;0 segundo;Incidente;Solicitação de transporte;Juazeiro ROTA (2968);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 11:38
+155;Erro ao trocar passagem por compra em moeda diferente - +5574988211602 (155);Inovit > GRUPO BRASILEIRO;27/07/2026 19:48;;0 segundo;Incidente;Solicitação de transporte;Juazeiro ROTA (2968);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 11:38
 156;Passagens não estão saindo legíveis - +5573988944471 (156);Inovit > GRUPO BRASILEIRO;27/07/2026 21:04;;0 segundo;Incidente;Periférico > Impressora - Correção de falha;DARIO MEIRA VIACAO JEQUIE CIDADE SOL LTDA (2697);Suporte N1<br>Suporte N3;;Pendente;;5;29/07/2026 08:37
-157;Internet caiu - +5573998662583 (157);Inovit > GRUPO BRASILEIRO;28/07/2026 03:28;;0 segundo;Incidente;Internet > Indisponibilidade;Automação INOVIT (2584);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Pendente;;5;29/07/2026 08:40
-158;Ponto não funciona na agência provável falta de energia - +5573988516280 (158);Inovit > GRUPO BRASILEIRO;28/07/2026 07:47;29/07/2026 11:39;0 segundo;Incidente;Hardware > Relogio de Ponto - Reparo;ITABUNA - POSTO CACHOEIRA ITABUNA - POSTO CACHOEIRA (2609);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 11:39
-159;Configuração de CPU recém-recebida - +5575998599438 (159);Inovit > GRUPO BRASILEIRO;28/07/2026 10:43;28/07/2026 11:01;0 segundo;Incidente;Periférico > Impressora - Correção de falha;ESPLANADA ROTA TRANSPORTES RODOVIARIOS LTDA (2701);Suporte N1;Leovan Serafim (2600);Fechado;;;28/07/2026 11:01
-160;Acesso ao Total Bus - +5573999502602 (160);Inovit > GRUPO BRASILEIRO;28/07/2026 10:49;29/07/2026 11:45;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;IBIRATAIA VIACAO JEQUIE CIDADE SOL LTDA (2725);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 11:45
-161;Solicitação resolvida - +557536323361 (161);Inovit > GRUPO BRASILEIRO;28/07/2026 11:46;29/07/2026 08:40;0 segundo;Incidente;;SANTO ANTONIO DE JESUS VIACAO JEQUIE CIDADE SOL LTDA (2856);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 08:40
+157;Internet caiu - +5573998662583 (157);Inovit > GRUPO BRASILEIRO;28/07/2026 03:28;;0 segundo;Incidente;Internet > Indisponibilidade;Automação INOVIT (2584);Suporte N1<br>Suporte N3;Leovan Serafim;Pendente;;5;29/07/2026 08:40
+158;Ponto não funciona na agência provável falta de energia - +5573988516280 (158);Inovit > GRUPO BRASILEIRO;28/07/2026 07:47;29/07/2026 11:39;0 segundo;Incidente;Hardware > Relogio de Ponto - Reparo;ITABUNA - POSTO CACHOEIRA ITABUNA - POSTO CACHOEIRA (2609);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 11:39
+159;Configuração de CPU recém-recebida - +5575998599438 (159);Inovit > GRUPO BRASILEIRO;28/07/2026 10:43;28/07/2026 11:01;0 segundo;Incidente;Periférico > Impressora - Correção de falha;ESPLANADA ROTA TRANSPORTES RODOVIARIOS LTDA (2701);Suporte N1;Leovan Serafim;Fechado;;;28/07/2026 11:01
+160;Acesso ao Total Bus - +5573999502602 (160);Inovit > GRUPO BRASILEIRO;28/07/2026 10:49;29/07/2026 11:45;0 segundo;Incidente;Sistema ERP > Cliente - Permissão;IBIRATAIA VIACAO JEQUIE CIDADE SOL LTDA (2725);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 11:45
+161;Solicitação resolvida - +557536323361 (161);Inovit > GRUPO BRASILEIRO;28/07/2026 11:46;29/07/2026 08:40;0 segundo;Incidente;;SANTO ANTONIO DE JESUS VIACAO JEQUIE CIDADE SOL LTDA (2856);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 08:40
 162;Sistema caiu e após reiniciar mostra estação não cadastrada no sistema - +5577981202449 (162);Inovit > GRUPO BRASILEIRO;28/07/2026 12:18;;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1<br>Suporte N3;;Pendente;;;28/07/2026 17:28
 163;Não consigo lançar no SGI - +5573988220491 (163);Inovit > GRUPO BRASILEIRO;28/07/2026 15:45;;0 segundo;Incidente;Sistema ERP > Execução de Rotina;Automação INOVIT (2584);Suporte N1;;Pendente;;;28/07/2026 16:26
-164;Senha bloqueada - +5574998005280 (164);Inovit > GRUPO BRASILEIRO;28/07/2026 20:11;;0 segundo;Incidente;Serviço de rede > AD - Desbloquear conta de rede;CAPIM GROSSO SUB ROTA TRANSPORTES RODOVIARIOS LTDA (2682);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Pendente;;5;29/07/2026 11:53
-165;Totalbus não abre - +5577988511083 (165);Inovit > GRUPO BRASILEIRO;29/07/2026 05:50;29/07/2026 07:35;0 segundo;Incidente;Software > Outros - Reparar;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 07:35
-166;Solicitação relacionada aos usuários 069012 e 069003 - +5573998389595 (166);Inovit > GRUPO BRASILEIRO;29/07/2026 07:37;;0 segundo;Incidente;Serviço de rede > AD - Adicionar|Desabilitar usuário;ITAMARAJU RODOVIARIA EXPRESSO BRASILEIRO TRANSPORTES LTDA (2751);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 09:49
+164;Senha bloqueada - +5574998005280 (164);Inovit > GRUPO BRASILEIRO;28/07/2026 20:11;;0 segundo;Incidente;Serviço de rede > AD - Desbloquear conta de rede;CAPIM GROSSO SUB ROTA TRANSPORTES RODOVIARIOS LTDA (2682);Suporte N1<br>Suporte N3;Leovan Serafim;Pendente;;5;29/07/2026 11:53
+165;Totalbus não abre - +5577988511083 (165);Inovit > GRUPO BRASILEIRO;29/07/2026 05:50;29/07/2026 07:35;0 segundo;Incidente;Software > Outros - Reparar;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 07:35
+166;Solicitação relacionada aos usuários 069012 e 069003 - +5573998389595 (166);Inovit > GRUPO BRASILEIRO;29/07/2026 07:37;;0 segundo;Incidente;Serviço de rede > AD - Adicionar|Desabilitar usuário;ITAMARAJU RODOVIARIA EXPRESSO BRASILEIRO TRANSPORTES LTDA (2751);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 09:49
 167;Oscilação de Internet - +5573988611456 (167);Inovit > GRUPO BRASILEIRO;29/07/2026 08:18;;0 segundo;Incidente;Internet > Instabilidade;Automação INOVIT (2584);Suporte N1;;Pendente;;;29/07/2026 11:56
-168;Sistema de venda não abre - +5573981845104 (168);Inovit > GRUPO BRASILEIRO;29/07/2026 08:21;29/07/2026 08:33;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 08:38
-169;Adicionar e-mail no Outlook desta máquina para nova estagiária do jurídico - +5573991311938 (169);Inovit > GRUPO BRASILEIRO;29/07/2026 08:49;29/07/2026 09:45;0 segundo;Incidente;E-mail > Configurar Outlook;Automação INOVIT (2584);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 09:45
-170;Não consigo entrar no sistema desde 08:00 - +5577988469774 (170);Inovit > GRUPO BRASILEIRO;29/07/2026 09:01;29/07/2026 10:28;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;VITORIA DA CONQ MAXTOUR ROTA TRANSPORTES RODOVIARIOS LTDA (2898);Suporte N1<br>Suporte N3;Leovan Serafim (2600);Fechado;;;29/07/2026 10:28
-171;Confirmação de resolução do problema - +5573998726453 (171);Inovit > GRUPO BRASILEIRO;29/07/2026 09:19;29/07/2026 09:38;0 segundo;Incidente;;POSTO DA MATA RODOVIARIA GILBERTO MOREIRA DA SILVA (2833);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 09:38
+168;Sistema de venda não abre - +5573981845104 (168);Inovit > GRUPO BRASILEIRO;29/07/2026 08:21;29/07/2026 08:33;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 08:38
+169;Adicionar e-mail no Outlook desta máquina para nova estagiária do jurídico - +5573991311938 (169);Inovit > GRUPO BRASILEIRO;29/07/2026 08:49;29/07/2026 09:45;0 segundo;Incidente;E-mail > Configurar Outlook;Automação INOVIT (2584);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 09:45
+170;Não consigo entrar no sistema desde 08:00 - +5577988469774 (170);Inovit > GRUPO BRASILEIRO;29/07/2026 09:01;29/07/2026 10:28;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;VITORIA DA CONQ MAXTOUR ROTA TRANSPORTES RODOVIARIOS LTDA (2898);Suporte N1<br>Suporte N3;Leovan Serafim;Fechado;;;29/07/2026 10:28
+171;Confirmação de resolução do problema - +5573998726453 (171);Inovit > GRUPO BRASILEIRO;29/07/2026 09:19;29/07/2026 09:38;0 segundo;Incidente;;POSTO DA MATA RODOVIARIA GILBERTO MOREIRA DA SILVA (2833);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 09:38
 172;Máquina com instabilidade no Pix, crédito e débito - +5573988220499 (172);Inovit > GRUPO BRASILEIRO;29/07/2026 09:47;;0 segundo;Incidente;Internet > Instabilidade;Automação INOVIT (2584);Suporte N1;;Pendente;;;29/07/2026 11:55
-173;Erro ao acessar sistema com usuário e senha - +5571999136617 (173);Inovit > GRUPO BRASILEIRO;29/07/2026 10:19;29/07/2026 10:46;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;SALVADOR - RDJ SHOPPING ITAIGARA SALVADOR - RDJ SHOPPING ITAIGARA (2606);Suporte N1;Leovan Serafim (2600);Fechado;;;29/07/2026 10:46
-174;Troca de horário em passagens sem opção venda em pé - +5577981242248 (174);Inovit > GRUPO BRASILEIRO;29/07/2026 10:26;;0 segundo;Incidente;;IGUAI VIACAO JEQUIE CIDADE SOL LTDA (2728);Suporte N1;Leovan Serafim (2600);Pendente;;;29/07/2026 10:49
+173;Erro ao acessar sistema com usuário e senha - +5571999136617 (173);Inovit > GRUPO BRASILEIRO;29/07/2026 10:19;29/07/2026 10:46;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;SALVADOR - RDJ SHOPPING ITAIGARA SALVADOR - RDJ SHOPPING ITAIGARA (2606);Suporte N1;Leovan Serafim;Fechado;;;29/07/2026 10:46
+174;Troca de horário em passagens sem opção venda em pé - +5577981242248 (174);Inovit > GRUPO BRASILEIRO;29/07/2026 10:26;;0 segundo;Incidente;;IGUAI VIACAO JEQUIE CIDADE SOL LTDA (2728);Suporte N1;Leovan Serafim;Pendente;;;29/07/2026 10:49
 175;Não consigo acessar o sistema - +5577988133447 (175);Inovit > GRUPO BRASILEIRO;29/07/2026 10:44;;0 segundo;Incidente;Sistema ERP > Cliente - Correção de falha;POCOES SUB AGENCIA VIACAO JEQUIE CIDADE SOL LTDA (2824);Suporte N1;;Pendente;;;29/07/2026 11:56
