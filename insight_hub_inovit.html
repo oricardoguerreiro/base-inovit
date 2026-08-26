@@ -472,6 +472,92 @@ window.loadCrmData=async function(){
   const sc=document.getElementById('crm-search-container'); if(sc) sc.style.display=(window.crmActiveTab==='geral')?'block':'none';
 };
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ===== CORREÇÃO CRM: parser limpo (id,category,name,client,whatsapp,email) + Supabase =====
+const SB_URL='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
+const sbx = (window.supabase && !window.sb) ? window.supabase.createClient(SB_URL, SB_KEY) : (window.sb || null);
+
+function splitCsv(line){ return line.split(',').map(s=>s.trim()); }
+function dominioDe(email){ return (email && email.includes('@')) ? email.split('@')[1].trim() : ''; }
+
+// Parser único e limpo para os dois arquivos
+function parseCrmLine(line, tipo){
+  if(!line || !line.trim()) return null;
+  const p = splitCsv(line);
+  // ignora cabeçalho id,category,...
+  if((p[0]||'').toLowerCase()==='id' && (p[1]||'').toLowerCase()==='category') return null;
+  let id=null, category=tipo, name='', client='', whatsapp='', email='';
+  if(tipo==='decisores'){
+    // formato: id,category,name,client,whatsapp,email
+    if(p.length>=6){ id=p[0]; category=p[1]||tipo; name=p[2]; client=p[3]; whatsapp=p[4]; email=p[5]; }
+    else if(p.length>=4){ name=p[0]; client=p[1]; email=p[2]; whatsapp=p[3]; }
+    else return null;
+    if(!client) client = dominioDe(email);
+  } else {
+    // geral: name,[sobrenome/cliente],email,whatsapp,local,category
+    const idx = p.findIndex(x=>x && x.includes('@'));
+    if(idx===-1) return null;
+    email = p[idx];
+    name = p.slice(0, idx).join(' ').trim();
+    whatsapp = p[idx+1] || '';
+    client = dominioDe(email); // client vem do domínio do e-mail
+  }
+  if(!name && !email) return null;
+  if(!client) client = dominioDe(email);
+  return { id: id || (tipo+'_'+Math.random().toString(36).slice(2,8)), category, name, client, whatsapp, email };
+}
+function parseCrmText(text, tipo){
+  const out=[]; (text||'').split(/\r?\n/).forEach(l=>{ const o=parseCrmLine(l, tipo); if(o) out.push(o); });
+  return out;
+}
+
+let _decisoresCache=null, _geralCache=null;
+
+// Sobrescreve as funções de leitura do app (retornam cache limpo)
+window.loadDecisores = function(){ return (_decisoresCache||[]).map(r=>({nome:r.name, cliente:r.client, whatsapp:r.whatsapp, email:r.email})); };
+window.loadGeral = function(){ return (_geralCache||[]).map(r=>({nome:r.name, cliente:r.client, whatsapp:r.whatsapp, email:r.email})); };
+
+// Migração LIMPA para o Supabase (apaga e reinsere dados limpos)
+async function migrarCrmLimpo(){
+  if(!sbx) { console.warn('Supabase indisponível'); return; }
+  try{
+    const [td, tg] = await Promise.all([
+      fetch('https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt').then(r=>r.text()).catch(()=> ''),
+      fetch('https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt').then(r=>r.text()).catch(()=> '')
+    ]);
+    _decisoresCache = parseCrmText(td, 'decisores');
+    _geralCache = parseCrmText(tg, 'geral');
+    // limpa a tabela e reinsere limpo
+    await sbx.from('crm').delete().not('tipo','is',null);
+    const ins = [];
+    _decisoresCache.forEach(r=>ins.push({tipo:'decisores', nome:r.name, cliente:r.client, whatsapp:r.whatsapp, email:r.email}));
+    _geralCache.forEach(r=>ins.push({tipo:'geral', nome:r.name, cliente:r.client, whatsapp:r.whatsapp, email:r.email}));
+    if(ins.length) await sbx.from('crm').insert(ins);
+    // atualiza cache local do app (fallback)
+    localStorage.setItem('crm_decisores', JSON.stringify(window.loadDecisores()));
+    localStorage.setItem('crm_geral', JSON.stringify(window.loadGeral()));
+    if (typeof renderCrmTable==='function') renderCrmTable();
+    console.log('✅ CRM migrado limpo para o Supabase:', _decisoresCache.length, 'decisores,', _geralCache.length, 'geral.');
+  }catch(e){ console.warn('Migração CRM falhou:', e); }
+}
+
+// Ao carregar: tenta ler do Supabase; se vazio, migra dos TXT
+(async ()=>{
+  if(!sbx) return;
+  try{
+    const {data} = await sbx.from('crm').select('*');
+    if(data && data.length){
+      _decisoresCache = data.filter(r=>r.tipo==='decisores').map(r=>({name:r.nome, client:r.cliente, whatsapp:r.whatsapp, email:r.email}));
+      _geralCache = data.filter(r=>r.tipo==='geral').map(r=>({name:r.nome, client:r.cliente, whatsapp:r.whatsapp, email:r.email}));
+      if (typeof renderCrmTable==='function') renderCrmTable();
+    } else {
+      await migrarCrmLimpo();
+    }
+  }catch(e){ console.warn(e); }
+})();
+</script>
 <body>
 <div id="login-overlay">
 <div class="login-box">
