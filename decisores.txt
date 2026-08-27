@@ -1,4 +1,3 @@
-id,category,name,client,whatsapp,email
 decisor_001,decisores,Claudia,ACCTA,+55 71 9326-5750,claudia@accta.com.br
 decisor_002,decisores,Tawany,ACTA,+55 71 9399-3317,adm@acta.com.br
 decisor_003,decisores,Juliana,AGILIZE,+55 61 99864-8594,juliana.oliveira@agilize.com.br
