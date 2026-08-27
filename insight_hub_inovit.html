@@ -2220,5 +2220,50 @@ window.parseGeralLine = function(line){
   window.addEventListener('load', sync);
 })();
 </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* SYNC PLANOS DE AÇÃO -> SUPABASE (não perde dados locais) */
+(function(){
+  if(!window.supabase) return;
+  var sb = window.supabase.createClient(
+    'https://jqgjfwlrkdxgkrdqbbrt.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo'
+  );
+  function lerLocal(){ try{ return JSON.parse(localStorage.getItem('inovit_planos_acao')||'[]'); }catch(e){ return []; } }
+  function gravarLocal(p){ localStorage.setItem('inovit_planos_acao', JSON.stringify(p)); }
+  function up(p){ return p.map(function(x){ return { id:x.id, payload:x }; }); }
+
+  async function sync(){
+    try{
+      var rem = await sb.from('planos_acao').select('*');
+      if(rem.error){ console.warn('Supabase:', rem.error); return; }
+      var remList = (rem.data||[]).map(function(r){ return r.payload; });
+      var local = lerLocal();
+      if(remList.length===0 && local.length>0){
+        // Migração: sobe o que já existe neste navegador (não apaga nada)
+        await sb.from('planos_acao').upsert(up(local), {onConflict:'id'});
+      } else if(remList.length>0){
+        // Mescla por id (Supabase tem prioridade) e atualiza este navegador
+        var map={}; local.forEach(function(p){map[p.id]=p;}); remList.forEach(function(p){map[p.id]=p;});
+        var merged=Object.values(map);
+        gravarLocal(merged);
+        await sb.from('planos_acao').upsert(up(merged), {onConflict:'id'});
+        if(window.renderPlanosAcao) window.renderPlanosAcao();
+        if(window.atualizarBadgePlanos) window.atualizarBadgePlanos();
+      }
+    }catch(e){ console.warn('sync planos:', e); }
+  }
+
+  // Todo save do app passa a gravar também no Supabase
+  window.savePlanosAcao = function(p){
+    gravarLocal(p);
+    sb.from('planos_acao').upsert(up(p), {onConflict:'id'}).then(function(){}, function(e){ console.warn(e); });
+    if(window.renderPlanosAcao) window.renderPlanosAcao();
+    if(window.atualizarBadgePlanos) window.atualizarBadgePlanos();
+  };
+
+  window.addEventListener('load', sync);
+})();
+</script>
 </body>
 </html>
