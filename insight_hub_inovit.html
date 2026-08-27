@@ -250,312 +250,47 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',
 </head>
 <!-- ===== CONECTOR SUPABASE (não altera o resto do app) ===== -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SB_URL='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
-const sb = window.supabase.createClient(SB_URL, SB_KEY);
-
-async function puxarSupabase(){
-  try{
-    const [u,pl,v,c] = await Promise.all([
-      sb.from('users').select('*'),
-      sb.from('planos_acao').select('*'),
-      sb.from('visitas').select('*'),
-      sb.from('crm').select('*')
-    ]);
-    if(u.data && u.data.length){
-      const users={}; const perms={};
-      u.data.forEach(r=>{ users[r.username]={password:r.password, displayName:r.display_name||r.username}; perms[r.username]=r.perms||{}; });
-      localStorage.setItem('inovit_users', JSON.stringify(users));
-      localStorage.setItem('inovit_perms', JSON.stringify(perms));
-    }
-    if(pl.data && pl.data.length) localStorage.setItem('inovit_planos_acao', JSON.stringify(pl.data.map(r=>r.payload)));
-    if(v.data && v.data.length) localStorage.setItem('inovit_visitas', JSON.stringify(v.data.map(r=>r.payload)));
-    if(c.data && c.data.length){
-      const dec=c.data.filter(r=>r.tipo==='decisores').map(r=>({nome:r.nome,cliente:r.cliente,whatsapp:r.whatsapp,email:r.email}));
-      const ger=c.data.filter(r=>r.tipo==='geral').map(r=>({nome:r.nome,cliente:r.cliente,whatsapp:r.whatsapp,email:r.email}));
-      localStorage.setItem('crm_decisores', JSON.stringify(dec));
-      localStorage.setItem('crm_geral', JSON.stringify(ger));
-    }
-  }catch(e){ console.warn('Supabase pull falhou; usando dados locais.', e); }
-}
-async function enviarSupabase(){
-  try{
-    const users=JSON.parse(localStorage.getItem('inovit_users')||'{}');
-    const perms=JSON.parse(localStorage.getItem('inovit_perms')||'{}');
-    const uRows=Object.keys(users).map(u=>({username:u,password:users[u].password,display_name:users[u].displayName||u,perms:perms[u]||{}}));
-    if(uRows.length) await sb.from('users').upsert(uRows,{onConflict:'username'});
-    const planos=JSON.parse(localStorage.getItem('inovit_planos_acao')||'[]');
-    if(planos.length) await sb.from('planos_acao').upsert(planos.map(p=>({id:p.id,payload:p})),{onConflict:'id'});
-    const visitas=JSON.parse(localStorage.getItem('inovit_visitas')||'[]');
-    if(visitas.length) await sb.from('visitas').upsert(visitas.map(v=>({id:v.id,payload:v})),{onConflict:'id'});
-    const dec=JSON.parse(localStorage.getItem('crm_decisores')||'[]').map(r=>({tipo:'decisores',nome:r.nome,cliente:r.cliente,whatsapp:r.whatsapp,email:r.email}));
-    const ger=JSON.parse(localStorage.getItem('crm_geral')||'[]').map(r=>({tipo:'geral',nome:r.nome,cliente:r.cliente,whatsapp:r.whatsapp,email:r.email}));
-    await sb.from('crm').delete().not('tipo','is',null);
-    if(dec.length) await sb.from('crm').insert(dec);
-    if(ger.length) await sb.from('crm').insert(ger);
-  }catch(e){ console.warn('Supabase push falhou.', e); }
-}
-// No início: puxa do Supabase e, na primeira vez, recarrega para o app ler os dados novos.
-(async ()=>{
-  await puxarSupabase();
-  if(!sessionStorage.getItem('sb_sync_done')){ sessionStorage.setItem('sb_sync_done','1'); location.reload(); }
-  setInterval(enviarSupabase, 30000);           // salva no banco a cada 30s
-  window.addEventListener('beforeunload', enviarSupabase); // salva ao fechar
-})();
 </script>
 <!-- ===== CONECTOR SUPABASE (não altera o resto do app) ===== -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SB_URL='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
-const sb = window.supabase.createClient(SB_URL, SB_KEY);
-
-async function puxarSupabase(){
-  try{
-    const [u,pl,v,c] = await Promise.all([
-      sb.from('users').select('*'),
-      sb.from('planos_acao').select('*'),
-      sb.from('visitas').select('*'),
-      sb.from('crm').select('*')
-    ]);
-    if(u.data && u.data.length){
-      const users={}; const perms={};
-      u.data.forEach(r=>{ users[r.username]={password:r.password, displayName:r.display_name||r.username}; perms[r.username]=r.perms||{}; });
-      localStorage.setItem('inovit_users', JSON.stringify(users));
-      localStorage.setItem('inovit_perms', JSON.stringify(perms));
-    }
-    if(pl.data && pl.data.length) localStorage.setItem('inovit_planos_acao', JSON.stringify(pl.data.map(r=>r.payload)));
-    if(v.data && v.data.length) localStorage.setItem('inovit_visitas', JSON.stringify(v.data.map(r=>r.payload)));
-    if(c.data && c.data.length){
-      const dec=c.data.filter(r=>r.tipo==='decisores').map(r=>({nome:r.nome,cliente:r.cliente,whatsapp:r.whatsapp,email:r.email}));
-      const ger=c.data.filter(r=>r.tipo==='geral').map(r=>({nome:r.nome,cliente:r.cliente,whatsapp:r.whatsapp,email:r.email}));
-      localStorage.setItem('crm_decisores', JSON.stringify(dec));
-      localStorage.setItem('crm_geral', JSON.stringify(ger));
-    }
-  }catch(e){ console.warn('Supabase pull falhou; usando dados locais.', e); }
-}
-async function enviarSupabase(){
-  try{
-    const users=JSON.parse(localStorage.getItem('inovit_users')||'{}');
-    const perms=JSON.parse(localStorage.getItem('inovit_perms')||'{}');
-    const uRows=Object.keys(users).map(u=>({username:u,password:users[u].password,display_name:users[u].displayName||u,perms:perms[u]||{}}));
-    if(uRows.length) await sb.from('users').upsert(uRows,{onConflict:'username'});
-    const planos=JSON.parse(localStorage.getItem('inovit_planos_acao')||'[]');
-    if(planos.length) await sb.from('planos_acao').upsert(planos.map(p=>({id:p.id,payload:p})),{onConflict:'id'});
-    const visitas=JSON.parse(localStorage.getItem('inovit_visitas')||'[]');
-    if(visitas.length) await sb.from('visitas').upsert(visitas.map(v=>({id:v.id,payload:v})),{onConflict:'id'});
-    const dec=JSON.parse(localStorage.getItem('crm_decisores')||'[]').map(r=>({tipo:'decisores',nome:r.nome,cliente:r.cliente,whatsapp:r.whatsapp,email:r.email}));
-    const ger=JSON.parse(localStorage.getItem('crm_geral')||'[]').map(r=>({tipo:'geral',nome:r.nome,cliente:r.cliente,whatsapp:r.whatsapp,email:r.email}));
-    await sb.from('crm').delete().not('tipo','is',null);
-    if(dec.length) await sb.from('crm').insert(dec);
-    if(ger.length) await sb.from('crm').insert(ger);
-  }catch(e){ console.warn('Supabase push falhou.', e); }
-}
-// No início: puxa do Supabase e, na primeira vez, recarrega para o app ler os dados novos.
-(async ()=>{
-  await puxarSupabase();
-  if(!sessionStorage.getItem('sb_sync_done')){ sessionStorage.setItem('sb_sync_done','1'); location.reload(); }
-  setInterval(enviarSupabase, 30000);           // salva no banco a cada 30s
-  window.addEventListener('beforeunload', enviarSupabase); // salva ao fechar
-})();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SB_URL='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
-const sb = window.supabase.createClient(SB_URL, SB_KEY);
-
-function lerLocal(k){ try{ return JSON.parse(localStorage.getItem(k)||'[]'); }catch(e){ return []; } }
-function planoObj(r){ return (r && r.payload) ? r.payload : r; }
-
-async function sincronizarPlanos(){
-  const local = lerLocal('inovit_planos_acao');
-  const rem = await sb.from('planos_acao').select('*');
-  const remList = (rem.data||[]).map(planoObj).filter(p=>p && p.id);
-  // Mescla por id (Supabase tem prioridade, mas não apaga o que só existe no local)
-  const map = {}; local.forEach(p=>{ if(p&&p.id) map[p.id]=p; });
-  remList.forEach(p=>{ map[p.id]=p; });
-  const merged = Object.values(map);
-  localStorage.setItem('inovit_planos_acao', JSON.stringify(merged));
-  // Sobe tudo que falta para o Supabase
-  if (merged.length) await sb.from('planos_acao').upsert(merged.map(p=>({id:p.id, payload:p})), {onConflict:'id'});
-  return merged;
-}
-async function sincronizarVisitas(){
-  const local = lerLocal('inovit_visitas');
-  const rem = await sb.from('visitas').select('*');
-  const remList = (rem.data||[]).map(planoObj).filter(v=>v && v.id);
-  const map = {}; local.forEach(v=>{ if(v&&v.id) map[v.id]=v; });
-  remList.forEach(v=>{ map[v.id]=v; });
-  const merged = Object.values(map);
-  localStorage.setItem('inovit_visitas', JSON.stringify(merged));
-  if (merged.length) await sb.from('visitas').upsert(merged.map(v=>({id:v.id, payload:v})), {onConflict:'id'});
-  return merged;
-}
-(async ()=>{
-  try{
-    await sincronizarPlanos();
-    await sincronizarVisitas();
-    // Re-renderiza se o app já carregou
-    if (typeof renderPlanosAcao==='function') renderPlanosAcao();
-    if (typeof renderCalendario==='function') renderCalendario();
-    if (typeof atualizarBadgePlanos==='function') atualizarBadgePlanos();
-  }catch(e){ console.warn('Sincronização falhou:', e); }
-})();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SB_URL='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
-const sb = window.supabase.createClient(SB_URL, SB_KEY);
-let _crmDecisoresCache=null, _crmGeralCache=null;
-
-// Parser do NOVO formato: id,categoria,nome,cliente,whatsapp,email
-function parseCrmCsv(text){
-  const lines=(text||'').split(/\r?\n/).map(l=>l.trim()).filter(l=>l && !l.toLowerCase().startsWith('id,'));
-  const out=[];
-  lines.forEach(l=>{
-    const p=l.split(',').map(x=>x.trim());
-    if(p.length>=6){ out.push({nome:p[2], cliente:p[3], whatsapp:p[4], email:p[5]}); }
-    else if(p.length>=4){ out.push({nome:p[0], cliente:p[1], whatsapp:p[2], email:p[3]}); }
-  });
-  return out;
-}
-async function migrarCrmSeVazio(){
-  try{
-    const chk=await sb.from('crm').select('id').limit(1);
-    if(chk.data && chk.data.length) return; // já migrado
-    const [td,tg]=await Promise.all([
-      fetch('https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt').then(r=>r.text()).catch(()=> ''),
-      fetch('https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt').then(r=>r.text()).catch(()=> '')
-    ]);
-    const dec=parseCrmCsv(td).map(r=>({tipo:'decisores',...r}));
-    const ger=parseCrmCsv(tg).map(r=>({tipo:'geral',...r}));
-    if(dec.length) await sb.from('crm').insert(dec);
-    if(ger.length) await sb.from('crm').insert(ger);
-  }catch(e){ console.warn('Migração CRM falhou:', e); }
-}
-async function puxarCrm(){
-  const {data}=await sb.from('crm').select('*');
-  _crmDecisoresCache=(data||[]).filter(r=>r.tipo==='decisores').map(r=>({nome:r.nome,cliente:r.cliente,whatsapp:r.whatsapp,email:r.email}));
-  _crmGeralCache=(data||[]).filter(r=>r.tipo==='geral').map(r=>({nome:r.nome,cliente:r.cliente,whatsapp:r.whatsapp,email:r.email}));
-}
-function lerTabelaEdicao(){
-  const rows=[...document.querySelectorAll('#crm-table-body tr')];
-  const nd=[]; rows.forEach(tr=>{ const inp=tr.querySelectorAll('input'); if(inp.length>=4) nd.push({nome:inp[0].value.trim(),cliente:inp[1].value.trim(),whatsapp:inp[2].value.trim(),email:inp[3].value.trim()}); });
-  return nd;
-}
-// ===== Sobrescreve as funções do app (CRM passa a ser Supabase) =====
-window.loadDecisores=function(){ return _crmDecisoresCache||[]; };
-window.loadGeral=function(){ return _crmGeralCache||[]; };
-window.saveDecisores=async function(){
-  const nd=lerTabelaEdicao(); _crmDecisoresCache=nd;
-  await sb.from('crm').delete().eq('tipo','decisores');
-  if(nd.length) await sb.from('crm').insert(nd.map(r=>({tipo:'decisores',...r})));
-  alert('✅ Decisores salvos no Supabase!'); renderCrmTable();
-};
-window.saveGeral=async function(){
-  const nd=lerTabelaEdicao(); _crmGeralCache=nd;
-  await sb.from('crm').delete().eq('tipo','geral');
-  if(nd.length) await sb.from('crm').insert(nd.map(r=>({tipo:'geral',...r})));
-  alert('✅ Geral salvo no Supabase!');
-  if (typeof crmSearchTerm!=='undefined' && crmSearchTerm) applyCrmFilter(); else renderCrmTable();
-};
-window.loadCrmData=async function(){
-  await migrarCrmSeVazio();
-  await puxarCrm();
-  if(!window.crmActiveTab) window.crmActiveTab='decisores';
-  renderCrmTable();
-  document.querySelectorAll('.crm-tabs .btn-crm-tab').forEach(b=>b.classList.remove('active-tab'));
-  const tb=document.getElementById('crm-tab-'+window.crmActiveTab); if(tb) tb.classList.add('active-tab');
-  const sc=document.getElementById('crm-search-container'); if(sc) sc.style.display=(window.crmActiveTab==='geral')?'block':'none';
-};
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</script>
 <script>
-// ===== CORREÇÃO CRM: parser limpo (id,category,name,client,whatsapp,email) + Supabase =====
-const SB_URL='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
-const sbx = (window.supabase && !window.sb) ? window.supabase.createClient(SB_URL, SB_KEY) : (window.sb || null);
+/* SYNC ÚNICO SUPABASE — cole SOMENTE este bloco */
+(function(){
+  if (window.__INOVIT_SYNC) return; window.__INOVIT_SYNC = true;
+  var URL='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
+  var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
+  function boot(cb){ if(window.supabase) return cb(); var s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'; s.onload=cb; document.head.appendChild(s); }
+  function ler(k){ try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(e){return [];} }
+  function gravar(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
+  function up(lista){ return lista.map(function(x){ return {id:x.id, payload:x}; }); }
 
-function splitCsv(line){ return line.split(',').map(s=>s.trim()); }
-function dominioDe(email){ return (email && email.includes('@')) ? email.split('@')[1].trim() : ''; }
-
-// Parser único e limpo para os dois arquivos
-function parseCrmLine(line, tipo){
-  if(!line || !line.trim()) return null;
-  const p = splitCsv(line);
-  // ignora cabeçalho id,category,...
-  if((p[0]||'').toLowerCase()==='id' && (p[1]||'').toLowerCase()==='category') return null;
-  let id=null, category=tipo, name='', client='', whatsapp='', email='';
-  if(tipo==='decisores'){
-    // formato: id,category,name,client,whatsapp,email
-    if(p.length>=6){ id=p[0]; category=p[1]||tipo; name=p[2]; client=p[3]; whatsapp=p[4]; email=p[5]; }
-    else if(p.length>=4){ name=p[0]; client=p[1]; email=p[2]; whatsapp=p[3]; }
-    else return null;
-    if(!client) client = dominioDe(email);
-  } else {
-    // geral: name,[sobrenome/cliente],email,whatsapp,local,category
-    const idx = p.findIndex(x=>x && x.includes('@'));
-    if(idx===-1) return null;
-    email = p[idx];
-    name = p.slice(0, idx).join(' ').trim();
-    whatsapp = p[idx+1] || '';
-    client = dominioDe(email); // client vem do domínio do e-mail
+  function syncAll(sb){
+    // PLANOS
+    sb.from('planos_acao').select('*').then(function(rp){
+      var local=ler('inovit_planos_acao'); var rem=(rp.data||[]).map(function(r){return r.payload;});
+      if(rem.length===0 && local.length>0){ sb.from('planos_acao').upsert(up(local),{onConflict:'id'}); }
+      else if(rem.length>0){ var m={}; local.forEach(function(p){m[p.id]=p;}); rem.forEach(function(p){m[p.id]=p;}); var mg=Object.values(m); gravar('inovit_planos_acao',mg); if(window.renderPlanosAcao)window.renderPlanosAcao(); if(window.atualizarBadgePlanos)window.atualizarBadgePlanos(); }
+    });
+    // VISITAS
+    sb.from('visitas').select('*').then(function(rv){
+      var local=ler('inovit_visitas'); var rem=(rv.data||[]).map(function(r){return r.payload;});
+      if(rem.length===0 && local.length>0){ sb.from('visitas').upsert(up(local),{onConflict:'id'}); }
+      else if(rem.length>0){ var m={}; local.forEach(function(v){m[v.id]=v;}); rem.forEach(function(v){m[v.id]=v;}); var mg=Object.values(m); gravar('inovit_visitas',mg); if(window.renderCalendario)window.renderCalendario(); }
+    });
   }
-  if(!name && !email) return null;
-  if(!client) client = dominioDe(email);
-  return { id: id || (tipo+'_'+Math.random().toString(36).slice(2,8)), category, name, client, whatsapp, email };
-}
-function parseCrmText(text, tipo){
-  const out=[]; (text||'').split(/\r?\n/).forEach(l=>{ const o=parseCrmLine(l, tipo); if(o) out.push(o); });
-  return out;
-}
 
-let _decisoresCache=null, _geralCache=null;
+  // Todo save passa a ir também para o Supabase
+  window.savePlanosAcao=function(p){ gravar('inovit_planos_acao',p); boot(function(){ window.supabase.createClient(URL,KEY).from('planos_acao').upsert(up(p),{onConflict:'id'}); }); if(window.renderPlanosAcao)window.renderPlanosAcao(); };
+  window.saveVisitas=function(v){ gravar('inovit_visitas',v); boot(function(){ window.supabase.createClient(URL,KEY).from('visitas').upsert(up(v),{onConflict:'id'}); }); if(window.renderCalendario)window.renderCalendario(); };
 
-// Sobrescreve as funções de leitura do app (retornam cache limpo)
-window.loadDecisores = function(){ return (_decisoresCache||[]).map(r=>({nome:r.name, cliente:r.client, whatsapp:r.whatsapp, email:r.email})); };
-window.loadGeral = function(){ return (_geralCache||[]).map(r=>({nome:r.name, cliente:r.client, whatsapp:r.whatsapp, email:r.email})); };
-
-// Migração LIMPA para o Supabase (apaga e reinsere dados limpos)
-async function migrarCrmLimpo(){
-  if(!sbx) { console.warn('Supabase indisponível'); return; }
-  try{
-    const [td, tg] = await Promise.all([
-      fetch('https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt').then(r=>r.text()).catch(()=> ''),
-      fetch('https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt').then(r=>r.text()).catch(()=> '')
-    ]);
-    _decisoresCache = parseCrmText(td, 'decisores');
-    _geralCache = parseCrmText(tg, 'geral');
-    // limpa a tabela e reinsere limpo
-    await sbx.from('crm').delete().not('tipo','is',null);
-    const ins = [];
-    _decisoresCache.forEach(r=>ins.push({tipo:'decisores', nome:r.name, cliente:r.client, whatsapp:r.whatsapp, email:r.email}));
-    _geralCache.forEach(r=>ins.push({tipo:'geral', nome:r.name, cliente:r.client, whatsapp:r.whatsapp, email:r.email}));
-    if(ins.length) await sbx.from('crm').insert(ins);
-    // atualiza cache local do app (fallback)
-    localStorage.setItem('crm_decisores', JSON.stringify(window.loadDecisores()));
-    localStorage.setItem('crm_geral', JSON.stringify(window.loadGeral()));
-    if (typeof renderCrmTable==='function') renderCrmTable();
-    console.log('✅ CRM migrado limpo para o Supabase:', _decisoresCache.length, 'decisores,', _geralCache.length, 'geral.');
-  }catch(e){ console.warn('Migração CRM falhou:', e); }
-}
-
-// Ao carregar: tenta ler do Supabase; se vazio, migra dos TXT
-(async ()=>{
-  if(!sbx) return;
-  try{
-    const {data} = await sbx.from('crm').select('*');
-    if(data && data.length){
-      _decisoresCache = data.filter(r=>r.tipo==='decisores').map(r=>({name:r.nome, client:r.cliente, whatsapp:r.whatsapp, email:r.email}));
-      _geralCache = data.filter(r=>r.tipo==='geral').map(r=>({name:r.nome, client:r.cliente, whatsapp:r.whatsapp, email:r.email}));
-      if (typeof renderCrmTable==='function') renderCrmTable();
-    } else {
-      await migrarCrmLimpo();
-    }
-  }catch(e){ console.warn(e); }
+  boot(function(){ syncAll(window.supabase.createClient(URL,KEY)); });
 })();
 </script>
 <body>
@@ -2176,51 +1911,6 @@ window.parseGeralLine = function(line){
 };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-/* SYNC PLANOS DE AÇÃO -> SUPABASE (não perde dados locais) */
-(function(){
-  if(!window.supabase) return;
-  var sb = window.supabase.createClient(
-    'https://jqgjfwlrkdxgkrdqbbrt.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo'
-  );
-  function lerLocal(){ try{ return JSON.parse(localStorage.getItem('inovit_planos_acao')||'[]'); }catch(e){ return []; } }
-  function gravarLocal(p){ localStorage.setItem('inovit_planos_acao', JSON.stringify(p)); }
-  function up(p){ return p.map(function(x){ return { id:x.id, payload:x }; }); }
-
-  async function sync(){
-    try{
-      var rem = await sb.from('planos_acao').select('*');
-      if(rem.error){ console.warn('Supabase:', rem.error); return; }
-      var remList = (rem.data||[]).map(function(r){ return r.payload; });
-      var local = lerLocal();
-      if(remList.length===0 && local.length>0){
-        // Migração: sobe o que já existe neste navegador (não apaga nada)
-        await sb.from('planos_acao').upsert(up(local), {onConflict:'id'});
-      } else if(remList.length>0){
-        // Mescla por id (Supabase tem prioridade) e atualiza este navegador
-        var map={}; local.forEach(function(p){map[p.id]=p;}); remList.forEach(function(p){map[p.id]=p;});
-        var merged=Object.values(map);
-        gravarLocal(merged);
-        await sb.from('planos_acao').upsert(up(merged), {onConflict:'id'});
-        if(window.renderPlanosAcao) window.renderPlanosAcao();
-        if(window.atualizarBadgePlanos) window.atualizarBadgePlanos();
-      }
-    }catch(e){ console.warn('sync planos:', e); }
-  }
-
-  // Todo save do app passa a gravar também no Supabase
-  window.savePlanosAcao = function(p){
-    gravarLocal(p);
-    sb.from('planos_acao').upsert(up(p), {onConflict:'id'}).then(function(){}, function(e){ console.warn(e); });
-    if(window.renderPlanosAcao) window.renderPlanosAcao();
-    if(window.atualizarBadgePlanos) window.atualizarBadgePlanos();
-  };
-
-  window.addEventListener('load', sync);
-})();
-</script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* SYNC PLANOS DE AÇÃO -> SUPABASE (não perde dados locais) */
 (function(){
