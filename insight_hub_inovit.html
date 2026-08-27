@@ -2077,5 +2077,103 @@ window.onload=function(){
   }
 };
 </script>
+<script>
+/* ================= PATCH v47 — cole ANTES de </body> ================= */
+
+/* 1) Drill-down "Chamados Avaliados" agora exibe o TÉCNICO na lista */
+const _ogd = openGlobalDrilldown;
+window.openGlobalDrilldown = function(type){
+  if(type==='csat'){
+    const av = currentFiltered.filter(d=>d.csat!==null);
+    openTicketList('⭐ Chamados Avaliados (CSAT)', av, ['id','entidade','titulo','dataAbertura','tecnico','csat','sla'], true);
+    return;
+  }
+  return _ogd(type);
+};
+
+/* Helper: barra de pesquisa ao lado do título (filtra linhas de tabela) */
+function injectTableSearch(modalId, tbodyId){
+  const modal=document.getElementById(modalId); if(!modal) return;
+  const hdr=modal.querySelector('.modal-hdr'); if(!hdr) return;
+  if(hdr.querySelector('.inline-search')) return;
+  const inp=document.createElement('input');
+  inp.type='text'; inp.className='inline-search'; inp.placeholder='🔍 Pesquisar...';
+  inp.style.cssText='padding:8px 14px;border-radius:40px;border:1px solid var(--border-color);background:var(--bg-input);font-size:13px;min-width:220px;';
+  inp.oninput=function(){ const f=inp.value.toLowerCase(); document.querySelectorAll('#'+tbodyId+' tr').forEach(tr=>{ tr.style.display=tr.innerText.toLowerCase().includes(f)?'':'none'; }); };
+  hdr.querySelector('.modal-title').after(inp);
+}
+/* Helper: barra de pesquisa que filtra cards (planos) */
+function injectCardSearch(modalId){
+  const modal=document.getElementById(modalId); if(!modal) return;
+  const hdr=modal.querySelector('.modal-hdr'); if(!hdr) return;
+  if(hdr.querySelector('.inline-search')) return;
+  const inp=document.createElement('input'); inp.type='text'; inp.className='inline-search'; inp.placeholder='🔍 Pesquisar...';
+  inp.style.cssText='padding:8px 14px;border-radius:40px;border:1px solid var(--border-color);background:var(--bg-input);font-size:13px;min-width:220px;';
+  inp.oninput=function(){ const f=inp.value.toLowerCase(); modal.querySelectorAll('.plano-card').forEach(c=>{ c.style.display=c.innerText.toLowerCase().includes(f)?'':'none'; }); };
+  hdr.querySelector('.modal-title').after(inp);
+}
+
+/* 2) Painel do Técnico: pesquisa ao lado do título */
+const _otd = openTechnicianDetail;
+window.openTechnicianDetail = function(techKey){ _otd(techKey); injectTableSearch('modal-technician-detail','tech-tickets-tbody'); };
+
+/* 3) Drill-down de Visitas: pesquisa ao lado do título */
+const _alv = abrirListaVisitas;
+window.abrirListaVisitas = function(f,t){ _alv(f,t); injectTableSearch('modal-visitas-lista','modal-visitas-lista-tbody'); };
+const _alvs = abrirListaVisitasSemVisita;
+window.abrirListaVisitasSemVisita = function(){ _alvs(); injectTableSearch('modal-visitas-lista','modal-visitas-lista-tbody'); };
+/* Card "Visitas" do Dashboard vira drill-down com pesquisa */
+window.navegarParaVisitas = function(){ abrirListaVisitas(v=>true,'Visitas do Período'); };
+
+/* 4) Drill-down de Planos: pesquisa ao lado do título */
+const _apc = abrirPlanosDoCliente;
+window.abrirPlanosDoCliente = function(c){ _apc(c); injectCardSearch('modal-lista-planos'); };
+
+/* 5) Cards Kanban mudam de cor conforme o status (máx. 80% opacidade) */
+const STATUS_COLORS={
+ 'Planejado':'rgba(79,111,133,0.8)','Pendente':'rgba(79,111,133,0.8)',
+ 'Em Andamento':'rgba(4,116,196,0.8)','Em andamento':'rgba(4,116,196,0.8)',
+ 'Pausado':'rgba(245,124,0,0.8)','Pausada':'rgba(245,124,0,0.8)',
+ 'Concluído':'rgba(30,126,52,0.8)','Realizada':'rgba(30,126,52,0.8)',
+ 'Cancelado':'rgba(183,28,28,0.8)','Cancelada':'rgba(183,28,28,0.8)'
+};
+function paintKanbanCards(){
+  document.querySelectorAll('.kanban-card').forEach(card=>{
+    let st='';
+    const badge=card.querySelector('.kanban-card-badge'); if(badge) st=badge.textContent.trim();
+    const foot=card.querySelector('.kanban-card-footer'); if(!st&&foot) st=foot.textContent.split('·').pop().trim();
+    const col=card.closest('.kanban-column');
+    if(!st&&col){ const h=col.querySelector('.kanban-column-header span'); if(h) st=h.textContent.trim(); }
+    const color=STATUS_COLORS[st];
+    if(color){
+      card.style.background=color; card.style.color='#fff';
+      card.querySelectorAll('.kanban-card-meta,.kanban-card-footer,.kanban-card-code').forEach(el2=>{ el2.style.color='rgba(255,255,255,0.9)'; });
+    } else { card.style.background=''; card.style.color=''; }
+  });
+}
+const _rp = renderPlanosAcao; window.renderPlanosAcao=function(){ _rp(); paintKanbanCards(); };
+const _rc = renderCalendario; window.renderCalendario=function(){ _rc(); paintKanbanCards(); };
+
+/* 6) CRM limpo: Nome+Sobrenome | Cliente | WhatsApp | E-mail (Decisores e Geral) */
+window.parseDecisoresLine = function(line){
+  if(!line||!line.trim()) return null;
+  const p=line.split(',').map(s=>s.trim());
+  if((p[0]||'').toLowerCase()==='id') return null;
+  if(p.length>=6) return { nome:p[2], cliente:p[3], whatsapp:p[4], email:p[5] };
+  return null;
+};
+window.parseGeralLine = function(line){
+  if(!line||!line.trim()) return null;
+  const p=line.split(',').map(s=>s.trim());
+  const ei=p.findIndex(x=>x && x.includes('@'));
+  if(ei===-1) return null;
+  const nome=p.slice(0,ei).join(' ').trim();
+  const email=p[ei];
+  const whatsapp=p[ei+1]||'';
+  const cliente=email.split('@')[1]||'';
+  if(!nome) return null;
+  return { nome, cliente, whatsapp, email };
+};
+</script>
 </body>
 </html>
