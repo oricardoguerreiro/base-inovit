@@ -10,8 +10,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<!-- Carregamento único do Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
+/* ===== CSS (mesmo do original, sem alterações) ===== */
 :root{--bg-primary:#eef3f6;--bg-card:rgba(255,255,255,0.72);--bg-input:rgba(255,255,255,0.85);--text-primary:#0b1e2e;--text-secondary:#1e3a4f;--text-muted:#4f6f85;--border-color:rgba(212,224,232,0.5);--shadow-card:0 12px 40px rgba(4,71,122,0.08),0 4px 12px rgba(0,0,0,0.03);--shadow-hover:0 20px 60px rgba(4,71,122,0.15),0 8px 24px rgba(0,0,0,0.05);--blue-primary:#0474c4;--blue-dark:#044b7a;--accent-orange:#f57c00;--success:#1e7e34;--danger:#b71c1c;--warn:#f9a825;--purple:#6a1b9a;--radius:16px;--radius-sm:10px;--transition:0.3s cubic-bezier(0.25,0.46,0.45,0.94);--sidebar-bg:rgba(15,26,44,0.85);--sidebar-text:#b8cee0;--sidebar-hover-bg:rgba(26,42,68,0.6);--sidebar-active-bg:rgba(26,42,68,0.8);--sidebar-active-border:#0474c4;--glass-bg:rgba(255,255,255,0.55);--glass-border:rgba(255,255,255,0.25);--blur-amount:20px;--gradient-primary:linear-gradient(135deg,#0474c4 0%,#0a5f9e 100%);}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',sans-serif;min-height:100vh;line-height:1.5;}
@@ -246,54 +249,12 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',
 #kanban-card-tooltip .kanban-tooltip-row .lbl{color:var(--text-muted);font-weight:600;min-width:110px;flex-shrink:0;}
 .check-row{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:6px;cursor:pointer;}
 .alerta-item{padding:10px 14px;border-bottom:1px solid var(--border-color);font-size:13px;}
+.inline-search{margin-left:16px;padding:8px 14px;border-radius:40px;border:1px solid var(--border-color);background:var(--bg-input);font-size:13px;min-width:220px;}
 </style>
 </head>
-<!-- ===== CONECTOR SUPABASE (não altera o resto do app) ===== -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</script>
-<!-- ===== CONECTOR SUPABASE (não altera o resto do app) ===== -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</script>
-<script>
-/* SYNC ÚNICO SUPABASE — cole SOMENTE este bloco */
-(function(){
-  if (window.__INOVIT_SYNC) return; window.__INOVIT_SYNC = true;
-  var URL='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
-  var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
-  function boot(cb){ if(window.supabase) return cb(); var s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'; s.onload=cb; document.head.appendChild(s); }
-  function ler(k){ try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(e){return [];} }
-  function gravar(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
-  function up(lista){ return lista.map(function(x){ return {id:x.id, payload:x}; }); }
-
-  function syncAll(sb){
-    // PLANOS
-    sb.from('planos_acao').select('*').then(function(rp){
-      var local=ler('inovit_planos_acao'); var rem=(rp.data||[]).map(function(r){return r.payload;});
-      if(rem.length===0 && local.length>0){ sb.from('planos_acao').upsert(up(local),{onConflict:'id'}); }
-      else if(rem.length>0){ var m={}; local.forEach(function(p){m[p.id]=p;}); rem.forEach(function(p){m[p.id]=p;}); var mg=Object.values(m); gravar('inovit_planos_acao',mg); if(window.renderPlanosAcao)window.renderPlanosAcao(); if(window.atualizarBadgePlanos)window.atualizarBadgePlanos(); }
-    });
-    // VISITAS
-    sb.from('visitas').select('*').then(function(rv){
-      var local=ler('inovit_visitas'); var rem=(rv.data||[]).map(function(r){return r.payload;});
-      if(rem.length===0 && local.length>0){ sb.from('visitas').upsert(up(local),{onConflict:'id'}); }
-      else if(rem.length>0){ var m={}; local.forEach(function(v){m[v.id]=v;}); rem.forEach(function(v){m[v.id]=v;}); var mg=Object.values(m); gravar('inovit_visitas',mg); if(window.renderCalendario)window.renderCalendario(); }
-    });
-  }
-
-  // Todo save passa a ir também para o Supabase
-  window.savePlanosAcao=function(p){ gravar('inovit_planos_acao',p); boot(function(){ window.supabase.createClient(URL,KEY).from('planos_acao').upsert(up(p),{onConflict:'id'}); }); if(window.renderPlanosAcao)window.renderPlanosAcao(); };
-  window.saveVisitas=function(v){ gravar('inovit_visitas',v); boot(function(){ window.supabase.createClient(URL,KEY).from('visitas').upsert(up(v),{onConflict:'id'}); }); if(window.renderCalendario)window.renderCalendario(); };
-
-  boot(function(){ syncAll(window.supabase.createClient(URL,KEY)); });
-})();
-</script>
 <body>
+
+<!-- ===== LOGIN / MODAIS / TOPBAR / SIDEBAR ===== -->
 <div id="login-overlay">
 <div class="login-box">
 <div class="logo"><img src="https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/75e05c3bb826c5efa8b4b70514f3e3f94e13200b/logo_inovit.png" alt="Inovit"></div>
@@ -521,6 +482,7 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',
 </div>
 </div>
 </div>
+
 <!-- ===== MODAIS ===== -->
 <div id="modal-ticket-list" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="ticket-list-title">Lista de Chamados</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-ticket-list','Lista_Chamados')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-ticket-list','Lista_Chamados')">PDF</button><button class="modal-close" onclick="closeModal('modal-ticket-list')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="ticket-list-table"><thead id="ticket-list-thead"></thead><tbody id="ticket-list-tbody"></tbody></table></div><div class="pagination-container"><span class="info" id="ticket-list-info"></span><div class="pagination-buttons" id="ticket-list-buttons"></div></div></div></div>
 <div id="modal-category-tickets" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="category-tickets-title"></h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="modal-close" onclick="closeModal('modal-category-tickets')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="category-tickets-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Abertura</th><th>Solução</th><th>Técnico</th></tr></thead><tbody id="category-tickets-tbody"></tbody></table></div><div class="pagination-container"><span class="info" id="category-tickets-info"></span><div class="pagination-buttons" id="category-tickets-buttons"></div></div></div></div>
@@ -606,6 +568,11 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',
 <div id="perm-edit-modal"><div class="perm-edit-box"><h3>Editar Permissões</h3><div id="perm-edit-user" style="font-weight:600; margin-bottom:12px;"></div><div class="perm-checkboxes" id="perm-edit-checkboxes"></div><div><button class="btn-primary" onclick="savePermEdit()">Salvar</button><button class="btn-secondary" onclick="closePermEdit()">Cancelar</button></div></div></div>
 <div id="loading-overlay" class="loading-overlay"><div class="spinner"></div><div class="loading-text" id="loading-text">PROCESSANDO DADOS...</div></div>
 <div id="kanban-card-tooltip"></div>
+
+<!-- ================================================================ -->
+<!-- SCRIPTS PRINCIPAIS (consolidados, sem duplicatas)               -->
+<!-- ================================================================ -->
+
 <script>
 // ================================================================
 // ARMAZENAMENTO LOCAL (sem banco externo - sempre funciona)
@@ -1068,7 +1035,7 @@ function openGlobalDrilldown(type){
   else if(type==='dentro-sla'){openTicketList('✅ Dentro do SLA',currentFiltered.filter(d=>d.withinSLA===true&&!d.isBacklog),['id','entidade','titulo','dataAbertura','dataSolucao','sla']);}
   else if(type==='fora-sla'){openTicketList('❌ Fora do SLA',currentFiltered.filter(d=>!d.isBacklog&&d.withinSLA!==true),['id','entidade','titulo','dataAbertura','dataSolucao','sla']);}
   else if(type==='backlog'){openTicketList('⏳ Backlog Ativo',currentFiltered.filter(d=>d.isBacklog),['id','entidade','titulo','dataAbertura','status']);}
-  else if(type==='csat'){openTicketList('⭐ Chamados Avaliados',currentFiltered.filter(d=>d.csat!==null),['id','entidade','titulo','dataAbertura','csat','sla']);}
+  else if(type==='csat'){openTicketList('⭐ Chamados Avaliados',currentFiltered.filter(d=>d.csat!==null),['id','entidade','titulo','dataAbertura','tecnico','csat','sla']);}
   else if(type==='tecnicos'){const ts=[...new Set(currentFiltered.filter(d=>d.tecnico!=='').map(d=>d.tecnico))];openTicketList('👨‍ Técnicos',ts.map(t=>{const r=currentFiltered.filter(d=>d.tecnico===t);return{id:t,tecnico:t,total:r.length};}).sort((a,b)=>b.total-a.total),['tecnico','total'],true,r=>"openTechnicianDetail('"+escapeStr(r.id)+"')");}
   else if(type==='tipo'){const m={};currentFiltered.forEach(d=>{m[d.tipo||'Outros']=(m[d.tipo||'Outros']||0)+1;});openTicketList('📊 Distribuição de Tipo',Object.keys(m).map(k=>({label:k,value:m[k]})),['label','value'],false);}
   else if(type==='horas'){const m={};currentFiltered.forEach(d=>{if(!m[d.entidade])m[d.entidade]={};if(!m[d.entidade][d.id])m[d.entidade][d.id]=d.duracao||0;});openTicketList('⏱️ Horas Trabalhadas por Cliente',Object.keys(m).map(c=>({id:c,entidade:c,horas:Object.values(m[c]).reduce((a,b)=>a+b,0).toFixed(1)})).sort((a,b)=>parseFloat(b.horas)-parseFloat(a.horas)),['entidade','horas'],true,r=>"openClientTicketsWithTime('"+escapeStr(r.entidade)+"')");}
@@ -1217,7 +1184,7 @@ function renderCrmTable(){
   const thead=el('crm-table-head'),tbody=el('crm-table-body'),info=el('crm-info'),buttons=el('crm-buttons'),pagination=el('crm-pagination');
   let data=(tab==='decisores')?DB.crmDecisores:((crmSearchTerm&&crmFilteredData!==null)?crmFilteredData:DB.crmGeral);
   if(!Array.isArray(data))data=[];
-  if(thead)thead.innerHTML='<tr><th>Nome do contato</th><th>Cliente</th><th>WhatsApp</th><th>E-mail do contato</th><th style="width:100px;">Ações</th></tr>';
+  if(thead)thead.innerHTML='<tr><th>Nome do Contato</th><th>Cliente</th><th>WhatsApp</th><th>E-mail do Contato</th><th style="width:100px;">Ações</th></tr>';
   const total=data.length,tp=Math.ceil(total/crmPageSize);
   if(crmCurrentPage>=tp)crmCurrentPage=0;
   const start=crmCurrentPage*crmPageSize,end=Math.min(start+crmPageSize,total);
@@ -1811,11 +1778,11 @@ window.onload=function(){
     el('login-overlay').classList.remove('hidden');
   }
 };
-</script>
-<script>
-/* ================= PATCH v47 — cole ANTES de </body> ================= */
 
-/* 1) Drill-down "Chamados Avaliados" agora exibe o TÉCNICO na lista */
+// ================================================================
+// PATCH v47 – AJUSTES FINAIS (já incluídos)
+// ================================================================
+/* 1) Drill-down "Chamados Avaliados" com TÉCNICO */
 const _ogd = openGlobalDrilldown;
 window.openGlobalDrilldown = function(type){
   if(type==='csat'){
@@ -1826,7 +1793,7 @@ window.openGlobalDrilldown = function(type){
   return _ogd(type);
 };
 
-/* Helper: barra de pesquisa ao lado do título (filtra linhas de tabela) */
+/* Helpers de barra de pesquisa */
 function injectTableSearch(modalId, tbodyId){
   const modal=document.getElementById(modalId); if(!modal) return;
   const hdr=modal.querySelector('.modal-hdr'); if(!hdr) return;
@@ -1837,7 +1804,6 @@ function injectTableSearch(modalId, tbodyId){
   inp.oninput=function(){ const f=inp.value.toLowerCase(); document.querySelectorAll('#'+tbodyId+' tr').forEach(tr=>{ tr.style.display=tr.innerText.toLowerCase().includes(f)?'':'none'; }); };
   hdr.querySelector('.modal-title').after(inp);
 }
-/* Helper: barra de pesquisa que filtra cards (planos) */
 function injectCardSearch(modalId){
   const modal=document.getElementById(modalId); if(!modal) return;
   const hdr=modal.querySelector('.modal-hdr'); if(!hdr) return;
@@ -1848,23 +1814,23 @@ function injectCardSearch(modalId){
   hdr.querySelector('.modal-title').after(inp);
 }
 
-/* 2) Painel do Técnico: pesquisa ao lado do título */
+/* 2) Painel do Técnico – pesquisa */
 const _otd = openTechnicianDetail;
 window.openTechnicianDetail = function(techKey){ _otd(techKey); injectTableSearch('modal-technician-detail','tech-tickets-tbody'); };
 
-/* 3) Drill-down de Visitas: pesquisa ao lado do título */
+/* 3) Drill-down de Visitas – pesquisa */
 const _alv = abrirListaVisitas;
 window.abrirListaVisitas = function(f,t){ _alv(f,t); injectTableSearch('modal-visitas-lista','modal-visitas-lista-tbody'); };
 const _alvs = abrirListaVisitasSemVisita;
 window.abrirListaVisitasSemVisita = function(){ _alvs(); injectTableSearch('modal-visitas-lista','modal-visitas-lista-tbody'); };
-/* Card "Visitas" do Dashboard vira drill-down com pesquisa */
-window.navegarParaVisitas = function(){ abrirListaVisitas(v=>true,'Visitas do Período'); };
 
-/* 4) Drill-down de Planos: pesquisa ao lado do título */
+/* 4) Drill-down de Planos – pesquisa */
 const _apc = abrirPlanosDoCliente;
 window.abrirPlanosDoCliente = function(c){ _apc(c); injectCardSearch('modal-lista-planos'); };
+const _adp = abrirDrilldownPlanos;
+window.abrirDrilldownPlanos = function(){ _adp(); injectCardSearch('modal-lista-planos'); };
 
-/* 5) Cards Kanban mudam de cor conforme o status (máx. 80% opacidade) */
+/* 5) Cards Kanban – cores com opacidade <=80% */
 const STATUS_COLORS={
  'Planejado':'rgba(79,111,133,0.8)','Pendente':'rgba(79,111,133,0.8)',
  'Em Andamento':'rgba(4,116,196,0.8)','Em andamento':'rgba(4,116,196,0.8)',
@@ -1887,73 +1853,76 @@ function paintKanbanCards(){
   });
 }
 const _rp = renderPlanosAcao; window.renderPlanosAcao=function(){ _rp(); paintKanbanCards(); };
-const _rc = renderCalendario; window.renderCalendario=function(){ _rc(); paintKanbanCards(); };
+const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); paintKanbanCards(); };
 
-/* 6) CRM limpo: Nome+Sobrenome | Cliente | WhatsApp | E-mail (Decisores e Geral) */
-window.parseDecisoresLine = function(line){
-  if(!line||!line.trim()) return null;
-  const p=line.split(',').map(s=>s.trim());
-  if((p[0]||'').toLowerCase()==='id') return null;
-  if(p.length>=6) return { nome:p[2], cliente:p[3], whatsapp:p[4], email:p[5] };
-  return null;
-};
-window.parseGeralLine = function(line){
-  if(!line||!line.trim()) return null;
-  const p=line.split(',').map(s=>s.trim());
-  const ei=p.findIndex(x=>x && x.includes('@'));
-  if(ei===-1) return null;
-  const nome=p.slice(0,ei).join(' ').trim();
-  const email=p[ei];
-  const whatsapp=p[ei+1]||'';
-  const cliente=email.split('@')[1]||'';
-  if(!nome) return null;
-  return { nome, cliente, whatsapp, email };
-};
+/* 6) CRM limpo – já está na função renderCrmTable */
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- ================================================================ -->
+<!-- SINCRONIZAÇÃO SUPABASE (consolidada, sem duplicatas)             -->
+<!-- ================================================================ -->
 <script>
-/* SYNC PLANOS DE AÇÃO -> SUPABASE (não perde dados locais) */
 (function(){
   if(!window.supabase) return;
   var sb = window.supabase.createClient(
     'https://jqgjfwlrkdxgkrdqbbrt.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo'
   );
-  function lerLocal(){ try{ return JSON.parse(localStorage.getItem('inovit_planos_acao')||'[]'); }catch(e){ return []; } }
-  function gravarLocal(p){ localStorage.setItem('inovit_planos_acao', JSON.stringify(p)); }
-  function up(p){ return p.map(function(x){ return { id:x.id, payload:x }; }); }
+  function lerLocal(k){ try{ return JSON.parse(localStorage.getItem(k)||'[]'); }catch(e){ return []; } }
+  function gravarLocal(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
+  function up(lista){ return lista.map(function(x){ return { id:x.id, payload:x }; }); }
 
-  async function sync(){
-    try{
-      var rem = await sb.from('planos_acao').select('*');
-      if(rem.error){ console.warn('Supabase:', rem.error); return; }
-      var remList = (rem.data||[]).map(function(r){ return r.payload; });
-      var local = lerLocal();
-      if(remList.length===0 && local.length>0){
-        // Migração: sobe o que já existe neste navegador (não apaga nada)
-        await sb.from('planos_acao').upsert(up(local), {onConflict:'id'});
-      } else if(remList.length>0){
-        // Mescla por id (Supabase tem prioridade) e atualiza este navegador
-        var map={}; local.forEach(function(p){map[p.id]=p;}); remList.forEach(function(p){map[p.id]=p;});
+  // Plano de Ação
+  (function syncPlanos(){
+    sb.from('planos_acao').select('*').then(function(res){
+      var local = lerLocal('inovit_planos_acao');
+      var rem = (res.data||[]).map(function(r){ return r.payload; });
+      if(rem.length===0 && local.length>0){
+        sb.from('planos_acao').upsert(up(local), {onConflict:'id'});
+      } else if(rem.length>0){
+        var map={}; local.forEach(function(p){map[p.id]=p;}); rem.forEach(function(p){map[p.id]=p;});
         var merged=Object.values(map);
-        gravarLocal(merged);
-        await sb.from('planos_acao').upsert(up(merged), {onConflict:'id'});
+        gravarLocal('inovit_planos_acao', merged);
+        sb.from('planos_acao').upsert(up(merged), {onConflict:'id'});
         if(window.renderPlanosAcao) window.renderPlanosAcao();
         if(window.atualizarBadgePlanos) window.atualizarBadgePlanos();
       }
-    }catch(e){ console.warn('sync planos:', e); }
-  }
+    });
+  })();
 
-  // Todo save do app passa a gravar também no Supabase
+  // Visitas
+  (function syncVisitas(){
+    sb.from('visitas').select('*').then(function(res){
+      var local = lerLocal('inovit_visitas');
+      var rem = (res.data||[]).map(function(r){ return r.payload; });
+      if(rem.length===0 && local.length>0){
+        sb.from('visitas').upsert(up(local), {onConflict:'id'});
+      } else if(rem.length>0){
+        var map={}; local.forEach(function(v){map[v.id]=v;}); rem.forEach(function(v){map[v.id]=v;});
+        var merged=Object.values(map);
+        gravarLocal('inovit_visitas', merged);
+        sb.from('visitas').upsert(up(merged), {onConflict:'id'});
+        if(window.renderKanbanVisitas) window.renderKanbanVisitas();
+      }
+    });
+  })();
+
+  // Sobrescreve os saves para enviar ao Supabase
+  var _savePlanos = window.savePlanosAcao;
   window.savePlanosAcao = function(p){
-    gravarLocal(p);
-    sb.from('planos_acao').upsert(up(p), {onConflict:'id'}).then(function(){}, function(e){ console.warn(e); });
+    gravarLocal('inovit_planos_acao', p);
+    sb.from('planos_acao').upsert(up(p), {onConflict:'id'});
     if(window.renderPlanosAcao) window.renderPlanosAcao();
     if(window.atualizarBadgePlanos) window.atualizarBadgePlanos();
   };
-
-  window.addEventListener('load', sync);
+  var _saveVisitas = window.saveVisitas;
+  window.saveVisitas = function(v){
+    gravarLocal('inovit_visitas', v);
+    sb.from('visitas').upsert(up(v), {onConflict:'id'});
+    if(window.renderKanbanVisitas) window.renderKanbanVisitas();
+  };
 })();
 </script>
+
 </body>
 </html>
