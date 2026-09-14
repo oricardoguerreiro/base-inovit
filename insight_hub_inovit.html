@@ -1923,6 +1923,34 @@ const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); p
   };
 })();
 </script>
+<script>
+/* SYNC TOTAL SUPABASE — cole ANTES de </body> */
+(function(){
+  if(window.__INOVIT_SYNC2) return; window.__INOVIT_SYNC2=true;
+  var URL='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
+  var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
+  function boot(cb){ if(window.supabase) return cb(); var s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'; s.onload=cb; document.head.appendChild(s); }
+  function ler(k){ try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(e){return [];} }
+  function gravar(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+  function up(l){ return l.map(function(x){return {id:x.id,payload:x};}); }
+  function merge(a,b){ var m={}; a.forEach(function(x){m[x.id]=x;}); b.forEach(function(x){m[x.id]=x;}); return Object.values(m); }
+  boot(function(){
+    var sb=window.supabase.createClient(URL,KEY);
+    sb.from('planos_acao').select('*').then(function(r){ if(!r.error){ var mg=merge(ler('inovit_planos_acao'),(r.data||[]).map(function(x){return x.payload;})); gravar('inovit_planos_acao',mg); if(window.renderPlanosAcao)window.renderPlanosAcao(); if(window.atualizarBadgePlanos)window.atualizarBadgePlanos(); } });
+    sb.from('visitas').select('*').then(function(r){ if(!r.error){ var mg=merge(ler('inovit_visitas'),(r.data||[]).map(function(x){return x.payload;})); gravar('inovit_visitas',mg); if(window.renderCalendario)window.renderCalendario(); } });
+    sb.from('users').select('*').then(function(r){ if(!r.error&&(r.data||[]).length){ var u={},pm={}; (r.data||[]).forEach(function(x){ u[x.username]={password:x.password,displayName:x.display_name}; pm[x.username]=x.perms||{}; }); localStorage.setItem('inovit_users',JSON.stringify(u)); localStorage.setItem('inovit_perms',JSON.stringify(pm)); if(window.renderUserManagement)window.renderUserManagement(); } });
+    var oDec=window.loadDecisores, oGer=window.loadGeral;
+    function crm(tipo,fb){ return sb.from('crm').select('*').eq('tipo',tipo).then(function(r){ if(!r.error&&(r.data||[]).length) return (r.data||[]).map(function(x){return {nome:x.nome,cliente:x.cliente,whatsapp:x.whatsapp,email:x.email};}); return fb(); }); }
+    window.loadDecisores=function(){ return crm('decisores',oDec); };
+    window.loadGeral=function(){ return crm('geral',oGer); };
+    window.savePlanosAcao=function(p){ gravar('inovit_planos_acao',p); sb.from('planos_acao').upsert(up(p),{onConflict:'id'}).then(function(){},function(e){console.warn(e);}); if(window.renderPlanosAcao)window.renderPlanosAcao(); if(window.atualizarBadgePlanos)window.atualizarBadgePlanos(); };
+    window.saveVisitas=function(v){ gravar('inovit_visitas',v); sb.from('visitas').upsert(up(v),{onConflict:'id'}).then(function(){},function(e){console.warn(e);}); if(window.renderCalendario)window.renderCalendario(); };
+    function pushUsers(){ var u=JSON.parse(localStorage.getItem('inovit_users')||'{}'); var pm=JSON.parse(localStorage.getItem('inovit_perms')||'{}'); var rows=Object.keys(u).map(function(k){ return {username:k,password:u[k].password,display_name:u[k].displayName||k,perms:pm[k]||{}}; }); if(rows.length) sb.from('users').upsert(rows,{onConflict:'username'}).then(function(){},function(e){console.warn(e);}); }
+    window.saveUsers=function(u){ localStorage.setItem('inovit_users',JSON.stringify(u)); pushUsers(); if(window.renderUserManagement)window.renderUserManagement(); };
+    window.savePerms=function(pm){ localStorage.setItem('inovit_perms',JSON.stringify(pm)); pushUsers(); };
+  });
+})();
+</script>
 
 </body>
 </html>
