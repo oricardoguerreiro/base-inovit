@@ -1888,5 +1888,32 @@ const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); p
   window.loadGeral=function(){ return load('geral','https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt',parseGer); };
 })();
 </script>
+  <script>
+/* CORRETOR DE EXIBIÇÃO DO CRM — age por cima de qualquer render */
+(function(){
+  if(window.__CRM_DISPLAY_FIX) return; window.__CRM_DISPLAY_FIX=true;
+  function fixRow(tr){
+    var inp=tr.querySelectorAll('input');
+    if(inp.length<4) return;
+    var nome=inp[0].value, email=inp[3].value;
+    if(!nome) return;
+    // Linha de DECISORES embolada: "decisor_001,decisores,Claudia,ACCTA,..."
+    if(/^(decisor_|geral_)\d+,/.test(nome)){
+      var q=nome.split(',').map(function(s){return s.trim();});
+      if(q.length>=4){ inp[0].value=q[2]||nome; inp[1].value=q[3]||''; }
+    }
+    // Linha de GERAL embolada: "Marcos,Dultra,..." → junta nome+sobrenome, cliente=domínio
+    else if(nome.indexOf(',')>-1 && email){
+      var p=nome.split(',').map(function(s){return s.trim();})
+              .filter(function(s){return s && s!=='.' && s!=='|';});
+      inp[0].value=p.join(' ');
+      inp[1].value=(email.split('@')[1]||'');
+    }
+  }
+  function fixAll(){ document.querySelectorAll('#crm-table-body tr').forEach(fixRow); }
+  setInterval(fixAll, 700);                       // corrige qualquer render em <1s
+  document.addEventListener('click', function(){ setTimeout(fixAll, 300); }); // corrige ao trocar de aba
+})();
+</script>
 </body>
 </html>
