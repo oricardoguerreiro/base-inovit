@@ -1856,6 +1856,37 @@ const _rp = renderPlanosAcao; window.renderPlanosAcao=function(){ _rp(); paintKa
 const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); paintKanbanCards(); };
 
 /* 6) CRM limpo – já está na função renderCrmTable */
-</script>   
+</script> 
+  <script>
+(function(){
+  if(window.__CRM_FIX) return; window.__CRM_FIX=true;
+  function parseDec(line){
+    if(!line||!line.trim()) return null;
+    var q=line.split(',').map(function(s){return s.trim();});
+    if((q[0]||'').toLowerCase()==='id') return null;
+    if(q.length>=6) return {nome:q[2],cliente:q[3],whatsapp:q[4],email:q[5]};
+    return null;
+  }
+  function parseGer(line){
+    if(!line||!line.trim()) return null;
+    var q=line.split(',').map(function(s){return s.trim();});
+    var ei=-1; for(var i=0;i<q.length;i++){ if(q[i]&&q[i].indexOf('@')>-1){ei=i;break;} }
+    if(ei===-1) return null;
+    var nome=q.slice(0,ei).join(' ').replace(/\s*\|.*$/,'').trim();
+    return {nome:nome, cliente:(q[ei].split('@')[1]||''), whatsapp:(q[ei+1]||''), email:q[ei]};
+  }
+  window.parseDecisoresLine=parseDec;
+  window.parseGeralLine=parseGer;
+  function load(tipo,url,parse){
+    return fetch(url+'?v='+Date.now()).then(function(r){return r.text();}).then(function(t){
+      var arr=t.split(/\r?\n/).map(parse).filter(Boolean);
+      localStorage.setItem('crm_'+tipo, JSON.stringify(arr));
+      return arr;
+    });
+  }
+  window.loadDecisores=function(){ return load('decisores','https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt',parseDec); };
+  window.loadGeral=function(){ return load('geral','https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt',parseGer); };
+})();
+</script>
 </body>
 </html>
