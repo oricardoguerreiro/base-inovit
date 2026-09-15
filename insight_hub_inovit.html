@@ -1882,5 +1882,35 @@ const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); p
   setInterval(puxar,60000);
 })();
 </script>
+<script>
+/* VISITAS-DYN — fonte unica + sincronizacao viva das Visitas */
+(function(){
+  if(window.__VISITAS_DYN) return; window.__VISITAS_DYN=true;
+  var URLSB='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
+  var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
+  function ler(){ try{ return JSON.parse(localStorage.getItem('inovit_visitas')||'[]'); }catch(e){ return []; } }
+  window.getVisitas=function(){ return ler(); };
+  function puxar(){
+    return fetch(URLSB+'/rest/v1/visitas?select=id,payload',{headers:{apikey:KEY,'Authorization':'Bearer '+KEY}})
+      .then(function(r){ return r.json(); })
+      .then(function(rows){
+        var rem=(Array.isArray(rows)?rows:[]).map(function(x){ return x.payload; }).filter(Boolean);
+        var local=ler(); var m={}; local.forEach(function(v){ m[v.id]=v; }); rem.forEach(function(v){ m[v.id]=v; });
+        var mg=Object.values(m);
+        localStorage.setItem('inovit_visitas',JSON.stringify(mg));
+        if(window.renderCalendario) window.renderCalendario();
+        return mg.length;
+      }).catch(function(e){ console.warn('pull visitas:',e); });
+  }
+  window.saveVisitas=function(v){
+    localStorage.setItem('inovit_visitas',JSON.stringify(v));
+    if(window.renderCalendario) window.renderCalendario();
+    fetch(URLSB+'/rest/v1/visitas?on_conflict=id',{method:'POST',headers:{apikey:KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},body:JSON.stringify(v.map(function(x){ return {id:x.id,payload:x}; }))}).catch(function(e){ console.warn('push visitas:',e); });
+  };
+  window.addEventListener('load',function(){ setTimeout(puxar,1500); });
+  window.addEventListener('focus',function(){ puxar(); });
+  setInterval(puxar,60000);
+})();
+</script>  
 </body>
 </html>
