@@ -1953,5 +1953,27 @@ const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); p
   window.addEventListener('load',function(){ setTimeout(go,1500); });
 })();
 </script>
+  <script>
+/* UNIFICA-FIX — fonte unica de planos + lixeira de visitas */
+(function(){
+  if(window.__UNIFICA) return; window.__UNIFICA=true;
+  var SB='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
+  var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
+  function H(){ return {apikey:KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'}; }
+  function read(k){ try{ return JSON.parse(localStorage.getItem(k)||'[]'); }catch(e){ return []; } }
+  function write(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+  // 1) Unifica as duas chaves de planos (sem perder nada)
+  (function(){ var a=read('inovit_planos_acao'), b=read('inovit_planos'); var m={}; a.forEach(function(p){m[p.id]=p;}); b.forEach(function(p){ if(!m[p.id]) m[p.id]=p; }); var u=Object.values(m); write('inovit_planos_acao',u); write('inovit_planos',u); })();
+  // 2) Leitura e gravacao na chave unica + Supabase
+  window.getPlanosAcao=function(){ return read('inovit_planos_acao'); };
+  window.savePlanosAcao=function(p){ write('inovit_planos_acao',p); write('inovit_planos',p); fetch(SB+'/rest/v1/planos_acao?on_conflict=id',{method:'POST',headers:H(),body:JSON.stringify(p.map(function(x){ return {id:x.id,payload:x}; }))}).catch(function(){}); };
+  // 3) Excluir visita + lixeira visivel
+  window.excluirVisita=function(id){ if(!confirm('Excluir esta visita?')) return; var v=read('inovit_visitas').filter(function(x){ return x.id!==id; }); write('inovit_visitas',v); fetch(SB+'/rest/v1/visitas?id=eq.'+id,{method:'DELETE',headers:{apikey:KEY,'Authorization':'Bearer '+KEY}}).catch(function(){}); if(window.renderCalendario) window.renderCalendario(); if(window.renderKanbanVisitas) window.renderKanbanVisitas(); };
+  window.__injDel=function(){ document.querySelectorAll('[data-kanban-tipo="visita"]').forEach(function(card){ if(card.querySelector('.visita-del')) return; var b=document.createElement('button'); b.type='button'; b.className='visita-del'; b.textContent='🗑️'; b.title='Excluir visita'; b.style.cssText='position:absolute;top:6px;right:6px;z-index:9;border:none;background:rgba(255,255,255,0.95);color:#b71c1c;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:13px;line-height:1;'; b.onclick=function(e){ e.stopPropagation(); e.preventDefault(); window.excluirVisita(card.dataset.id); }; card.style.position='relative'; card.appendChild(b); }); };
+  setInterval(window.__injDel,1200);
+  window.addEventListener('load',function(){ setTimeout(window.__injDel,1000); });
+  if(window.renderPlanosAcao) window.renderPlanosAcao();
+})();
+</script>
 </body>
 </html>
