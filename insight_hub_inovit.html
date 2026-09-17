@@ -1911,6 +1911,44 @@ const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); p
   window.addEventListener('focus',function(){ puxar(); });
   setInterval(puxar,60000);
 })();
+</script>
+<script>
+/* COMPANION-FIX — restaura funcoes de Planos, cria excluir Visita e corrige CRM (chaves duplas) */
+(function(){
+  if(window.__COMPANION) return; window.__COMPANION=true;
+  var SB='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
+  var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
+  function H(){ return {apikey:KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'}; }
+  function j(k){ try{ return JSON.parse(localStorage.getItem(k)||'[]'); }catch(e){ return []; } }
+  function set(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+  function f(n){ return document.getElementById(n); }
+
+  /* ---------- PLANOS: so redefine se o build perdeu as funcoes ---------- */
+  function pushPlanos(p){ fetch(SB+'/rest/v1/planos_acao?on_conflict=id',{method:'POST',headers:H(),body:JSON.stringify(p.map(function(x){return {id:x.id,payload:x};}))}).catch(function(){}); }
+  function setPlanos(p){ set('inovit_planos_acao',p); pushPlanos(p); if(window.renderPlanosAcao)window.renderPlanosAcao(); if(window.atualizarBadgePlanos)window.atualizarBadgePlanos(); }
+  function clientesLista(){ var s={}; (window.globalData||[]).forEach(function(d){ s[d.entidade]=1; }); j('inovit_planos_acao').forEach(function(p){ if(p.cliente) s[p.cliente]=1; }); return Object.keys(s).sort(); }
+  if(!window.abrirFormPlanoAcao){ window.abrirFormPlanoAcao=function(id){ var m=f('modal-plano-acao'); if(!m) return; f('plano-id').value=''; ['plano-titulo','plano-porque','plano-descricao-geral','plano-onde','plano-prazo','plano-responsavel','plano-descricao','plano-custo','plano-evidencias'].forEach(function(n){ if(f(n)) f(n).value=''; }); if(f('plano-status')) f('plano-status').value='Pendente'; if(f('plano-percentual')) f('plano-percentual').value=0; if(f('plano-prioridade')) f('plano-prioridade').value='Média'; var sel=f('plano-cliente'); if(sel) sel.innerHTML='<option value="">-- Selecione --</option>'+clientesLista().map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join(''); if(id){ var p=j('inovit_planos_acao').find(function(x){ return x.id===id; }); if(p){ f('plano-id').value=p.id; if(sel) sel.value=p.cliente||''; ['titulo','porque','onde','prazo','responsavel','prioridade','descricao','custo','status','percentual','evidencias'].forEach(function(k){ var el=f('plano-'+k); if(el) el.value=(p[k]!==undefined&&p[k]!==null)?p[k]:''; }); var dg=f('plano-descricao-geral'); if(dg) dg.value=p.descricaoGeral||''; } } m.style.display='block'; document.body.style.overflow='hidden'; }; }
+  if(!window.salvarPlanoAcao){ window.salvarPlanoAcao=function(){ var cliente=f('plano-cliente')?f('plano-cliente').value:''; var titulo=f('plano-titulo')?f('plano-titulo').value.trim():''; var prazo=f('plano-prazo')?f('plano-prazo').value:''; var resp=f('plano-responsavel')?f('plano-responsavel').value.trim():''; var desc=f('plano-descricao')?f('plano-descricao').value.trim():''; if(!cliente||!titulo||!prazo||!resp||!desc){ alert('Preencha Cliente, O quê, Quando, Quem e Como.'); return; } var id=f('plano-id').value||('p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)); var p={ id:id, cliente:cliente, titulo:titulo, porque:f('plano-porque')?f('plano-porque').value.trim():'', descricaoGeral:f('plano-descricao-geral')?f('plano-descricao-geral').value.trim():'', onde:f('plano-onde')?f('plano-onde').value.trim():'', responsavel:resp, prazo:prazo, prioridade:f('plano-prioridade')?f('plano-prioridade').value:'Média', descricao:desc, custo:f('plano-custo')?f('plano-custo').value:'', status:f('plano-status')?f('plano-status').value:'Pendente', percentual:parseInt(f('plano-percentual')?f('plano-percentual').value:0)||0, evidencias:f('plano-evidencias')?f('plano-evidencias').value.trim():'' }; if(p.status==='Concluído'||p.percentual>=100) p.dataConclusao=new Date().toISOString(); var arr=j('inovit_planos_acao'); var i=arr.findIndex(function(x){ return x.id===id; }); if(i>-1) arr[i]=p; else arr.push(p); setPlanos(arr); var m=f('modal-plano-acao'); if(m) m.style.display='none'; document.body.style.overflow='auto'; }; }
+  if(!window.editarPlanoAcao){ window.editarPlanoAcao=function(id){ window.abrirFormPlanoAcao(id); }; }
+  if(!window.excluirPlanoAcao){ window.excluirPlanoAcao=function(id){ if(!confirm('Excluir este plano?')) return; setPlanos(j('inovit_planos_acao').filter(function(x){ return x.id!==id; })); }; }
+  if(!window.togglePlanoConcluido){ window.togglePlanoConcluido=function(id,conc){ var arr=j('inovit_planos_acao'); var p=arr.find(function(x){ return x.id===id; }); if(!p) return; if(conc){ p.status='Concluído'; p.percentual=100; p.dataConclusao=new Date().toISOString(); } else { p.status='Em andamento'; if(p.percentual>=100) p.percentual=0; } setPlanos(arr); }; }
+
+  /* ---------- VISITAS: botao excluir em cada card ---------- */
+  function pushVisitas(v){ fetch(SB+'/rest/v1/visitas?on_conflict=id',{method:'POST',headers:H(),body:JSON.stringify(v.map(function(x){ return {id:x.id,payload:x}; }))}).catch(function(){}); }
+  function setVisitas(v){ set('inovit_visitas',v); pushVisitas(v); if(window.renderCalendario) window.renderCalendario(); }
+  window.excluirVisita=function(id){ if(!confirm('Excluir esta visita?')) return; setVisitas(j('inovit_visitas').filter(function(x){ return x.id!==id; })); };
+  function injetarDel(){ document.querySelectorAll('#kanban-visitas-board .kanban-card').forEach(function(card){ if(card.querySelector('.visita-del')) return; var b=document.createElement('button'); b.type='button'; b.className='visita-del'; b.textContent='🗑️'; b.title='Excluir visita'; b.style.cssText='position:absolute;top:8px;right:8px;z-index:5;border:none;background:rgba(255,255,255,0.92);border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:13px;'; b.onclick=function(e){ e.stopPropagation(); window.excluirVisita(card.dataset.id); }; card.style.position='relative'; card.appendChild(b); }); }
+  var _rc=window.renderCalendario; window.renderCalendario=function(){ var r=_rc?_rc.apply(this,arguments):undefined; setTimeout(injetarDel,60); return r; };
+
+  /* ---------- CRM: adaptador de formato + grava nas DUAS familias de chaves ---------- */
+  function parseDec(t){ var out=[]; t.split(/\r?\n/).forEach(function(l){ if(!l.trim()) return; var q=l.split(',').map(function(s){ return s.trim(); }); if((q[0]||'').toLowerCase()==='id') return; if(q.length>=6) out.push({nome:q[2],cliente:q[3],whatsapp:q[4],email:q[5]}); }); return out; }
+  function parseGer(t){ var out=[]; t.split(/\r?\n/).forEach(function(l){ if(!l.trim()) return; var q=l.split(',').map(function(s){ return s.trim(); }); var ei=-1; for(var i=0;i<q.length;i++){ if(q[i]&&q[i].indexOf('@')>-1){ ei=i; break; } } if(ei>-1) out.push({nome:q.slice(0,ei).join(' ').replace(/\s*\|.*$/,'').trim(),cliente:q[ei].split('@')[1]||'',whatsapp:q[ei+1]||'',email:q[ei]}); }); return out; }
+  function fetchParse(){ return Promise.all([ fetch('https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt?v='+Date.now()).then(function(r){ return r.text(); }), fetch('https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt?v='+Date.now()).then(function(r){ return r.text(); }) ]).then(function(rs){ var d=parseDec(rs[0]), g=parseGer(rs[1]); set('crm_decisores',d); set('inovit_crm_decisores',d); set('crm_geral',g); set('inovit_crm_geral',g); return {d:d,g:g}; }); }
+  window.loadDecisores=function(){ return fetchParse().then(function(o){ return o.d; }); };
+  window.loadGeral=function(){ return fetchParse().then(function(o){ return o.g; }); };
+  window.crmRefresh=function(){ return fetchParse().then(function(o){ if(window.loadCrmData) window.loadCrmData(); return o; }); };
+  window.addEventListener('load',function(){ setTimeout(function(){ window.crmRefresh(); },1500); setTimeout(injetarDel,1500); });
+})();
 </script>  
 </body>
 </html>
