@@ -1911,6 +1911,47 @@ const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); p
   window.addEventListener('focus',function(){ puxar(); });
   setInterval(puxar,60000);
 })();
-</script>  
+</script>
+<script>
+/* VISITAS-DEL — botao excluir em cada card de visita */
+(function(){
+  if(window.__VISITAS_DEL) return; window.__VISITAS_DEL=true;
+  var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
+  function ler(){ try{ return JSON.parse(localStorage.getItem('inovit_visitas')||'[]'); }catch(e){ return []; } }
+  window.excluirVisita=function(id){
+    if(!confirm('Excluir esta visita?')) return;
+    var v=ler().filter(function(x){ return x.id!==id; });
+    localStorage.setItem('inovit_visitas',JSON.stringify(v));
+    fetch('https://jqgjfwlrkdxgkrdqbbrt.supabase.co/rest/v1/visitas?id=eq.'+id,{method:'DELETE',headers:{apikey:KEY,'Authorization':'Bearer '+KEY}}).catch(function(){});
+    var rn=window.renderCalendario||window.renderKanbanVisitas||window.renderVisitas;
+    if(rn) rn();
+  };
+  window.__injDel=function(){
+    var cards=document.querySelectorAll('#kanban-visitas-board .kanban-card');
+    if(!cards.length) cards=document.querySelectorAll('#panel-visitas .kanban-card');
+    cards.forEach(function(card){
+      if(card.querySelector('.visita-del')) return;
+      var b=document.createElement('button');
+      b.type='button'; b.className='visita-del'; b.textContent='🗑️'; b.title='Excluir visita';
+      b.style.cssText='position:absolute;top:8px;right:8px;z-index:5;border:none;background:rgba(255,255,255,0.92);border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:13px;';
+      b.onclick=function(e){ e.stopPropagation(); window.excluirVisita(card.dataset.id); };
+      card.style.position='relative'; card.appendChild(b);
+    });
+  };
+  setInterval(window.__injDel,1500);
+  window.addEventListener('load',function(){ setTimeout(window.__injDel,1200); });
+})();
+</script>
+  <script>
+/* CRM-FIX MIN — grava nas chaves inovit_crm_* e crm_* */
+(function(){
+  if(window.__CRM_MIN) return; window.__CRM_MIN=true;
+  function pd(t){var o=[];t.split(/\r?\n/).forEach(function(l){if(!l.trim())return;var q=l.split(',').map(function(s){return s.trim();});if((q[0]||'').toLowerCase()==='id')return;if(q.length>=6)o.push({nome:q[2],cliente:q[3],whatsapp:q[4],email:q[5]});});return o;}
+  function pg(t){var o=[];t.split(/\r?\n/).forEach(function(l){if(!l.trim())return;var q=l.split(',').map(function(s){return s.trim();});var ei=-1;for(var i=0;i<q.length;i++){if(q[i]&&q[i].indexOf('@')>-1){ei=i;break;}}if(ei>-1)o.push({nome:q.slice(0,ei).join(' ').replace(/\s*\|.*$/,'').trim(),cliente:q[ei].split('@')[1]||'',whatsapp:q[ei+1]||'',email:q[ei]});});return o;}
+  function go(){ return Promise.all([ fetch('https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt?v='+Date.now()).then(function(r){return r.text();}), fetch('https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt?v='+Date.now()).then(function(r){return r.text();}) ]).then(function(rs){ var d=pd(rs[0]),g=pg(rs[1]); localStorage.setItem('inovit_crm_decisores',JSON.stringify(d)); localStorage.setItem('inovit_crm_geral',JSON.stringify(g)); localStorage.setItem('crm_decisores',JSON.stringify(d)); localStorage.setItem('crm_geral',JSON.stringify(g)); if(window.loadCrmData) window.loadCrmData(); return {d:d.length,g:g.length}; }); }
+  window.resetCrmData=function(){ return go().then(function(o){ alert('✅ CRM recarregado: '+o.d+' decisores, '+o.g+' gerais.'); }); };
+  window.addEventListener('load',function(){ setTimeout(go,1500); });
+})();
+</script>
 </body>
 </html>
