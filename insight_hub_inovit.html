@@ -1995,6 +1995,30 @@ window.addEventListener('load',function(){ setTimeout(window.__injDel,1000); });
   discover().then(function(){ pull(); push(); setInterval(push,4000); setInterval(pull,30000); });
   window.addEventListener('beforeunload',push);
 })();
-</script>
+ <script>
+/* CRM-FIX4 — save real no Supabase + linha nova no topo + botao + por linha (NAO REMOVER) */
+(function(){
+  if(window.__CRM4) return; window.__CRM4=true;
+  var SB='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
+  function read(k){ try{ return JSON.parse(localStorage.getItem(k)||'[]'); }catch(e){ return []; } }
+  function write(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+  var KEY=null;
+  fetch(location.href,{cache:'no-store'}).then(function(r){ return r.text(); }).then(function(t){ var m=t.match(/var KEY='([^']+)'/); KEY=m?m[1]:null; });
+  function pushNow(){ if(!KEY) return; ['inovit_crm_decisores','inovit_crm_geral','crm_decisores','crm_geral'].forEach(function(k){ var v=localStorage.getItem(k); if(!v) return; fetch(SB+'/rest/v1/kv?on_conflict=key',{method:'POST',headers:{apikey:KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},body:JSON.stringify({key:k,value:JSON.parse(v)})}).catch(function(){}); }); }
+  window.__crmPush=pushNow;
+  // Loaders passam a ler do localStorage (que o KVSYNC3 sincroniza com o Supabase)
+  window.loadDecisores=function(){ return Promise.resolve(read('inovit_crm_decisores')); };
+  window.loadGeral=function(){ return Promise.resolve(read('inovit_crm_geral')); };
+  function domRows(){ var rows=[]; document.querySelectorAll('#crm-table-body tr').forEach(function(tr){ var inp=tr.querySelectorAll('input'); if(inp.length<4) return; rows.push({nome:inp[0].value, cliente:inp[1].value, whatsapp:inp[2].value, email:inp[3].value}); }); return rows; }
+  function activeTab(){ var bs=Array.from(document.querySelectorAll('button')); for(var i=0;i<bs.length;i++){ var t=(bs[i].textContent||'').trim(); if(/^(Decisores|Geral)$/i.test(t)){ if(/active|selected/i.test(bs[i].className)||bs[i].getAttribute('aria-selected')==='true'){ return /Geral/i.test(t)?'geral':'decisores'; } } } return 'decisores'; }
+  window.saveCrmData=function(){ var rows=domRows(); var tab=activeTab(); var k= tab==='geral'?'inovit_crm_geral':'inovit_crm_decisores'; var m= tab==='geral'?'crm_geral':'crm_decisores'; write(k,rows); write(m,rows); if(window.loadCrmData) window.loadCrmData(); pushNow(); };
+  // Clique em Salvar (CRM) garante save + aviso unico
+  document.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var tb=document.getElementById('crm-table-body'); if(tb && tb.offsetParent!==null && /Salvar/i.test(b.textContent||'')){ setTimeout(function(){ window.saveCrmData(); alert('✅ CRM salvo e sincronizado com o Supabase.'); },40); } });
+  // Adicionar Linha -> move a nova linha para o TOPO
+  document.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b && /Adicionar Linha/i.test(b.textContent||'')){ setTimeout(function(){ var tb=document.getElementById('crm-table-body'); if(tb && tb.rows.length>1){ tb.insertBefore(tb.rows[tb.rows.length-1], tb.rows[0]); } },60); } });
+  // Botao + em cada linha (insere linha vazia abaixo)
+  setInterval(function(){ document.querySelectorAll('#crm-table-body tr').forEach(function(tr){ var act=tr.querySelector('td:last-child'); if(!act || act.querySelector('.crm-add')) return; var b=document.createElement('button'); b.type='button'; b.className='crm-add'; b.textContent='＋'; b.title='Inserir linha abaixo'; b.style.cssText='margin-left:6px;border:1px solid #0d5fa7;color:#0d5fa7;background:#fff;border-radius:50%;width:26px;height:26px;cursor:pointer;'; b.onclick=function(){ var nb=tr.cloneNode(true); nb.querySelectorAll('input').forEach(function(i){ i.value=''; }); tr.parentNode.insertBefore(nb, tr.nextSibling); }; act.appendChild(b); }); },1000);
+})();
+</script> 
 </body>
 </html>
