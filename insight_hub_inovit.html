@@ -2019,6 +2019,18 @@ window.addEventListener('load',function(){ setTimeout(window.__injDel,1000); });
   // Botao + em cada linha (insere linha vazia abaixo)
   setInterval(function(){ document.querySelectorAll('#crm-table-body tr').forEach(function(tr){ var act=tr.querySelector('td:last-child'); if(!act || act.querySelector('.crm-add')) return; var b=document.createElement('button'); b.type='button'; b.className='crm-add'; b.textContent='＋'; b.title='Inserir linha abaixo'; b.style.cssText='margin-left:6px;border:1px solid #0d5fa7;color:#0d5fa7;background:#fff;border-radius:50%;width:26px;height:26px;cursor:pointer;'; b.onclick=function(){ var nb=tr.cloneNode(true); nb.querySelectorAll('input').forEach(function(i){ i.value=''; }); tr.parentNode.insertBefore(nb, tr.nextSibling); }; act.appendChild(b); }); },1000);
 })();
-</script> 
+<script>
+/* TEC-CHIPS — clientes atendidos como cartoes (NAO REMOVER) */
+(function(){
+  if(window.__TECCHIPS) return; window.__TECCHIPS=true;
+  var URLCSV='https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/base.csv';
+  function parseCSV(t){ var rows=[]; var row=[]; var cur=''; var q=false; for(var i=0;i<t.length;i++){ var ch=t[i]; if(q){ if(ch==='"'){ if(t[i+1]==='"'){ cur+='"'; i++; } else q=false; } else cur+=ch; } else { if(ch==='"') q=true; else if(ch===';'){ row.push(cur); cur=''; } else if(ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur=''; } else if(ch!=='\r') cur+=ch; } } if(cur!==''||row.length){ row.push(cur); rows.push(row); } return rows; }
+  function carregar(){ return fetch(URLCSV,{cache:'no-store'}).then(function(r){ return r.text(); }).then(function(t){ var rows=parseCSV(t); var h=rows[0]||[]; var iE=h.indexOf('Entidade'); var iT=h.indexOf('Atribuído - Técnico'); var map={}; for(var i=1;i<rows.length;i++){ var r=rows[i]; if(!r||r.length<=Math.max(iE,iT)) continue; var tec=(r[iT]||'').trim(); var cli=(r[iE]||'').trim(); if(!tec) continue; (map[tec]=map[tec]||{}); if(cli) map[tec][cli]=1; } var out={}; Object.keys(map).forEach(function(k){ out[k]=Object.keys(map[k]); }); window.__tecClientes=out; return out; }); }
+  function currentTec(){ var cands=Array.from(document.querySelectorAll('*')).filter(function(e){ return ((e.textContent||'').trim().indexOf('Técnico:')===0); }); if(!cands.length) return null; cands.sort(function(a,b){ return (a.textContent||'').length-(b.textContent||'').length; }); var m=(cands[0].textContent||'').match(/T[eé]cnico:\s*([^(]+)/i); return m? m[1].trim(): null; }
+  function injChips(){ var tec=currentTec(); if(!tec) return; var list=(window.__tecClientes||{})[tec]; if(!list) return; document.querySelectorAll('.detail-item').forEach(function(it){ var lab=it.querySelector('.label'); var val=it.querySelector('.value'); if(!lab||!val) return; if(!/clientes atendidos/i.test(lab.textContent||'')) return; if(val.querySelector('.tec-chip')) return; val.innerHTML=''; val.style.cssText='display:flex;flex-wrap:wrap;gap:4px;max-height:150px;overflow:auto;'; list.forEach(function(c){ var s=document.createElement('span'); s.className='tec-chip'; s.textContent=c; s.title=c; s.style.cssText='background:#e8f0fe;color:#0d5fa7;border:1px solid #c5d9f5;border-radius:999px;padding:2px 8px;font-size:11px;white-space:nowrap;'; val.appendChild(s); }); }); }
+  window.addEventListener('load',function(){ carregar().then(function(){ injChips(); }); });
+  setInterval(injChips,800);
+})();
+</script>
 </body>
 </html>
