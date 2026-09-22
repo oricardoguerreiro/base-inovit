@@ -1981,21 +1981,6 @@ window.savePlanosAcao=function(p){ localStorage.setItem('inovit_planos_acao',JSO
 window.__injDel=function(){ document.querySelectorAll('[data-kanban-tipo="visita"]').forEach(function(c){ if(c.querySelector('.visita-del')) return; var b=document.createElement('button'); b.type='button'; b.className='visita-del'; b.textContent='🗑️'; b.title='Excluir visita'; b.style.cssText='position:absolute;top:6px;right:6px;z-index:9;border:none;background:#fff;color:#b71c1c;border-radius:50%;width:26px;height:26px;cursor:pointer;'; b.onclick=function(e){ e.stopPropagation(); if(!confirm('Excluir esta visita?')) return; var v=JSON.parse(localStorage.getItem('inovit_visitas')||'[]').filter(function(x){ return x.id!==c.dataset.id; }); localStorage.setItem('inovit_visitas',JSON.stringify(v)); fetch('https://jqgjfwlrkdxgkrdqbbrt.supabase.co/rest/v1/visitas?id=eq.'+c.dataset.id,{method:'DELETE',headers:{apikey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo'}}).catch(function(){}); if(window.renderCalendario) window.renderCalendario(); }; c.style.position='relative'; c.appendChild(b); }); };
 setInterval(window.__injDel,1200);
 window.addEventListener('load',function(){ setTimeout(window.__injDel,1000); });
-<script>
-/* KVSYNC — espelha CRM + Config no Supabase (NAO REMOVER) */
-(function(){
-  if(window.__KVSYNC) return; window.__KVSYNC=true;
-  var SB='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
-  var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo';
-  var KEYS=['inovit_crm_decisores','inovit_crm_geral','crm_decisores','crm_geral','inovit_config'];
-  function H(){ return {apikey:KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'}; }
-  function pull(){ return fetch(SB+'/rest/v1/kv?select=key,value',{headers:{apikey:KEY,'Authorization':'Bearer '+KEY}}).then(function(r){ return r.json(); }).then(function(rows){ (Array.isArray(rows)?rows:[]).forEach(function(r){ if(KEYS.indexOf(r.key)>-1 && r.value!==null) localStorage.setItem(r.key, JSON.stringify(r.value)); }); if(window.loadCrmData) window.loadCrmData(); }); }
-  var last={};
-  function push(){ KEYS.forEach(function(k){ var v=localStorage.getItem(k); if(v===null) return; if(last[k]===v) return; last[k]=v; var p; try{ p=JSON.parse(v); }catch(e){ return; } fetch(SB+'/rest/v1/kv?on_conflict=key',{method:'POST',headers:H(),body:JSON.stringify({key:k,value:p})}).catch(function(){}); }); }
-  window.addEventListener('load',function(){ pull(); push(); });
-  setInterval(push,4000); setInterval(pull,30000); window.addEventListener('beforeunload',push);
-})();
-</script>
 </script>  
 </body>
 </html>
