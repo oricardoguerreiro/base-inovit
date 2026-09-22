@@ -1994,8 +1994,7 @@ window.addEventListener('load',function(){ setTimeout(window.__injDel,1000); });
   function push(){ if(!KEY) return; KEYS.forEach(function(k){ var v=localStorage.getItem(k); if(!v) return; var sig=v.length+':'+v.slice(-40); push.last=push.last||{}; if(push.last[k]===sig) return; push.last[k]=sig; fetch(SB+'/rest/v1/kv?on_conflict=key',{method:'POST',headers:Hd(),body:JSON.stringify({key:k,value:JSON.parse(v)})}).catch(function(){}); }); }
   discover().then(function(){ pull(); push(); setInterval(push,4000); setInterval(pull,30000); });
   window.addEventListener('beforeunload',push);
-})();
- <script>
+})(); / </script> / <script> / /* CRM-FIX4 ... */
 /* CRM-FIX4 — save real no Supabase + linha nova no topo + botao + por linha (NAO REMOVER) */
 (function(){
   if(window.__CRM4) return; window.__CRM4=true;
@@ -2018,8 +2017,7 @@ window.addEventListener('load',function(){ setTimeout(window.__injDel,1000); });
   document.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b && /Adicionar Linha/i.test(b.textContent||'')){ setTimeout(function(){ var tb=document.getElementById('crm-table-body'); if(tb && tb.rows.length>1){ tb.insertBefore(tb.rows[tb.rows.length-1], tb.rows[0]); } },60); } });
   // Botao + em cada linha (insere linha vazia abaixo)
   setInterval(function(){ document.querySelectorAll('#crm-table-body tr').forEach(function(tr){ var act=tr.querySelector('td:last-child'); if(!act || act.querySelector('.crm-add')) return; var b=document.createElement('button'); b.type='button'; b.className='crm-add'; b.textContent='＋'; b.title='Inserir linha abaixo'; b.style.cssText='margin-left:6px;border:1px solid #0d5fa7;color:#0d5fa7;background:#fff;border-radius:50%;width:26px;height:26px;cursor:pointer;'; b.onclick=function(){ var nb=tr.cloneNode(true); nb.querySelectorAll('input').forEach(function(i){ i.value=''; }); tr.parentNode.insertBefore(nb, tr.nextSibling); }; act.appendChild(b); }); },1000);
-})();
-<script>
+})(); / </script> / <script> / /* TEC-CHIPS ... */
 /* TEC-CHIPS — clientes atendidos como cartoes (NAO REMOVER) */
 (function(){
   if(window.__TECCHIPS) return; window.__TECCHIPS=true;
