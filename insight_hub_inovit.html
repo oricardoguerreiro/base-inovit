@@ -2031,6 +2031,25 @@ function injChips(){ var tec=currentTec(); if(!tec) return; var list=(window.__t
 window.addEventListener('load',function(){ carregar().then(function(){ injChips(); }); });
 setInterval(injChips,800);
 })();
+<script>
+/* VISITAS-FIX2 — lista de visitas obedece ao filtro do painel (NAO REMOVER) */
+(function(){
+if(window.__VISITAS_FIX2) return; window.__VISITAS_FIX2=true;
+var _alv=window.abrirListaVisitas;
+window.abrirListaVisitas=function(filtro,titulo){
+var pv=document.getElementById('panel-visitas');
+if(!pv||!pv.classList.contains('active')) return _alv(filtro,titulo);
+var mes=el('calendario-mes-select'), ano=el('calendario-ano-select');
+var mesVal=mes?mes.value:'all', anoStr=ano?ano.value:String(new Date().getFullYear());
+var from,to;
+if(mesVal==='all'){ from=anoStr+'-01-01'; to=anoStr+'-12-31'; }
+else { var m=String(parseInt(mesVal)+1).padStart(2,'0'); from=anoStr+'-'+m+'-01'; var last=new Date(+anoStr,+m,0); to=anoStr+'-'+m+'-'+String(last.getDate()).padStart(2,'0'); }
+var f=el('filter-from'), t=el('filter-to');
+var sf=f?f.value:'', st=t?t.value:'';
+if(f)f.value=from; if(t)t.value=to;
+try{ return _alv(filtro,titulo); } finally { if(f)f.value=sf; if(t)t.value=st; }
+};
+})();
 </script>
 </body>
 </html>
