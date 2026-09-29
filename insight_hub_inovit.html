@@ -1440,7 +1440,7 @@ function preencherFiltroVisitas(){
   if(mesSelect.options.length===0){
     const meses=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
     mesSelect.innerHTML='<option value="all">Todos os meses</option>'+meses.map((nome,idx)=>'<option value="'+idx+'">'+nome+'</option>').join('');
-    mesSelect.value=String(new Date().getMonth());
+    mesSelect.value='all';
     const anoAtual=new Date().getFullYear();let opts='';
     for(let a=anoAtual-5;a<=anoAtual+5;a++)opts+='<option value="'+a+'">'+a+'</option>';
     anoSelect.innerHTML=opts;anoSelect.value=String(anoAtual);
@@ -2070,13 +2070,13 @@ el('visita-status').value=visita.status||'Planejada';
 var vgp=el('visita-gerar-plano');if(vgp)vgp.checked=visita.gerouPlano||false;
 var vpc=el('visita-plano-container');if(vpc){vpc.style.display='none';vpc.classList.remove('visible');}
 preencherSelectClientesVisita();
+el('visita-cliente').value=visita.cliente||'';
 var sel=el('visita-cliente');
 if(visita.cliente){
 var found=false;
 for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===visita.cliente){found=true;break;}}
 if(!found){var o=document.createElement('option');o.value=visita.cliente;o.textContent=visita.cliente;sel.appendChild(o);}
 }
-el('visita-cliente').value=visita.cliente||'';
 modal.style.display='block';document.body.style.overflow='hidden';
 };
 window.preencherFiltroVisitas=function(){
