@@ -2050,6 +2050,51 @@ if(f)f.value=from; if(t)t.value=to;
 try{ return _alv(filtro,titulo); } finally { if(f)f.value=sf; if(t)t.value=st; }
 };
 })();
+<script>
+/* VISITAS-FIX6 — cliente preservado no Editar Visita + filtro default Todos os meses (NAO REMOVER) */
+(function(){
+if(window.__VISITAS_FIX6) return; window.__VISITAS_FIX6=true;
+window.editarVisita=function(id){
+var visita=getVisitas().find(function(v){return v.id===id;});
+if(!visita){alert('Visita não encontrada.');return;}
+var modal=el('modal-visita');if(!modal)return;
+setText('modal-visita-title','✏️ Editar Visita');
+el('visita-id').value=visita.id;
+el('visita-data').value=visita.data||'';
+el('visita-hora').value=visita.hora||'';
+el('visita-local').value=visita.local||'';
+el('visita-participantes').value=visita.participantes||'';
+el('visita-objetivo').value=visita.objetivo||'';
+el('visita-obs').value=visita.obs||'';
+el('visita-status').value=visita.status||'Planejada';
+var vgp=el('visita-gerar-plano');if(vgp)vgp.checked=visita.gerouPlano||false;
+var vpc=el('visita-plano-container');if(vpc){vpc.style.display='none';vpc.classList.remove('visible');}
+preencherSelectClientesVisita();
+var sel=el('visita-cliente');
+if(visita.cliente){
+var found=false;
+for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===visita.cliente){found=true;break;}}
+if(!found){var o=document.createElement('option');o.value=visita.cliente;o.textContent=visita.cliente;sel.appendChild(o);}
+}
+el('visita-cliente').value=visita.cliente||'';
+modal.style.display='block';document.body.style.overflow='hidden';
+};
+window.preencherFiltroVisitas=function(){
+const mesSelect=el('calendario-mes-select'),anoSelect=el('calendario-ano-select');
+if(!mesSelect||!anoSelect)return false;
+if(mesSelect.options.length===0){
+const meses=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+mesSelect.innerHTML='<option value="all">Todos os meses</option>'+meses.map((nome,idx)=>'<option value="'+idx+'">'+nome+'</option>').join('');
+mesSelect.value='all';
+const anoAtual=new Date().getFullYear();
+let opts='';
+for(let a=anoAtual-5;a<=anoAtual+5;a++)opts+='<option value="'+a+'">'+a+'</option>';
+anoSelect.innerHTML=opts;
+anoSelect.value=String(anoAtual);
+}
+return true;
+};
+})();
 </script>
 </body>
 </html>
