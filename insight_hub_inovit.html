@@ -664,7 +664,7 @@ function switchSection(key,btnEl){
 let globalData=[],currentFiltered=[],allTicketsData=[],allTicketsPageSize=50,allTicketsCurrentPage=0,chartInstances={};
 const BACKLOG_STATUSES=['novo','pendente','em atendimento (atribuído)','em atendimento (planejado)'];
 function isBacklogStatus(s){if(!s)return false;const x=s.toLowerCase().trim();return BACKLOG_STATUSES.some(b=>x.includes(b));}
-function parseDuration(v){if(!v)return 0;if(typeof v==='number')return v;const s=String(v).trim();let n=parseFloat(s.replace(',','.'));if(!isNaN(n)&&s.indexOf(' ')===-1)return n;const m=s.match(/^(\d+):(\d+)$/);if(m)return parseInt(m[1])+parseInt(m[2])/60;const parts=s.split('\n').map(x=>x.trim()).filter(x=>x);let t=0;for(let p of parts){let d=0,h=0,min=0,sec=0;const dm=p.match(/(\d+)\s*dias?/),hm=p.match(/(\d+)\s*horas?/),mm=p.match(/(\d+)\s*minutos?/),sm=p.match(/(\d+)\s*segundos?/);if(dm)d=+dm[1];if(hm)h=+hm[1];if(mm)min=+mm[1];if(sm)sec=+sm[1];t+=d*24+h+min/60+sec/3600;}return Math.round(t*100)/100;}
+function parseDuration(v){if(!v)return 0;if(typeof v==='number')return v;const s=String(v).trim();let n=parseFloat(s.replace(',','.'));if(!isNaN(n)&&s.indexOf(' ')===-1)return n;const m=s.match(/^(\d+):(\d+)$/);if(m)return parseInt(m[1])+parseInt(m[2])/60;const m2=s.match(/(\d+)h(\d+)min/i);if(m2)return parseInt(m2[1])+parseInt(m2[2])/60;const parts=s.split('\n').map(x=>x.trim()).filter(x=>x);let t=0;for(let p of parts){let d=0,h=0,min=0,sec=0;const dm=p.match(/(\d+)\s*dias?/),hm=p.match(/(\d+)\s*horas?/),mm=p.match(/(\d+)\s*minutos?/),sm=p.match(/(\d+)\s*segundos?/);if(dm)d=+dm[1];if(hm)h=+hm[1];if(mm)min=+mm[1];if(sm)sec=+sm[1];t+=d*24+h+min/60+sec/3600;}return Math.round(t*100)/100;}
 function findCol(row,kws){if(!row)return null;const keys=Object.keys(row);for(const kw of kws){for(const k of keys){if(k.toLowerCase().trim().includes(kw.toLowerCase().trim()))return k;}}return null;}
 function parseDate(v){if(!v)return null;let d=null;if(v instanceof Date)d=v;else if(typeof v==='string'){v=v.trim();const br=v.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})/);if(br)d=new Date(+br[3],+br[2]-1,+br[1]);else d=new Date(v);}else if(typeof v==='number'){d=(v>40000&&v<60000)?new Date((v-25569)*86400000):new Date(v);}if(!d||isNaN(d.getTime()))return null;return{dia:d.getDate(),mes:d.getMonth()+1,ano:d.getFullYear(),dateObj:d};}
 function calcularSla16HorasUteis(a,f){if(!a||!f)return true;let d1=new Date(a),d2=new Date(f);if(isNaN(d1.getTime())||isNaN(d2.getTime()))return true;if(d1>=d2)return true;let min=0,cur=new Date(d1.getTime());while(cur<d2){const dia=cur.getDay();if(dia!==0&&dia!==6){const h=cur.getHours();if((h>=8&&h<12)||(h>=14&&h<18))min++;}cur.setMinutes(cur.getMinutes()+1);}return (min/60)<=16;}
@@ -695,7 +695,7 @@ function regTable(tableId,cfg){
 function processFileRows(rows){
   if(!rows||!rows.length)return;
   const sample=rows[0];
-  const idCol=findCol(sample,['id','chamado','ticket']),titleCol=findCol(sample,['título','titulo','assunto']),entityCol=findCol(sample,['entidade','cliente']),openCol=findCol(sample,['abertura','criado']),closeCol=findCol(sample,['solução','solucao']),typeCol=findCol(sample,['tipo']),catCol=findCol(sample,['categoria']),techCol=findCol(sample,['atribuído - técnico','atribuido','técnico']),teamCol=findCol(sample,['equipe','grupo']),csatCol=findCol(sample,['satisfação','csat','nota']),reqCol=findCol(sample,['requerente','usuario']),statusCol=findCol(sample,['status']),durCol=findCol(sample,['duração','duracao','horas']);
+  const idCol=findCol(sample,['id','chamado','ticket','número','numero']),titleCol=findCol(sample,['título','titulo','assunto']),entityCol=findCol(sample,['entidade','cliente']),openCol=findCol(sample,['abertura','criado','data de abertura']),closeCol=findCol(sample,['solução','solucao','data de solução']),typeCol=findCol(sample,['tipo']),catCol=findCol(sample,['categoria']),techCol=findCol(sample,['atribuído - técnico','atribuido','técnico','tecnico atribuído']),teamCol=findCol(sample,['equipe','grupo','grupo de atendimento']),csatCol=findCol(sample,['satisfação','csat','nota','avaliação','avaliacao']),reqCol=findCol(sample,['requerente','usuario','solicitante']),statusCol=findCol(sample,['status']),durCol=findCol(sample,['duração','duracao','horas','tempo total']);
   rows.forEach(row=>{
     const openParsed=parseDate(row[openCol]);if(!openParsed)return;
     const closeParsed=parseDate(row[closeCol]);
@@ -1440,7 +1440,7 @@ function preencherFiltroVisitas(){
   if(mesSelect.options.length===0){
     const meses=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
     mesSelect.innerHTML='<option value="all">Todos os meses</option>'+meses.map((nome,idx)=>'<option value="'+idx+'">'+nome+'</option>').join('');
-    mesSelect.value='all';
+    mesSelect.value=String(new Date().getMonth());
     const anoAtual=new Date().getFullYear();let opts='';
     for(let a=anoAtual-5;a<=anoAtual+5;a++)opts+='<option value="'+a+'">'+a+'</option>';
     anoSelect.innerHTML=opts;anoSelect.value=String(anoAtual);
@@ -1976,125 +1976,58 @@ const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); p
 })();
 </script>
 <script>
-<script>
 /* UNIFICA2 — save unificado de planos + lixeira de visitas (NAO REMOVER) */
 window.savePlanosAcao=function(p){ localStorage.setItem('inovit_planos_acao',JSON.stringify(p)); localStorage.setItem('inovit_planos',JSON.stringify(p)); fetch('https://jqgjfwlrkdxgkrdqbbrt.supabase.co/rest/v1/planos_acao?on_conflict=id',{method:'POST',headers:{apikey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},body:JSON.stringify(p.map(function(x){ return {id:x.id,payload:x}; }))}).catch(function(){}); };
 window.__injDel=function(){ document.querySelectorAll('[data-kanban-tipo="visita"]').forEach(function(c){ if(c.querySelector('.visita-del')) return; var b=document.createElement('button'); b.type='button'; b.className='visita-del'; b.textContent='🗑️'; b.title='Excluir visita'; b.style.cssText='position:absolute;top:6px;right:6px;z-index:9;border:none;background:#fff;color:#b71c1c;border-radius:50%;width:26px;height:26px;cursor:pointer;'; b.onclick=function(e){ e.stopPropagation(); if(!confirm('Excluir esta visita?')) return; var v=JSON.parse(localStorage.getItem('inovit_visitas')||'[]').filter(function(x){ return x.id!==c.dataset.id; }); localStorage.setItem('inovit_visitas',JSON.stringify(v)); fetch('https://jqgjfwlrkdxgkrdqbbrt.supabase.co/rest/v1/visitas?id=eq.'+c.dataset.id,{method:'DELETE',headers:{apikey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo'}}).catch(function(){}); if(window.renderCalendario) window.renderCalendario(); }; c.style.position='relative'; c.appendChild(b); }); };
 setInterval(window.__injDel,1200);
 window.addEventListener('load',function(){ setTimeout(window.__injDel,1000); });
-</script>
-<script>
-/* KVSYNC3 — espelha CRM + Config no Supabase (NAO REMOVER) */
-(function(){
-if(window.__KVSYNC3) return; window.__KVSYNC3=true;
-var SB='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
-var KEYS=['inovit_crm_decisores','inovit_crm_geral','crm_decisores','crm_geral','inovit_config'];
-var KEY=null;
-function discover(){ return fetch(location.href,{cache:'no-store'}).then(function(r){ return r.text(); }).then(function(t){ var m=t.match(/var KEY='([^']+)'/); if(!m) m=t.match(/apikey:'([^']+)'/); KEY=m?m[1]:null; return KEY; }); }
-function Hd(){ return {apikey:KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'}; }
-function pull(){ if(!KEY) return; fetch(SB+'/rest/v1/kv?select=key,value',{headers:{apikey:KEY,'Authorization':'Bearer '+KEY}}).then(function(r){ return r.ok?r.json():[]; }).then(function(rows){ (Array.isArray(rows)?rows:[]).forEach(function(r){ if(KEYS.indexOf(r.key)>-1&&r.value!=null) localStorage.setItem(r.key,JSON.stringify(r.value)); }); if(window.loadCrmData) window.loadCrmData(); }); }
-function push(){ if(!KEY) return; KEYS.forEach(function(k){ var v=localStorage.getItem(k); if(!v) return; var sig=v.length+':'+v.slice(-40); push.last=push.last||{}; if(push.last[k]===sig) return; push.last[k]=sig; fetch(SB+'/rest/v1/kv?on_conflict=key',{method:'POST',headers:Hd(),body:JSON.stringify({key:k,value:JSON.parse(v)})}).catch(function(){}); }); }
-discover().then(function(){ pull(); push(); setInterval(push,4000); setInterval(pull,30000); });
-window.addEventListener('beforeunload',push);
-})();
-</script>
 
-<script>
+/* KVSYNC3 — auto-descobre a chave do proprio HTML (NAO REMOVER) */
+(function(){
+  if(window.__KVSYNC3) return; window.__KVSYNC3=true;
+  var SB='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
+  var KEYS=['inovit_crm_decisores','inovit_crm_geral','crm_decisores','crm_geral','inovit_config'];
+  var KEY=null;
+  function discover(){ return fetch(location.href,{cache:'no-store'}).then(function(r){ return r.text(); }).then(function(t){ var m=t.match(/var KEY='([^']+)'/); if(!m) m=t.match(/apikey:'([^']+)'/); KEY=m?m[1]:null; return KEY; }); }
+  function Hd(){ return {apikey:KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'}; }
+  function pull(){ if(!KEY) return; fetch(SB+'/rest/v1/kv?select=key,value',{headers:{apikey:KEY,'Authorization':'Bearer '+KEY}}).then(function(r){ return r.ok?r.json():[]; }).then(function(rows){ (Array.isArray(rows)?rows:[]).forEach(function(r){ if(KEYS.indexOf(r.key)>-1&&r.value!=null) localStorage.setItem(r.key,JSON.stringify(r.value)); }); if(window.loadCrmData) window.loadCrmData(); }); }
+  function push(){ if(!KEY) return; KEYS.forEach(function(k){ var v=localStorage.getItem(k); if(!v) return; var sig=v.length+':'+v.slice(-40); push.last=push.last||{}; if(push.last[k]===sig) return; push.last[k]=sig; fetch(SB+'/rest/v1/kv?on_conflict=key',{method:'POST',headers:Hd(),body:JSON.stringify({key:k,value:JSON.parse(v)})}).catch(function(){}); }); }
+  discover().then(function(){ pull(); push(); setInterval(push,4000); setInterval(pull,30000); });
+  window.addEventListener('beforeunload',push);
+})(); / </script> / <script> / /* CRM-FIX4 ... */
 /* CRM-FIX4 — save real no Supabase + linha nova no topo + botao + por linha (NAO REMOVER) */
 (function(){
-if(window.__CRM4) return; window.__CRM4=true;
-var SB='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
-function read(k){ try{ return JSON.parse(localStorage.getItem(k)||'[]'); }catch(e){ return []; } }
-function write(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
-var KEY=null;
-fetch(location.href,{cache:'no-store'}).then(function(r){ return r.text(); }).then(function(t){ var m=t.match(/var KEY='([^']+)'/); KEY=m?m[1]:null; });
-function pushNow(){ if(!KEY) return; ['inovit_crm_decisores','inovit_crm_geral','crm_decisores','crm_geral'].forEach(function(k){ var v=localStorage.getItem(k); if(!v) return; fetch(SB+'/rest/v1/kv?on_conflict=key',{method:'POST',headers:{apikey:KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},body:JSON.stringify({key:k,value:JSON.parse(v)})}).catch(function(){}); }); }
-window.__crmPush=pushNow;
-window.loadDecisores=function(){ return Promise.resolve(read('inovit_crm_decisores')); };
-window.loadGeral=function(){ return Promise.resolve(read('inovit_crm_geral')); };
-function domRows(){ var rows=[]; document.querySelectorAll('#crm-table-body tr').forEach(function(tr){ var inp=tr.querySelectorAll('input'); if(inp.length<4) return; rows.push({nome:inp[0].value, cliente:inp[1].value, whatsapp:inp[2].value, email:inp[3].value}); }); return rows; }
-function activeTab(){ var bs=Array.from(document.querySelectorAll('button')); for(var i=0;i<bs.length;i++){ var t=(bs[i].textContent||'').trim(); if(/^(Decisores|Geral)$/i.test(t)){ if(/active|selected/i.test(bs[i].className)||bs[i].getAttribute('aria-selected')==='true'){ return /Geral/i.test(t)?'geral':'decisores'; } } } return 'decisores'; }
-window.saveCrmData=function(){ var rows=domRows(); var tab=activeTab(); var k= tab==='geral'?'inovit_crm_geral':'inovit_crm_decisores'; var m= tab==='geral'?'crm_geral':'crm_decisores'; write(k,rows); write(m,rows); if(window.loadCrmData) window.loadCrmData(); pushNow(); };
-document.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var tb=document.getElementById('crm-table-body'); if(tb && tb.offsetParent!==null && /Salvar/i.test(b.textContent||'')){ setTimeout(function(){ window.saveCrmData(); alert('✅ CRM salvo e sincronizado com o Supabase.'); },40); } });
-document.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b && /Adicionar Linha/i.test(b.textContent||'')){ setTimeout(function(){ var tb=document.getElementById('crm-table-body'); if(tb && tb.rows.length>1){ tb.insertBefore(tb.rows[tb.rows.length-1], tb.rows[0]); } },60); } });
-setInterval(function(){ document.querySelectorAll('#crm-table-body tr').forEach(function(tr){ var act=tr.querySelector('td:last-child'); if(!act || act.querySelector('.crm-add')) return; var b=document.createElement('button'); b.type='button'; b.className='crm-add'; b.textContent='＋'; b.title='Inserir linha abaixo'; b.style.cssText='margin-left:6px;border:1px solid #0d5fa7;color:#0d5fa7;background:#fff;border-radius:50%;width:26px;height:26px;cursor:pointer;'; b.onclick=function(){ var nb=tr.cloneNode(true); nb.querySelectorAll('input').forEach(function(i){ i.value=''; }); tr.parentNode.insertBefore(nb, tr.nextSibling); }; act.appendChild(b); }); },1000);
-})();
-</script>
-
-<script>
+  if(window.__CRM4) return; window.__CRM4=true;
+  var SB='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
+  function read(k){ try{ return JSON.parse(localStorage.getItem(k)||'[]'); }catch(e){ return []; } }
+  function write(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+  var KEY=null;
+  fetch(location.href,{cache:'no-store'}).then(function(r){ return r.text(); }).then(function(t){ var m=t.match(/var KEY='([^']+)'/); KEY=m?m[1]:null; });
+  function pushNow(){ if(!KEY) return; ['inovit_crm_decisores','inovit_crm_geral','crm_decisores','crm_geral'].forEach(function(k){ var v=localStorage.getItem(k); if(!v) return; fetch(SB+'/rest/v1/kv?on_conflict=key',{method:'POST',headers:{apikey:KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},body:JSON.stringify({key:k,value:JSON.parse(v)})}).catch(function(){}); }); }
+  window.__crmPush=pushNow;
+  // Loaders passam a ler do localStorage (que o KVSYNC3 sincroniza com o Supabase)
+  window.loadDecisores=function(){ return Promise.resolve(read('inovit_crm_decisores')); };
+  window.loadGeral=function(){ return Promise.resolve(read('inovit_crm_geral')); };
+  function domRows(){ var rows=[]; document.querySelectorAll('#crm-table-body tr').forEach(function(tr){ var inp=tr.querySelectorAll('input'); if(inp.length<4) return; rows.push({nome:inp[0].value, cliente:inp[1].value, whatsapp:inp[2].value, email:inp[3].value}); }); return rows; }
+  function activeTab(){ var bs=Array.from(document.querySelectorAll('button')); for(var i=0;i<bs.length;i++){ var t=(bs[i].textContent||'').trim(); if(/^(Decisores|Geral)$/i.test(t)){ if(/active|selected/i.test(bs[i].className)||bs[i].getAttribute('aria-selected')==='true'){ return /Geral/i.test(t)?'geral':'decisores'; } } } return 'decisores'; }
+  window.saveCrmData=function(){ var rows=domRows(); var tab=activeTab(); var k= tab==='geral'?'inovit_crm_geral':'inovit_crm_decisores'; var m= tab==='geral'?'crm_geral':'crm_decisores'; write(k,rows); write(m,rows); if(window.loadCrmData) window.loadCrmData(); pushNow(); };
+  // Clique em Salvar (CRM) garante save + aviso unico
+  document.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; var tb=document.getElementById('crm-table-body'); if(tb && tb.offsetParent!==null && /Salvar/i.test(b.textContent||'')){ setTimeout(function(){ window.saveCrmData(); alert('✅ CRM salvo e sincronizado com o Supabase.'); },40); } });
+  // Adicionar Linha -> move a nova linha para o TOPO
+  document.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b && /Adicionar Linha/i.test(b.textContent||'')){ setTimeout(function(){ var tb=document.getElementById('crm-table-body'); if(tb && tb.rows.length>1){ tb.insertBefore(tb.rows[tb.rows.length-1], tb.rows[0]); } },60); } });
+  // Botao + em cada linha (insere linha vazia abaixo)
+  setInterval(function(){ document.querySelectorAll('#crm-table-body tr').forEach(function(tr){ var act=tr.querySelector('td:last-child'); if(!act || act.querySelector('.crm-add')) return; var b=document.createElement('button'); b.type='button'; b.className='crm-add'; b.textContent='＋'; b.title='Inserir linha abaixo'; b.style.cssText='margin-left:6px;border:1px solid #0d5fa7;color:#0d5fa7;background:#fff;border-radius:50%;width:26px;height:26px;cursor:pointer;'; b.onclick=function(){ var nb=tr.cloneNode(true); nb.querySelectorAll('input').forEach(function(i){ i.value=''; }); tr.parentNode.insertBefore(nb, tr.nextSibling); }; act.appendChild(b); }); },1000);
+})(); / </script> / <script> / /* TEC-CHIPS ... */
 /* TEC-CHIPS — clientes atendidos como cartoes (NAO REMOVER) */
 (function(){
-if(window.__TECCHIPS) return; window.__TECCHIPS=true;
-var URLCSV='https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/base.csv';
-function parseCSV(t){ var rows=[]; var row=[]; var cur=''; var q=false; for(var i=0;i<t.length;i++){ var ch=t[i]; if(q){ if(ch==='"'){ if(t[i+1]==='"'){ cur+='"'; i++; } else q=false; } else cur+=ch; } else { if(ch==='"') q=true; else if(ch===';'){ row.push(cur); cur=''; } else if(ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur=''; } else if(ch!=='\r') cur+=ch; } } if(cur!==''||row.length){ row.push(cur); rows.push(row); } return rows; }
-function carregar(){ return fetch(URLCSV,{cache:'no-store'}).then(function(r){ return r.text(); }).then(function(t){ var rows=parseCSV(t); var h=rows[0]||[]; var iE=h.indexOf('Entidade'); var iT=h.indexOf('Atribuído - Técnico'); var map={}; for(var i=1;i<rows.length;i++){ var r=rows[i]; if(!r||r.length<=Math.max(iE,iT)) continue; var tec=(r[iT]||'').trim(); var cli=(r[iE]||'').trim(); if(!tec) continue; (map[tec]=map[tec]||{}); if(cli) map[tec][cli]=1; } var out={}; Object.keys(map).forEach(function(k){ out[k]=Object.keys(map[k]); }); window.__tecClientes=out; return out; }); }
-function currentTec(){ var cands=Array.from(document.querySelectorAll('*')).filter(function(e){ return ((e.textContent||'').trim().indexOf('Técnico:')===0); }); if(!cands.length) return null; cands.sort(function(a,b){ return (a.textContent||'').length-(b.textContent||'').length; }); var m=(cands[0].textContent||'').match(/T[eé]cnico:\s*([^(]+)/i); return m? m[1].trim(): null; }
-function injChips(){ var tec=currentTec(); if(!tec) return; var list=(window.__tecClientes||{})[tec]; if(!list) return; document.querySelectorAll('.detail-item').forEach(function(it){ var lab=it.querySelector('.label'); var val=it.querySelector('.value'); if(!lab||!val) return; if(!/clientes atendidos/i.test(lab.textContent||'')) return; if(val.querySelector('.tec-chip')) return; val.innerHTML=''; val.style.cssText='display:flex;flex-wrap:wrap;gap:4px;max-height:150px;overflow:auto;'; list.forEach(function(c){ var s=document.createElement('span'); s.className='tec-chip'; s.textContent=c; s.title=c; s.style.cssText='background:#e8f0fe;color:#0d5fa7;border:1px solid #c5d9f5;border-radius:999px;padding:2px 8px;font-size:11px;white-space:nowrap;'; val.appendChild(s); }); }); }
-window.addEventListener('load',function(){ carregar().then(function(){ injChips(); }); });
-setInterval(injChips,800);
-})();
-</script>
-
-<script>
-/* VISITAS-FIX-DEFINITIVO — Corrige Editar Visita e Filtro de Mês (NAO REMOVER) */
-(function(){
-if(window.__VISITAS_FIX_FINAL) return; window.__VISITAS_FIX_FINAL=true;
-
-/* 1. Correção do Filtro de Visitas (Default: Todos os meses) */
-window.preencherFiltroVisitas=function(){
-    const mesSelect=el('calendario-mes-select'),anoSelect=el('calendario-ano-select');
-    if(!mesSelect||!anoSelect)return false;
-    if(mesSelect.options.length===0){
-        const meses=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-        mesSelect.innerHTML='<option value="all">Todos os meses</option>'+meses.map((nome,idx)=>'<option value="'+idx+'">'+nome+'</option>').join('');
-        mesSelect.value='all'; /* AQUI ESTAVA O BUG: estava setando o mês atual */
-        const anoAtual=new Date().getFullYear();let opts='';
-        for(let a=anoAtual-5;a<=anoAtual+5;a++)opts+='<option value="'+a+'">'+a+'</option>';
-        anoSelect.innerHTML=opts;anoSelect.value=String(anoAtual);
-    }
-    return true;
-};
-
-/* 2. Correção do Editar Visita (Preservar Cliente) */
-window.editarVisita=function(id){
-    const visita=getVisitas().find(v=>v.id===id);
-    if(!visita){alert('Visita não encontrada.');return;}
-    const modal=el('modal-visita');if(!modal)return;
-    setText('modal-visita-title','✏️ Editar Visita');
-    el('visita-id').value=visita.id;
-    el('visita-data').value=visita.data||'';
-    el('visita-hora').value=visita.hora||'';
-    el('visita-local').value=visita.local||'';
-    el('visita-participantes').value=visita.participantes||'';
-    el('visita-objetivo').value=visita.objetivo||'';
-    el('visita-obs').value=visita.obs||'';
-    el('visita-status').value=visita.status||'Planejada';
-    const vgp=el('visita-gerar-plano');if(vgp)vgp.checked=visita.gerouPlano||false;
-    const vpc=el('visita-plano-container');if(vpc){vpc.style.display='none';vpc.classList.remove('visible');}
-    
-    /* ORDEM CORRIGIDA: Preencher o select ANTES de setar o valor */
-    preencherSelectClientesVisita();
-    
-    const sel=el('visita-cliente');
-    if(visita.cliente){
-        /* Garante que a opção existe, caso o cliente não esteja no CSV global */
-        let found=false;
-        for(let i=0;i<sel.options.length;i++){
-            if(sel.options[i].value===visita.cliente){found=true;break;}
-        }
-        if(!found){
-            const o=document.createElement('option');
-            o.value=visita.cliente;
-            o.textContent=visita.cliente;
-            sel.appendChild(o);
-        }
-    }
-    el('visita-cliente').value=visita.cliente||'';
-    
-    modal.style.display='block';document.body.style.overflow='hidden';
-};
-
-console.log('✅ VISITAS-FIX-DEFINITIVO instalado.');
+  if(window.__TECCHIPS) return; window.__TECCHIPS=true;
+  var URLCSV='https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/base.csv';
+  function parseCSV(t){ var rows=[]; var row=[]; var cur=''; var q=false; for(var i=0;i<t.length;i++){ var ch=t[i]; if(q){ if(ch==='"'){ if(t[i+1]==='"'){ cur+='"'; i++; } else q=false; } else cur+=ch; } else { if(ch==='"') q=true; else if(ch===';'){ row.push(cur); cur=''; } else if(ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur=''; } else if(ch!=='\r') cur+=ch; } } if(cur!==''||row.length){ row.push(cur); rows.push(row); } return rows; }
+  function carregar(){ return fetch(URLCSV,{cache:'no-store'}).then(function(r){ return r.text(); }).then(function(t){ var rows=parseCSV(t); var h=rows[0]||[]; var iE=h.indexOf('Entidade'); if(iE===-1) iE=h.indexOf('Cliente'); var iT=h.indexOf('Atribuído - Técnico'); if(iT===-1) iT=h.indexOf('Técnico Atribuído'); var map={}; for(var i=1;i<rows.length;i++){ var r=rows[i]; if(!r||r.length<=Math.max(iE,iT)) continue; var tec=(r[iT]||'').trim(); var cli=(r[iE]||'').trim(); if(!tec) continue; (map[tec]=map[tec]||{}); if(cli) map[tec][cli]=1; } var out={}; Object.keys(map).forEach(function(k){ out[k]=Object.keys(map[k]); }); window.__tecClientes=out; return out; }); }
+  function currentTec(){ var cands=Array.from(document.querySelectorAll('*')).filter(function(e){ return ((e.textContent||'').trim().indexOf('Técnico:')===0); }); if(!cands.length) return null; cands.sort(function(a,b){ return (a.textContent||'').length-(b.textContent||'').length; }); var m=(cands[0].textContent||'').match(/T[eé]cnico:\s*([^(]+)/i); return m? m[1].trim(): null; }
+  function injChips(){ var tec=currentTec(); if(!tec) return; var list=(window.__tecClientes||{})[tec]; if(!list) return; document.querySelectorAll('.detail-item').forEach(function(it){ var lab=it.querySelector('.label'); var val=it.querySelector('.value'); if(!lab||!val) return; if(!/clientes atendidos/i.test(lab.textContent||'')) return; if(val.querySelector('.tec-chip')) return; val.innerHTML=''; val.style.cssText='display:flex;flex-wrap:wrap;gap:4px;max-height:150px;overflow:auto;'; list.forEach(function(c){ var s=document.createElement('span'); s.className='tec-chip'; s.textContent=c; s.title=c; s.style.cssText='background:#e8f0fe;color:#0d5fa7;border:1px solid #c5d9f5;border-radius:999px;padding:2px 8px;font-size:11px;white-space:nowrap;'; val.appendChild(s); }); }); }
+  window.addEventListener('load',function(){ carregar().then(function(){ injChips(); }); });
+  setInterval(injChips,800);
 })();
 </script>
 </body>
