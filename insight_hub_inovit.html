@@ -1977,6 +1977,7 @@ const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); p
 </script>
 <script>
 <script>
+<script>
 /* UNIFICA2 — save unificado de planos + lixeira de visitas (NAO REMOVER) */
 window.savePlanosAcao=function(p){ localStorage.setItem('inovit_planos_acao',JSON.stringify(p)); localStorage.setItem('inovit_planos',JSON.stringify(p)); fetch('https://jqgjfwlrkdxgkrdqbbrt.supabase.co/rest/v1/planos_acao?on_conflict=id',{method:'POST',headers:{apikey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},body:JSON.stringify(p.map(function(x){ return {id:x.id,payload:x}; }))}).catch(function(){}); };
 window.__injDel=function(){ document.querySelectorAll('[data-kanban-tipo="visita"]').forEach(function(c){ if(c.querySelector('.visita-del')) return; var b=document.createElement('button'); b.type='button'; b.className='visita-del'; b.textContent='🗑️'; b.title='Excluir visita'; b.style.cssText='position:absolute;top:6px;right:6px;z-index:9;border:none;background:#fff;color:#b71c1c;border-radius:50%;width:26px;height:26px;cursor:pointer;'; b.onclick=function(e){ e.stopPropagation(); if(!confirm('Excluir esta visita?')) return; var v=JSON.parse(localStorage.getItem('inovit_visitas')||'[]').filter(function(x){ return x.id!==c.dataset.id; }); localStorage.setItem('inovit_visitas',JSON.stringify(v)); fetch('https://jqgjfwlrkdxgkrdqbbrt.supabase.co/rest/v1/visitas?id=eq.'+c.dataset.id,{method:'DELETE',headers:{apikey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo'}}).catch(function(){}); if(window.renderCalendario) window.renderCalendario(); }; c.style.position='relative'; c.appendChild(b); }); };
@@ -2033,7 +2034,7 @@ setInterval(injChips,800);
 })();
 </script>
 <script>
-/* VISITAS-FIX-FINAL — filtro default Todos os meses + cliente preservado no Editar (NAO REMOVER) */
+/* VISITAS-FIX-FINAL — filtro default Todos os meses + cliente preservado no Editar + Digitar novo cliente (NAO REMOVER) */
 (function(){
 if(window.__VISITAS_FIX_FINAL) return; window.__VISITAS_FIX_FINAL=true;
 
@@ -2083,6 +2084,46 @@ window.editarVisita = function(id){
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
 };
+
+/* 3) Digitar novo cliente no dropdown de visitas */
+var _pscv = window.preencherSelectClientesVisita;
+window.preencherSelectClientesVisita = function(){
+  _pscv();
+  var sel = el('visita-cliente');
+  if(!sel) return;
+  if(!sel.querySelector('option[value="__novo__"]')){
+    var opt = document.createElement('option');
+    opt.value = '__novo__';
+    opt.textContent = '➕ Digitar novo cliente...';
+    opt.style.fontWeight = '600';
+    opt.style.color = '#0474c4';
+    sel.appendChild(opt);
+  }
+};
+document.addEventListener('change', function(e){
+  if(e.target && e.target.id === 'visita-cliente' && e.target.value === '__novo__'){
+    var nome = prompt('Digite o nome do novo cliente:');
+    if(nome && nome.trim()){
+      nome = nome.trim();
+      var sel = el('visita-cliente');
+      var optNovo = sel.querySelector('option[value="__novo__"]');
+      if(optNovo) optNovo.remove();
+      var opt = document.createElement('option');
+      opt.value = nome;
+      opt.textContent = nome;
+      sel.appendChild(opt);
+      var optNovo2 = document.createElement('option');
+      optNovo2.value = '__novo__';
+      optNovo2.textContent = '➕ Digitar novo cliente...';
+      optNovo2.style.fontWeight = '600';
+      optNovo2.style.color = '#0474c4';
+      sel.appendChild(optNovo2);
+      sel.value = nome;
+    } else {
+      e.target.value = '';
+    }
+  }
+});
 
 console.log('✅ VISITAS-FIX-FINAL instalado.');
 })();
