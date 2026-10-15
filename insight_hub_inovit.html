@@ -2078,5 +2078,47 @@ document.addEventListener('change', function(e){
 });
 })();
 </script>
+  <script>
+/* VISITA-EDIT-FIX — preserva o cliente no Editar Visita (NAO REMOVER) */
+(function(){
+if(window.__VISITA_EDIT_FIX) return; window.__VISITA_EDIT_FIX=true;
+var _editarVisita = window.editarVisita;
+window.editarVisita = function(id){
+  var visita = getVisitas().find(function(v){ return v.id === id; });
+  if(!visita){ alert('Visita não encontrada.'); return; }
+  var modal = el('modal-visita'); if(!modal) return;
+  setText('modal-visita-title','✏️ Editar Visita');
+  el('visita-id').value = visita.id;
+  el('visita-data').value = visita.data || '';
+  el('visita-hora').value = visita.hora || '';
+  el('visita-local').value = visita.local || '';
+  el('visita-participantes').value = visita.participantes || '';
+  el('visita-objetivo').value = visita.objetivo || '';
+  el('visita-obs').value = visita.obs || '';
+  el('visita-status').value = visita.status || 'Planejada';
+  var vgp = el('visita-gerar-plano'); if(vgp) vgp.checked = visita.gerouPlano || false;
+  var vpc = el('visita-plano-container'); if(vpc){ vpc.style.display='none'; vpc.classList.remove('visible'); }
+  /* ORDEM CORRIGIDA: preencher o select PRIMEIRO, depois setar o valor */
+  preencherSelectClientesVisita();
+  var sel = el('visita-cliente');
+  /* Garante que o cliente existe como option (caso não esteja no CSV) */
+  if(visita.cliente){
+    var found = false;
+    for(var i=0; i<sel.options.length; i++){
+      if(sel.options[i].value === visita.cliente){ found = true; break; }
+    }
+    if(!found){
+      var o = document.createElement('option');
+      o.value = visita.cliente;
+      o.textContent = visita.cliente;
+      sel.appendChild(o);
+    }
+  }
+  el('visita-cliente').value = visita.cliente || '';
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+};
+})();
+</script>
 </body>
 </html>
