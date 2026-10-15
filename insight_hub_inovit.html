@@ -2034,5 +2034,49 @@ window.addEventListener('load',function(){ setTimeout(window.__injDel,1000); });
   setInterval(injChips,800);
 })();
 </script>
+  <script>
+/* VISITA-NOVO-CLIENTE — permite digitar cliente novo no dropdown de visitas (NAO REMOVER) */
+(function(){
+if(window.__VISITA_NOVO_CLIENTE) return; window.__VISITA_NOVO_CLIENTE=true;
+var _orig = window.preencherSelectClientesVisita;
+window.preencherSelectClientesVisita = function(){
+  _orig();
+  var sel = el('visita-cliente');
+  if(!sel) return;
+  if(!sel.querySelector('option[value="__novo__"]')){
+    var opt = document.createElement('option');
+    opt.value = '__novo__';
+    opt.textContent = '➕ Digitar novo cliente...';
+    opt.style.fontWeight = '600';
+    opt.style.color = '#0474c4';
+    sel.appendChild(opt);
+  }
+};
+document.addEventListener('change', function(e){
+  if(e.target && e.target.id === 'visita-cliente' && e.target.value === '__novo__'){
+    var nome = prompt('Digite o nome do novo cliente:');
+    if(nome && nome.trim()){
+      nome = nome.trim();
+      var sel = el('visita-cliente');
+      var optNovo = sel.querySelector('option[value="__novo__"]');
+      if(optNovo) optNovo.remove();
+      var opt = document.createElement('option');
+      opt.value = nome;
+      opt.textContent = nome;
+      sel.appendChild(opt);
+      var optNovo2 = document.createElement('option');
+      optNovo2.value = '__novo__';
+      optNovo2.textContent = ' Digitar novo cliente...';
+      optNovo2.style.fontWeight = '600';
+      optNovo2.style.color = '#0474c4';
+      sel.appendChild(optNovo2);
+      sel.value = nome;
+    } else {
+      e.target.value = '';
+    }
+  }
+});
+})();
+</script>
 </body>
 </html>
