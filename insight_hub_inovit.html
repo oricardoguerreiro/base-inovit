@@ -1982,18 +1982,42 @@ window.__injDel=function(){ document.querySelectorAll('[data-kanban-tipo="visita
 setInterval(window.__injDel,1200);
 window.addEventListener('load',function(){ setTimeout(window.__injDel,1000); });
 
-/* KVSYNC3 — auto-descobre a chave do proprio HTML (NAO REMOVER) */
+/* SYNC-ALL — sincroniza TODAS as chaves do localStorage com o Supabase (NAO REMOVER) */
 (function(){
-  if(window.__KVSYNC3) return; window.__KVSYNC3=true;
-  var SB='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
-  var KEYS=['inovit_crm_decisores','inovit_crm_geral','crm_decisores','crm_geral','inovit_config'];
-  var KEY=null;
-  function discover(){ return fetch(location.href,{cache:'no-store'}).then(function(r){ return r.text(); }).then(function(t){ var m=t.match(/var KEY='([^']+)'/); if(!m) m=t.match(/apikey:'([^']+)'/); KEY=m?m[1]:null; return KEY; }); }
-  function Hd(){ return {apikey:KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'}; }
-  function pull(){ if(!KEY) return; fetch(SB+'/rest/v1/kv?select=key,value',{headers:{apikey:KEY,'Authorization':'Bearer '+KEY}}).then(function(r){ return r.ok?r.json():[]; }).then(function(rows){ (Array.isArray(rows)?rows:[]).forEach(function(r){ if(KEYS.indexOf(r.key)>-1&&r.value!=null) localStorage.setItem(r.key,JSON.stringify(r.value)); }); if(window.loadCrmData) window.loadCrmData(); }); }
-  function push(){ if(!KEY) return; KEYS.forEach(function(k){ var v=localStorage.getItem(k); if(!v) return; var sig=v.length+':'+v.slice(-40); push.last=push.last||{}; if(push.last[k]===sig) return; push.last[k]=sig; fetch(SB+'/rest/v1/kv?on_conflict=key',{method:'POST',headers:Hd(),body:JSON.stringify({key:k,value:JSON.parse(v)})}).catch(function(){}); }); }
-  discover().then(function(){ pull(); push(); setInterval(push,4000); setInterval(pull,30000); });
-  window.addEventListener('beforeunload',push);
+if(window.__SYNC_ALL) return; window.__SYNC_ALL=true;
+var SB='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
+var KEYS=['inovit_planos_acao','inovit_planos','inovit_visitas','inovit_crm_decisores','inovit_crm_geral','crm_decisores','crm_geral','inovit_config','inovit_users','inovit_perms'];
+var KEY=null;
+function discover(){ return fetch(location.href,{cache:'no-store'}).then(function(r){ return r.text(); }).then(function(t){ var m=t.match(/var KEY='([^']+)'/); if(!m) m=t.match(/apikey:'([^']+)'/); KEY=m?m[1]:null; return KEY; }); }
+function Hd(){ return {apikey:KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'}; }
+function pull(){ 
+  if(!KEY) return; 
+  fetch(SB+'/rest/v1/kv?select=key,value',{headers:{apikey:KEY,'Authorization':'Bearer '+KEY}})
+    .then(function(r){ return r.ok?r.json():[]; })
+    .then(function(rows){ 
+      (Array.isArray(rows)?rows:[]).forEach(function(r){ 
+        if(KEYS.indexOf(r.key)>-1&&r.value!=null) localStorage.setItem(r.key,JSON.stringify(r.value)); 
+      }); 
+      if(window.loadCrmData) window.loadCrmData();
+      if(window.renderPlanosAcao) window.renderPlanosAcao();
+      if(window.renderKanbanVisitas) window.renderKanbanVisitas();
+      if(window.renderUserManagement) window.renderUserManagement();
+    }); 
+}
+function push(){ 
+  if(!KEY) return; 
+  KEYS.forEach(function(k){ 
+    var v=localStorage.getItem(k); 
+    if(!v) return; 
+    var sig=v.length+':'+v.slice(-40); 
+    push.last=push.last||{}; 
+    if(push.last[k]===sig) return; 
+    push.last[k]=sig; 
+    fetch(SB+'/rest/v1/kv?on_conflict=key',{method:'POST',headers:Hd(),body:JSON.stringify({key:k,value:JSON.parse(v)})}).catch(function(){}); 
+  }); 
+}
+discover().then(function(){ pull(); push(); setInterval(push,4000); setInterval(pull,30000); });
+window.addEventListener('beforeunload',push);
 })();
 </script>
 <script>
