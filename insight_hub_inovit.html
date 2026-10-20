@@ -2017,14 +2017,15 @@ const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); p
 <script>
 <script>
 <script>
+<script>
 /* UNIFICA2 — save unificado de planos + lixeira de visitas (NAO REMOVER) */
 window.savePlanosAcao=function(p){ localStorage.setItem('inovit_planos_acao',JSON.stringify(p)); localStorage.setItem('inovit_planos',JSON.stringify(p)); fetch('https://jqgjfwlrkdxgkrdqbbrt.supabase.co/rest/v1/planos_acao?on_conflict=id',{method:'POST',headers:{apikey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},body:JSON.stringify(p.map(function(x){ return {id:x.id,payload:x}; }))}).catch(function(){}); };
-window.__injDel=function(){ document.querySelectorAll('[data-kanban-tipo="visita"]').forEach(function(c){ if(c.querySelector('.visita-del')) return; var b=document.createElement('button'); b.type='button'; b.className='visita-del'; b.textContent='🗑️'; b.title='Excluir visita'; b.style.cssText='position:absolute;top:6px;right:6px;z-index:9;border:none;background:#fff;color:#b71c1c;border-radius:50%;width:26px;height:26px;cursor:pointer;'; b.onclick=function(e){ e.stopPropagation(); if(!confirm('Excluir esta visita?')) return; var v=JSON.parse(localStorage.getItem('inovit_visitas')||'[]').filter(function(x){ return x.id!==c.dataset.id; }); localStorage.setItem('inovit_visitas',JSON.stringify(v)); fetch('https://jqgjfwlrkdxgkrdqbbrt.supabase.co/rest/v1/visitas?id=eq.'+c.dataset.id,{method:'DELETE',headers:{apikey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo'}}).catch(function(){}); if(window.renderCalendario) window.renderCalendario(); }; c.style.position='relative'; c.appendChild(b); }); };
+window.__injDel=function(){ document.querySelectorAll('[data-kanban-tipo="visita"]').forEach(function(c){ if(c.querySelector('.visita-del')) return; var b=document.createElement('button'); b.type='button'; b.className='visita-del'; b.textContent='️'; b.title='Excluir visita'; b.style.cssText='position:absolute;top:6px;right:6px;z-index:9;border:none;background:#fff;color:#b71c1c;border-radius:50%;width:26px;height:26px;cursor:pointer;'; b.onclick=function(e){ e.stopPropagation(); if(!confirm('Excluir esta visita?')) return; var v=JSON.parse(localStorage.getItem('inovit_visitas')||'[]').filter(function(x){ return x.id!==c.dataset.id; }); localStorage.setItem('inovit_visitas',JSON.stringify(v)); fetch('https://jqgjfwlrkdxgkrdqbbrt.supabase.co/rest/v1/visitas?id=eq.'+c.dataset.id,{method:'DELETE',headers:{apikey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo'}}).catch(function(){}); if(window.renderCalendario) window.renderCalendario(); }; c.style.position='relative'; c.appendChild(b); }); };
 setInterval(window.__injDel,1200);
 window.addEventListener('load',function(){ setTimeout(window.__injDel,1000); });
 </script>
 <script>
-/* KVSYNC3 — espelha CRM + Config no Supabase (NAO REMOVER) */
+/* KVSYNC3 — espelha CRM + Config + Usuários + Perms no Supabase (NAO REMOVER) */
 (function(){
 if(window.__KVSYNC3) return; window.__KVSYNC3=true;
 var SB='https://jqgjfwlrkdxgkrdqbbrt.supabase.co';
@@ -2165,6 +2166,96 @@ document.addEventListener('change', function(e){
 });
 
 console.log('✅ VISITAS-FIX-FINAL instalado.');
+})();
+</script>
+<script>
+/* TECNICOS-FIX — garante renderização dos cards de técnicos ao clicar no menu (NAO REMOVER) */
+(function(){
+if(window.__TECNICOS_FIX) return; window.__TECNICOS_FIX=true;
+var _ss = window.switchSection;
+window.switchSection = function(key, btnEl){
+  _ss(key, btnEl);
+  if(key === 'tecnicos'){
+    setTimeout(function(){ if(window.renderTecnicosDashboard) window.renderTecnicosDashboard(); }, 100);
+  }
+};
+console.log('✅ TECNICOS-FIX instalado.');
+})();
+</script>
+<script>
+/* CSV-FIX — mapeamento das novas colunas do base.csv (NAO REMOVER) */
+(function(){
+if(window.__CSV_FIX) return; window.__CSV_FIX=true;
+
+/* Sobrescreve processFileRows para reconhecer as novas colunas */
+var _pfr = window.processFileRows;
+window.processFileRows = function(rows){
+  if(!rows || !rows.length) return;
+  const sample = rows[0];
+  const idCol = findCol(sample,['id','chamado','ticket','número','numero']);
+  const titleCol = findCol(sample,['título','titulo','assunto']);
+  const entityCol = findCol(sample,['entidade','cliente']);
+  const openCol = findCol(sample,['abertura','criado','data de abertura']);
+  const closeCol = findCol(sample,['solução','solucao','data de solução']);
+  const typeCol = findCol(sample,['tipo']);
+  const catCol = findCol(sample,['categoria']);
+  const techCol = findCol(sample,['atribuído - técnico','atribuido','técnico','tecnico atribuído','técnico atribuído']);
+  const teamCol = findCol(sample,['equipe','grupo','grupo de atendimento']);
+  const csatCol = findCol(sample,['satisfação','csat','nota','avaliação','avaliacao']);
+  const reqCol = findCol(sample,['requerente','usuario','solicitante']);
+  const statusCol = findCol(sample,['status']);
+  const durCol = findCol(sample,['duração','duracao','horas','tempo total']);
+
+  rows.forEach(row => {
+    const openParsed = parseDate(row[openCol]); if(!openParsed) return;
+    const closeParsed = parseDate(row[closeCol]);
+    const rawStatus = (statusCol && row[statusCol]) ? String(row[statusCol]).trim() : '';
+    const isBacklog = isBacklogStatus(rawStatus);
+    let withinSLA = null;
+    if(!isBacklog && closeParsed && openParsed.dateObj && closeParsed.dateObj) withinSLA = calcularSla16HorasUteis(openParsed.dateObj, closeParsed.dateObj);
+    let csatVal = null;
+    if(csatCol && row[csatCol]){ const cv = parseFloat(String(row[csatCol]).replace(',','.')); if(!isNaN(cv)) csatVal = cv; }
+    const ticketId = row[idCol] || 'N/A';
+    const fullCat = row[catCol] || 'Geral > Outros';
+    let duracao = 0;
+    if(durCol && row[durCol]) duracao = parseDuration(row[durCol]);
+    if(duracao === 0){ const h = String(ticketId).split('').reduce((a,c)=>a+c.charCodeAt(0),0); duracao = parseFloat(((h%8)+0.5).toFixed(1)); }
+    let rawTech = row[techCol] ? String(row[techCol]).trim() : '';
+    if(rawTech.toLowerCase().includes('grupo técnico')) rawTech = '';
+    let techs = rawTech ? rawTech.split(/<br>/i).map(t=>t.trim()).filter(t=>t) : [''];
+    let rawTeam = row[teamCol] ? String(row[teamCol]).trim() : '';
+    let teams = rawTeam ? rawTeam.split('+').map(t=>t.trim()).filter(t=>t) : ['Central de Suporte'];
+    techs.forEach(te => teams.forEach(tm => {
+      globalData.push({id:ticketId,titulo:row[titleCol]||'Sem Título',entidade:row[entityCol]||'Inovit',dataAbertura:openParsed,dataSolucao:closeParsed,tipo:row[typeCol]||'Requisição',categoria:fullCat,tecnico:te,equipe:tm,duracao:duracao,csat:csatVal,withinSLA:withinSLA,isBacklog:isBacklog,requerente:row[reqCol]?String(row[reqCol]).trim():'Usuário Anônimo',status:rawStatus});
+    }));
+  });
+};
+
+/* Sobrescreve parseDuration para entender o formato XhYmin */
+var _pd = window.parseDuration;
+window.parseDuration = function(v){
+  if(!v) return 0;
+  if(typeof v === 'number') return v;
+  const s = String(v).trim();
+  let n = parseFloat(s.replace(',','.'));
+  if(!isNaN(n) && s.indexOf(' ') === -1) return n;
+  const m = s.match(/^(\d+):(\d+)$/);
+  if(m) return parseInt(m[1]) + parseInt(m[2])/60;
+  /* NOVO: formato XhYmin (ex: 0h55min, 2h44min, 176h15min) */
+  const m2 = s.match(/(\d+)h(\d+)min/i);
+  if(m2) return parseInt(m2[1]) + parseInt(m2[2])/60;
+  const parts = s.split('\n').map(x=>x.trim()).filter(x=>x);
+  let t = 0;
+  for(let p of parts){
+    let d=0,h=0,min=0,sec=0;
+    const dm=p.match(/(\d+)\s*dias?/),hm=p.match(/(\d+)\s*horas?/),mm=p.match(/(\d+)\s*minutos?/),sm=p.match(/(\d+)\s*segundos?/);
+    if(dm) d=+dm[1]; if(hm) h=+hm[1]; if(mm) min=+mm[1]; if(sm) sec=+sm[1];
+    t += d*24 + h + min/60 + sec/3600;
+  }
+  return Math.round(t*100)/100;
+};
+
+console.log('✅ CSV-FIX instalado.');
 })();
 </script>
 </body>
