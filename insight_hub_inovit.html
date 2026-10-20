@@ -2541,5 +2541,112 @@ window.addEventListener('load', function(){
 console.log('✅ EQUIPES-RELATORIO instalado.');
 })();
 </script>
+  <script>
+/* MODAL-EXPORT — botões de exportação em todos os modais (NAO REMOVER) */
+(function(){
+if(window.__MODAL_EXPORT) return; window.__MODAL_EXPORT=true;
+
+/* Lista de modais que devem ter botões de exportação */
+const MODAIS_COM_EXPORT = [
+  {id: 'modal-ticket-list', label: 'Lista_Chamados'},
+  {id: 'modal-category-tickets', label: 'Chamados_Categoria'},
+  {id: 'modal-technician-detail', label: 'Detalhe_Tecnico'},
+  {id: 'modal-tech-evaluated', label: 'Chamados_Avaliados'},
+  {id: 'modal-backlog-isolated', label: 'Backlog_Isolado'},
+  {id: 'modal-client-tickets-time', label: 'Chamados_Tempo'},
+  {id: 'modal-client-universal', label: 'Visao_Cliente'},
+  {id: 'modal-tech-client-tickets', label: 'Chamados_Tec_Cliente'},
+  {id: 'modal-requester-tickets', label: 'Chamados_Requerente'},
+  {id: 'modal-lista-planos', label: 'Lista_Planos'},
+  {id: 'modal-visitas-lista', label: 'Lista_Visitas'}
+];
+
+/* Função para injetar botões em um modal */
+function injetarBotoesExport(modalId, label){
+  const modal = document.getElementById(modalId);
+  if(!modal) return;
+  
+  /* Verifica se já tem os botões */
+  if(modal.querySelector('.modal-export-buttons')) return;
+  
+  /* Encontra o header do modal */
+  const hdr = modal.querySelector('.modal-hdr');
+  if(!hdr) return;
+  
+  /* Cria o container dos botões */
+  const btnContainer = document.createElement('div');
+  btnContainer.className = 'modal-export-buttons';
+  btnContainer.style.cssText = 'display:flex; gap:8px; align-items:center;';
+  btnContainer.setAttribute('data-html2canvas-ignore', 'true');
+  
+  /* Botão JPG */
+  const btnJpg = document.createElement('button');
+  btnJpg.className = 'btn-secondary';
+  btnJpg.textContent = 'JPG';
+  btnJpg.onclick = function(){ exportPanelToJPG(modalId, label); };
+  btnContainer.appendChild(btnJpg);
+  
+  /* Botão PDF */
+  const btnPdf = document.createElement('button');
+  btnPdf.className = 'btn-secondary';
+  btnPdf.textContent = 'PDF';
+  btnPdf.onclick = function(){ openExportPdfPopup(modalId, label); };
+  btnContainer.appendChild(btnPdf);
+  
+  /* Insere antes do botão Fechar */
+  const btnFechar = hdr.querySelector('.modal-close');
+  if(btnFechar){
+    btnFechar.before(btnContainer);
+  } else {
+    hdr.appendChild(btnContainer);
+  }
+}
+
+/* Injeta botões em todos os modais na carga da página */
+function injetarEmTodosModais(){
+  MODAIS_COM_EXPORT.forEach(m => {
+    injetarBotoesExport(m.id, m.label);
+  });
+}
+
+/* Hook para injetar quando modais são abertos dinamicamente */
+const _openTicketList = window.openTicketList;
+window.openTicketList = function(title, data, columns, clickable, rowCb){
+  _openTicketList(title, data, columns, clickable, rowCb);
+  setTimeout(() => injetarBotoesExport('modal-ticket-list', 'Lista_Chamados'), 100);
+};
+
+const _openTechnicianDetail = window.openTechnicianDetail;
+window.openTechnicianDetail = function(techKey){
+  _openTechnicianDetail(techKey);
+  setTimeout(() => injetarBotoesExport('modal-technician-detail', 'Detalhe_Tecnico'), 100);
+};
+
+const _openClientUniversalModal = window.openClientUniversalModal;
+window.openClientUniversalModal = function(clientKey, mode){
+  _openClientUniversalModal(clientKey, mode);
+  setTimeout(() => injetarBotoesExport('modal-client-universal', 'Visao_Cliente'), 100);
+};
+
+/* Injeta na carga inicial */
+window.addEventListener('load', function(){
+  setTimeout(injetarEmTodosModais, 500);
+});
+
+/* Re-injeta quando modais são reabertos (fecha e abre novamente) */
+const _closeModal = window.closeModal;
+window.closeModal = function(id){
+  _closeModal(id);
+  /* Remove os botões para evitar duplicação na próxima abertura */
+  const modal = document.getElementById(id);
+  if(modal){
+    const btns = modal.querySelector('.modal-export-buttons');
+    if(btns) btns.remove();
+  }
+};
+
+console.log('✅ MODAL-EXPORT instalado: botões JPG/PDF em todos os modais.');
+})();
+</script>
 </body>
 </html>
