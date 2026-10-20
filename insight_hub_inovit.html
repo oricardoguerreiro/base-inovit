@@ -617,8 +617,7 @@ const LOGO_URL='https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/
 const DECISORES_URL='https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt';
 const GERAL_URL='https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt';
 const PERMS_ALL={global:true,cliente:true,chamado:true,tecnicos:true,backlog:true,acoes:true,visitas:true,crm:true,usuarios:true};
-let DB={users:LS.get('inovit_users',{}),perms:LS.get('inovit_perms',{}),planos:LS.get('inovit_planos',[]),visitas:LS.get('inovit_visitas',[]),crmDecisores:LS.get('inovit_crm_decisores',[]),crmGeral:LS.get('inovit_crm_geral',[]),config:LS.get('inovit_config',{})};
-DB.config=Object.assign({telegram_url:'',telegram_chat:'',freq_min:30,som:true,som_tipo:'duplo',al_planos_vencidos:true,al_planos_vencer:true,al_visitas_atrasadas:true,al_visitas_proximas:true,al_sla_risco:true},DB.config);
+let DB={users:LS.get('inovit_users',{}),perms:LS.get('inovit_perms',{}),planos:LS.get('inovit_planos',[]),visitas:LS.get('inovit_visitas',[]),crmDecisores:LS.get('inovit_crm_decisores',[]),crmGeral:LS.get('inovit_crm_geral',[]),config:LS.get('inovit_config',{}),atendentes:LS.get('inovit_atendentes',{})};DB.config=Object.assign({telegram_url:'',telegram_chat:'',freq_min:30,som:true,som_tipo:'duplo',al_planos_vencidos:true,al_planos_vencer:true,al_visitas_atrasadas:true,al_visitas_proximas:true,al_sla_risco:true},DB.config);
 if(!DB.users['ricardo']){DB.users['ricardo']={password:'mudar@123',displayName:'Ricardo Guerreiro'};DB.perms['ricardo']=Object.assign({},PERMS_ALL);LS.set('inovit_users',DB.users);LS.set('inovit_perms',DB.perms);}
 let CURRENT_USER=LS.get('inovit_session',null);
 let LOGO_DATA_URL='';
