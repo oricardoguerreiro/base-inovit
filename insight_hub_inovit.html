@@ -2278,5 +2278,67 @@ window.addEventListener('load',function(){setTimeout(renderGestaoAtendentes,2000
 console.log('✅ GESTAO-ATENDENTES instalado.');
 })();
 </script>
+  <script>
+/* TECNICOS-FIX — garante renderização dos cards de técnicos (NAO REMOVER) */
+(function(){
+  if(window.__TECNICOS_FIX) return; window.__TECNICOS_FIX=true;
+
+  // 1. Sobrescreve a função original com a versão que funciona
+  window.renderTecnicosDashboard = function(){
+    const grid = document.getElementById('grid-tecnicos-cards');
+    if(!grid) return;
+    grid.innerHTML = '';
+    
+    const map = {};
+    // Agrupa os dados filtrados por técnico
+    currentFiltered.forEach(d => {
+      if(!d.tecnico) return;
+      if(!map[d.tecnico]) map[d.tecnico] = {vol: 0, cli: new Set()};
+      map[d.tecnico].vol++;
+      map[d.tecnico].cli.add(d.entidade);
+    });
+
+    // Ordena por volume de chamados
+    const sortedTechs = Object.keys(map).sort((a,b) => map[b].vol - map[a].vol);
+    
+    sortedTechs.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'client-summary-card'; 
+      card.style.cssText = 'background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius); padding:20px; cursor:pointer; transition:var(--transition); display:flex; flex-direction:column; gap:8px;';
+      card.onmouseover = function(){ this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--shadow-hover)'; };
+      card.onmouseout = function(){ this.style.transform='none'; this.style.boxShadow='none'; };
+      
+      card.innerHTML = `
+        <div class="client-card-title">👨‍💻 ${t}</div>
+        <div class="client-metric-row"><span class="lbl">Chamados:</span><span class="val">${map[t].vol}</span></div>
+        <div class="client-metric-row"><span class="lbl">Clientes:</span><span class="val">${map[t].cli.size}</span></div>
+      `;
+      
+      // Se existir a função de detalhe, vincula o clique
+      if(window.openTechnicianDetail) {
+        card.onclick = function(){ window.openTechnicianDetail(t); };
+      }
+      
+      grid.appendChild(card);
+    });
+  };
+
+  // 2. Hook para chamar a renderização quando a seção "Técnicos" for aberta
+  const _ss = window.switchSection;
+  window.switchSection = function(key, btnEl){
+    _ss(key, btnEl); // Chama a função original de troca de aba
+    if(key === 'tecnicos'){
+      setTimeout(window.renderTecnicosDashboard, 100); // Força a renderização
+    }
+  };
+
+  // 3. Tenta renderizar agora caso já esteja na aba
+  if(document.getElementById('panel-tecnicos') && document.getElementById('panel-tecnicos').classList.contains('active')){
+    window.renderTecnicosDashboard();
+  }
+  
+  console.log('✅ TECNICOS-FIX instalado.');
+})();
+</script>
 </body>
 </html>
