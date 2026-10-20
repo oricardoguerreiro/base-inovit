@@ -250,6 +250,11 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',
 .check-row{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:6px;cursor:pointer;}
 .alerta-item{padding:10px 14px;border-bottom:1px solid var(--border-color);font-size:13px;}
 .inline-search{margin-left:16px;padding:8px 14px;border-radius:40px;border:1px solid var(--border-color);background:var(--bg-input);font-size:13px;min-width:220px;}
+.nav-submenu{display:none;flex-direction:column;gap:2px;margin-top:4px;}
+.nav-submenu.active{display:flex;}
+.nav-submenu .nav-item{font-size:13px;padding:10px 16px;}
+.nav-item .arrow-down{transition:transform 0.2s;}
+.nav-item.open .arrow-down{transform:rotate(180deg);}
 </style>
 </head>
 <body>
@@ -303,8 +308,12 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',
 <button class="nav-item" onclick="switchSection('acoes', this)" data-module="acoes">📋 Planos de Ação<span id="badge-planos" class="badge-planos"></span></button>
 <button class="nav-item" onclick="switchSection('visitas', this)" data-module="visitas">🗓️ Visitas</button>
 <button class="nav-item" onclick="switchSection('crm', this)" data-module="crm">📋 CRM</button>
-<button class="nav-item" onclick="switchSection('alertas', this)" data-module="usuarios">🔔 Configurações de Notificação</button>
-<button class="nav-item" onclick="switchSection('usuarios', this)" data-module="usuarios">👥 Gestão de Usuários</button>
+<button class="nav-item" onclick="toggleConfigMenu(this)" data-module="config">⚙️ Configurações <span class="arrow-down" style="margin-left:auto;">▼</span></button>
+<div id="config-submenu" class="nav-submenu" style="display:none; padding-left:20px;">
+  <button class="nav-item" onclick="switchSection('alertas', this)" data-module="alertas" style="font-size:13px; padding:10px 16px;">🔔 Configurações de Notificação</button>
+  <button class="nav-item" onclick="switchSection('usuarios', this)" data-module="usuarios" style="font-size:13px; padding:10px 16px;">👥 Gestão de Usuários</button>
+  <button class="nav-item" onclick="switchSection('atendentes', this)" data-module="atendentes" style="font-size:13px; padding:10px 16px;">‍💼 Gestão de Atendentes</button>
+</div>
 </div>
 </div>
 <div id="main-content">
@@ -450,7 +459,32 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',
 <div class="form-group-vertical"><label>Telegram – Chat ID (opcional)</label><input type="text" id="telegram-chat" placeholder="Ex.: 123456789"></div>
 </div>
 </div>
-<div id="panel-usuarios" class="section-panel">
+<div id="panel-atendentes" class="section-panel">
+  <div class="panel-header"><h2 class="panel-title">🧑‍💼 Gestão de Atendentes</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('panel-atendentes','Atendentes')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('panel-atendentes','Atendentes')">PDF</button></div></div>
+  <p style="color:var(--text-muted); margin-bottom:16px;">Defina qual atendente pertence a qual equipe. Essas informações serão refletidas nos relatórios do menu <strong>Técnicos</strong>.</p>
+  <div class="user-management-grid">
+    <div class="user-list-card">
+      <h3>📋 Equipes Cadastradas</h3>
+      <div id="equipes-list-container" style="margin-bottom:20px;"></div>
+      <h3>🧑‍ Atendentes Cadastrados</h3>
+      <div id="atendentes-list-container"></div>
+    </div>
+    <div class="add-user-form">
+      <h3>➕ Adicionar/Editar Atendente</h3>
+      <div class="form-group"><label>Nome do Atendente</label><input type="text" id="att-nome" placeholder="Ex: João Silva"></div>
+      <div class="form-group"><label>Equipe</label><select id="att-equipe" class="select-custom" style="width:100%;"></select></div>
+      <div class="form-group"><label>Nível</label><select id="att-nivel" class="select-custom" style="width:100%;"><option value="N1">N1</option><option value="N2">N2</option><option value="N3">N3</option></select></div>
+      <button class="btn-add-user" onclick="salvarAtendente()" style="width:100%; margin-top:12px;">💾 Salvar Atendente</button>
+      <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border-color);">
+        <h3>➕ Nova Equipe</h3>
+        <div class="form-group"><label>Nome da Equipe</label><input type="text" id="nova-equipe-nome" placeholder="Ex: Central de Suporte"></div>
+        <div class="form-group"><label>Níveis (separados por vírgula)</label><input type="text" id="nova-equipe-niveis" placeholder="Ex: N1, N2, N3" value="N1, N2, N3"></div>
+        <button class="btn-add-user" onclick="adicionarEquipe()" style="width:100%; margin-top:12px;"> Criar Equipe</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <div id="panel-usuarios" class="section-panel">
 <div class="panel-header"><h2 class="panel-title">👥 Gestão de Usuários e Permissões</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('panel-usuarios','Usuarios')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('panel-usuarios','Usuarios')">PDF</button></div></div>
 <p style="color:var(--text-muted); margin-bottom:16px;">Gerencie usuários e defina permissões de acesso por módulo.</p>
 <div class="backup-actions" data-html2canvas-ignore="true">
@@ -850,8 +884,10 @@ function renderTecnicosDashboard(){
   Object.keys(map).sort((a,b)=>map[b].vol-map[a].vol).forEach(t=>{
     const m=map[t];const considered=m.vol-m.backlog;const sla=considered>0?((m.dentro/considered)*100).toFixed(1):"100.0";
     const card=document.createElement('div');card.className='client-summary-card';card.setAttribute('onclick',"openTechnicianDetail('"+escapeStr(t)+"')");
-    card.innerHTML='<div class="client-card-title">👨‍💻 '+t+'</div><div class="client-metric-row"><span class="lbl">Chamados:</span><span class="val">'+m.vol+'</span></div><div class="client-metric-row"><span class="lbl">SLA:</span><span class="val" style="color:'+(sla>=85?'var(--success)':'var(--warn)')+'">'+sla+'%</span></div><div class="client-metric-row"><span class="lbl">Clientes:</span><span class="val">'+m.cli.size+'</span></div><div class="client-metric-row"><span class="lbl">Horas:</span><span class="val">'+m.horas.toFixed(1)+'h</span></div><div class="client-metric-row"><span class="lbl">Média CSAT:</span><span class="val" style="color:var(--purple);">⭐ '+(m.cc>0?(m.cs/m.cc).toFixed(2):'N/A')+'</span></div>';
-    grid.appendChild(card);
+       const attInfo=DB.atendentes&&DB.atendentes[t]?DB.atendentes[t]:null;
+   const equipeLabel=attInfo?attInfo.equipe:'Central de Suporte';
+   const nivelLabel=attInfo?attInfo.nivel:'N1';
+   card.innerHTML='<div class="client-card-title">👨‍💻 '+t+'</div><div class="client-metric-row"><span class="lbl">Equipe:</span><span class="val" style="color:var(--blue-primary);">'+equipeLabel+'</span></div><div class="client-metric-row"><span class="lbl">Nível:</span><span class="val">'+nivelLabel+'</span></div><div class="client-metric-row"><span class="lbl">Chamados:</span><span class="val">'+m.vol+'</span></div><div class="client-metric-row"><span class="lbl">SLA:</span><span class="val" style="color:'+(sla>=85?'var(--success)':'var(--warn)')+'">'+sla+'%</span></div><div class="client-metric-row"><span class="lbl">Clientes:</span><span class="val">'+m.cli.size+'</span></div><div class="client-metric-row"><span class="lbl">Horas:</span><span class="val">'+m.horas.toFixed(1)+'h</span></div><div class="client-metric-row"><span class="lbl">Média CSAT:</span><span class="val" style="color:var(--purple);">⭐ '+(m.cc>0?(m.cs/m.cc).toFixed(2):'N/A')+'</span></div>';
   });
 }
 function renderBacklogDashboard(){
@@ -2127,6 +2163,119 @@ document.addEventListener('change', function(e){
 });
 
 console.log('✅ VISITAS-FIX-FINAL instalado.');
+})();
+</script>
+<script>
+/* GESTAO-ATENDENTES — gestão de atendentes e equipes (NAO REMOVER) */
+(function(){
+if(window.__GESTAO_ATENDENTES) return; window.__GESTAO_ATENDENTES=true;
+
+// Inicializar dados se não existirem
+if(!DB.atendentes){DB.atendentes={};LS.set('inovit_atendentes',DB.atendentes);}
+if(!DB.equipes){DB.equipes={'Central de Suporte':['N1','N2','N3']};LS.set('inovit_equipes',DB.equipes);}
+
+function getAtendentes(){return DB.atendentes||{};}
+function getEquipes(){return DB.equipes||{'Central de Suporte':['N1','N2','N3']};}
+function saveAtendentes(a){DB.atendentes=a||{};LS.set('inovit_atendentes',DB.atendentes);}
+function saveEquipes(e){DB.equipes=e||{};LS.set('inovit_equipes',DB.equipes);}
+
+// Toggle do submenu Configurações
+window.toggleConfigMenu=function(btn){
+  const submenu=document.getElementById('config-submenu');
+  if(!submenu)return;
+  const isOpen=submenu.classList.contains('active');
+  submenu.classList.toggle('active');
+  btn.classList.toggle('open');
+  submenu.style.display=isOpen?'none':'flex';
+};
+
+// Renderizar gestão de atendentes
+window.renderGestaoAtendentes=function(){
+  const atendentes=getAtendentes();
+  const equipes=getEquipes();
+  
+  // Renderizar equipes
+  const eqContainer=document.getElementById('equipes-list-container');
+  if(eqContainer){
+    eqContainer.innerHTML='';
+    Object.keys(equipes).forEach(eq=>{
+      const div=document.createElement('div');
+      div.style.cssText='background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius-sm); padding:12px; margin-bottom:8px;';
+      div.innerHTML='<div style="font-weight:600; margin-bottom:4px;">'+eq+'</div><div style="font-size:12px; color:var(--text-muted);">Níveis: '+(equipes[eq].join(', ')||'N/A')+'</div>';
+      eqContainer.appendChild(div);
+    });
+  }
+  
+  // Renderizar atendentes
+  const attContainer=document.getElementById('atendentes-list-container');
+  if(attContainer){
+    attContainer.innerHTML='';
+    Object.keys(atendentes).forEach(nome=>{
+      const att=atendentes[nome];
+      const div=document.createElement('div');
+      div.className='user-row';
+      div.innerHTML='<div><span style="font-weight:500;">'+nome+'</span></div><div style="display:flex; gap:6px; flex-wrap:wrap;"><span class="perm-badge">'+att.equipe+'</span><span class="perm-badge">'+att.nivel+'</span></div><div class="user-actions"><button class="btn-remove-user" onclick="removerAtendente(\''+nome+'\')">✕</button></div>';
+      attContainer.appendChild(div);
+    });
+  }
+  
+  // Preencher select de equipes
+  const eqSelect=document.getElementById('att-equipe');
+  if(eqSelect){
+    eqSelect.innerHTML='';
+    Object.keys(equipes).forEach(eq=>{
+      const opt=document.createElement('option');
+      opt.value=eq;
+      opt.textContent=eq;
+      eqSelect.appendChild(opt);
+    });
+  }
+};
+
+window.salvarAtendente=function(){
+  const nome=document.getElementById('att-nome').value.trim();
+  const equipe=document.getElementById('att-equipe').value;
+  const nivel=document.getElementById('att-nivel').value;
+  if(!nome){alert('Digite o nome do atendente.');return;}
+  const atendentes=getAtendentes();
+  atendentes[nome]={equipe,nivel};
+  saveAtendentes(atendentes);
+  alert('✅ Atendente '+nome+' salvo na equipe '+equipe+' ('+nivel+')');
+  document.getElementById('att-nome').value='';
+  renderGestaoAtendentes();
+};
+
+window.removerAtendente=function(nome){
+  if(!confirm('Remover atendente '+nome+'?'))return;
+  const atendentes=getAtendentes();
+  delete atendentes[nome];
+  saveAtendentes(atendentes);
+  renderGestaoAtendentes();
+};
+
+window.adicionarEquipe=function(){
+  const nome=document.getElementById('nova-equipe-nome').value.trim();
+  const niveis=document.getElementById('nova-equipe-niveis').value.split(',').map(n=>n.trim()).filter(n=>n);
+  if(!nome){alert('Digite o nome da equipe.');return;}
+  const equipes=getEquipes();
+  equipes[nome]=niveis.length?niveis:['N1','N2','N3'];
+  saveEquipes(equipes);
+  alert('✅ Equipe '+nome+' criada!');
+  document.getElementById('nova-equipe-nome').value='';
+  renderGestaoAtendentes();
+};
+
+// Hook no switchSection para renderizar quando abrir o painel
+const _ss=window.switchSection;
+window.switchSection=function(key,btnEl){
+  _ss(key,btnEl);
+  if(key==='atendentes')renderGestaoAtendentes();
+};
+
+// Inicializar na carga
+window.addEventListener('load',function(){setTimeout(renderGestaoAtendentes,2000);});
+
+console.log('✅ GESTAO-ATENDENTES instalado.');
 })();
 </script>
 </body>
