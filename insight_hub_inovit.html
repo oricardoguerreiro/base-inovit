@@ -888,8 +888,9 @@ function renderTecnicosDashboard(){
        const attInfo=DB.atendentes&&DB.atendentes[t]?DB.atendentes[t]:null;
    const equipeLabel=attInfo?attInfo.equipe:'Central de Suporte';
    const nivelLabel=attInfo?attInfo.nivel:'N1';
-   card.innerHTML='<div class="client-card-title">👨‍💻 '+t+'</div><div class="client-metric-row"><span class="lbl">Equipe:</span><span class="val" style="color:var(--blue-primary);">'+equipeLabel+'</span></div><div class="client-metric-row"><span class="lbl">Nível:</span><span class="val">'+nivelLabel+'</span></div><div class="client-metric-row"><span class="lbl">Chamados:</span><span class="val">'+m.vol+'</span></div><div class="client-metric-row"><span class="lbl">SLA:</span><span class="val" style="color:'+(sla>=85?'var(--success)':'var(--warn)')+'">'+sla+'%</span></div><div class="client-metric-row"><span class="lbl">Clientes:</span><span class="val">'+m.cli.size+'</span></div><div class="client-metric-row"><span class="lbl">Horas:</span><span class="val">'+m.horas.toFixed(1)+'h</span></div><div class="client-metric-row"><span class="lbl">Média CSAT:</span><span class="val" style="color:var(--purple);">⭐ '+(m.cc>0?(m.cs/m.cc).toFixed(2):'N/A')+'</span></div>';
-  });
+   card.innerHTML='<div class="client-card-title">‍💻 '+t+'</div><div class="client-metric-row"><span class="lbl">Equipe:</span><span class="val" style="color:var(--blue-primary);">'+equipeLabel+'</span></div><div class="client-metric-row"><span class="lbl">Nível:</span><span class="val">'+nivelLabel+'</span></div><div class="client-metric-row"><span class="lbl">Chamados:</span><span class="val">'+m.vol+'</span></div><div class="client-metric-row"><span class="lbl">SLA:</span><span class="val" style="color:'+(sla>=85?'var(--success)':'var(--warn)')+'">'+sla+'%</span></div><div class="client-metric-row"><span class="lbl">Clientes:</span><span class="val">'+m.cli.size+'</span></div><div class="client-metric-row"><span class="lbl">Horas:</span><span class="val">'+m.horas.toFixed(1)+'h</span></div><div class="client-metric-row"><span class="lbl">Média CSAT:</span><span class="val" style="color:var(--purple);">⭐ '+(m.cc>0?(m.cs/m.cc).toFixed(2):'N/A')+'</span></div>';
+grid.appendChild(card);
+});
 }
 function renderBacklogDashboard(){
   const grid=el('grid-backlog-summary-cards');if(!grid)return;grid.innerHTML='';
@@ -2012,11 +2013,6 @@ const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); p
   if(window.renderPlanosAcao) window.renderPlanosAcao();
 })();
 </script>
-<script>
-<script>
-<script>
-<script>
-<script>
 <script>
 /* UNIFICA2 — save unificado de planos + lixeira de visitas (NAO REMOVER) */
 window.savePlanosAcao=function(p){ localStorage.setItem('inovit_planos_acao',JSON.stringify(p)); localStorage.setItem('inovit_planos',JSON.stringify(p)); fetch('https://jqgjfwlrkdxgkrdqbbrt.supabase.co/rest/v1/planos_acao?on_conflict=id',{method:'POST',headers:{apikey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},body:JSON.stringify(p.map(function(x){ return {id:x.id,payload:x}; }))}).catch(function(){}); };
