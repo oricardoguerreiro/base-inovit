@@ -2373,7 +2373,11 @@ function abrirRelatorioEquipe(equipe){
     <div style="max-width:1400px; margin:0 auto; background:#fff; border-radius:var(--radius); padding:32px 36px;">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:16px; margin-bottom:24px;">
         <h2 style="font-weight:700; font-size:26px; color:var(--blue-dark);">👥 Relatório de Produtividade — ${equipe}</h2>
-        <button onclick="document.getElementById('modal-relatorio-equipe').remove(); document.body.style.overflow='auto';" style="padding:8px 20px; border-radius:40px; border:1px solid var(--border-color); background:var(--glass-bg); cursor:pointer; font-weight:500;">Fechar</button>
+<div class="panel-actions" data-html2canvas-ignore="true" style="display:flex; gap:8px;">
+<button class="btn-secondary" onclick="exportPanelToJPG('modal-relatorio-equipe','Relatorio_Equipe_${equipe}')">JPG</button>
+<button class="btn-secondary" onclick="openExportPdfPopup('modal-relatorio-equipe','Relatorio_Equipe_${equipe}')">PDF</button>
+<button onclick="document.getElementById('modal-relatorio-equipe').remove(); document.body.style.overflow='auto';" style="padding:8px 20px; border-radius:40px; border:1px solid var(--border-color); background:var(--glass-bg); cursor:pointer; font-weight:500;">Fechar</button>
+</div>
       </div>
       
       <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; margin-bottom:32px;">
