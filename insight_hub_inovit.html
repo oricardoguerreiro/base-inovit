@@ -2903,5 +2903,126 @@ window.addEventListener('load', function(){
 console.log('✅ CONFIG-MENU instalado.');
 })();
 </script>
+  <script>
+/* CONFIG-MENU + ATENDENTES — toggle do menu Configurações e gestão de atendentes (NAO REMOVER) */
+(function(){
+if(window.__CONFIG_MENU) return; window.__CONFIG_MENU=true;
+
+/* 1) Toggle do submenu Configurações */
+window.toggleConfigMenu=function(btn){
+  const submenu=document.getElementById('config-submenu');
+  if(!submenu) return;
+  const isOpen=submenu.classList.contains('active');
+  submenu.classList.toggle('active');
+  btn.classList.toggle('open');
+  submenu.style.display=isOpen?'none':'flex';
+};
+
+/* 2) Inicializar DB.atendentes e DB.equipes se não existirem */
+if(!DB.atendentes){ DB.atendentes={}; LS.set('inovit_atendentes',DB.atendentes); }
+if(!DB.equipes){ DB.equipes={'Central de Suporte':['N1','N2','N3']}; LS.set('inovit_equipes',DB.equipes); }
+
+function getAtendentes(){ return DB.atendentes||{}; }
+function getEquipes(){ return DB.equipes||{'Central de Suporte':['N1','N2','N3']}; }
+function saveAtendentes(a){ DB.atendentes=a||{}; LS.set('inovit_atendentes',DB.atendentes); }
+function saveEquipes(e){ DB.equipes=e||{}; LS.set('inovit_equipes',DB.equipes); }
+
+/* 3) Renderizar painel de Gestão de Atendentes */
+window.renderGestaoAtendentes=function(){
+  const atendentes=getAtendentes();
+  const equipes=getEquipes();
+  
+  /* Renderizar equipes */
+  const eqContainer=document.getElementById('equipes-list-container');
+  if(eqContainer){
+    eqContainer.innerHTML='';
+    Object.keys(equipes).forEach(eq=>{
+      const div=document.createElement('div');
+      div.style.cssText='background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius-sm); padding:12px; margin-bottom:8px;';
+      div.innerHTML='<div style="font-weight:600; margin-bottom:4px;">'+eq+'</div><div style="font-size:12px; color:var(--text-muted);">Níveis: '+(equipes[eq].join(', ')||'N/A')+'</div>';
+      eqContainer.appendChild(div);
+    });
+  }
+  
+  /* Renderizar atendentes */
+  const attContainer=document.getElementById('atendentes-list-container');
+  if(attContainer){
+    attContainer.innerHTML='';
+    Object.keys(atendentes).forEach(nome=>{
+      const att=atendentes[nome];
+      const div=document.createElement('div');
+      div.className='user-row';
+      div.innerHTML='<div><span style="font-weight:500;">'+nome+'</span></div><div style="display:flex; gap:6px; flex-wrap:wrap;"><span class="perm-badge">'+att.equipe+'</span><span class="perm-badge">'+att.nivel+'</span></div><div class="user-actions"><button class="btn-remove-user" onclick="removerAtendente(\''+nome+'\')">✕</button></div>';
+      attContainer.appendChild(div);
+    });
+  }
+  
+  /* Preencher select de equipes */
+  const eqSelect=document.getElementById('att-equipe');
+  if(eqSelect){
+    eqSelect.innerHTML='';
+    Object.keys(equipes).forEach(eq=>{
+      const opt=document.createElement('option');
+      opt.value=eq;
+      opt.textContent=eq;
+      eqSelect.appendChild(opt);
+    });
+  }
+};
+
+/* 4) Funções globais para salvar/remover atendentes e equipes */
+window.salvarAtendente=function(){
+  const nome=document.getElementById('att-nome').value.trim();
+  const equipe=document.getElementById('att-equipe').value;
+  const nivel=document.getElementById('att-nivel').value;
+  if(!nome){ alert('Digite o nome do atendente.'); return; }
+  const atendentes=getAtendentes();
+  atendentes[nome]={equipe,nivel};
+  saveAtendentes(atendentes);
+  alert('✅ Atendente '+nome+' salvo na equipe '+equipe+' ('+nivel+')');
+  document.getElementById('att-nome').value='';
+  renderGestaoAtendentes();
+};
+
+window.removerAtendente=function(nome){
+  if(!confirm('Remover atendente '+nome+'?')) return;
+  const atendentes=getAtendentes();
+  delete atendentes[nome];
+  saveAtendentes(atendentes);
+  renderGestaoAtendentes();
+};
+
+window.adicionarEquipe=function(){
+  const nome=document.getElementById('nova-equipe-nome').value.trim();
+  const niveis=document.getElementById('nova-equipe-niveis').value.split(',').map(n=>n.trim()).filter(n=>n);
+  if(!nome){ alert('Digite o nome da equipe.'); return; }
+  const equipes=getEquipes();
+  equipes[nome]=niveis.length?niveis:['N1','N2','N3'];
+  saveEquipes(equipes);
+  alert('✅ Equipe '+nome+' criada!');
+  document.getElementById('nova-equipe-nome').value='';
+  renderGestaoAtendentes();
+};
+
+/* 5) Hook no switchSection para renderizar quando abrir o painel de atendentes */
+var _ss = window.switchSection;
+window.switchSection = function(key, btnEl){
+  _ss(key, btnEl);
+  if(key === 'atendentes'){
+    setTimeout(renderGestaoAtendentes, 100);
+  }
+};
+
+/* 6) Renderizar na carga inicial se já estiver no painel */
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    const panel = document.getElementById('panel-atendentes');
+    if(panel && panel.classList.contains('active')) renderGestaoAtendentes();
+  }, 2000);
+});
+
+console.log('✅ CONFIG-MENU instalado.');
+})();
+</script>
 </body>
 </html>
