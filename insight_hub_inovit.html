@@ -1651,8 +1651,9 @@ function preencherSelectClientesVisita(){
 function abrirFormVisitaData(dataStr){
   const modal=el('modal-visita');if(!modal)return;
   setText('modal-visita-title','🗓️ Nova Visita');
-  el('visita-id').value='';
-  el('form-visita').reset();
+  el('visita-local').value='';
+if(el('visita-link-gps'))el('visita-link-gps').value='';
+el('form-visita').reset();
   const vpc=el('visita-plano-container');if(vpc){vpc.style.display='none';vpc.classList.remove('visible');}
   preencherSelectClientesVisita();
   el('visita-data').value=dataStr?dataStr:new Date().toISOString().split('T')[0];
