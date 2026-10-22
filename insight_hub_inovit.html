@@ -2652,5 +2652,126 @@ window.closeModal = function(id){
 console.log('✅ MODAL-EXPORT instalado: botões JPG/PDF em todos os modais.');
 })();
 </script>
+  <script>
+/* CATEGORIAS-EXPANDIDAS — mostra todas as categorias com subcategorias e títulos (NAO REMOVER) */
+(function(){
+if(window.__CATEGORIAS_EXP) return; window.__CATEGORIAS_EXP=true;
+
+/* Sobrescreve a função openClientUniversalModal para expandir as categorias */
+var _ocum = window.openClientUniversalModal;
+window.openClientUniversalModal = function(clientKey, mode){
+  _ocum(clientKey, mode);
+  
+  setTimeout(function(){
+    const container = document.querySelector('#modal-client-universal');
+    if(!container) return;
+    
+    /* Remove a seção antiga de categorias se existir */
+    const oldCats = container.querySelector('.cats-expanded-section');
+    if(oldCats) oldCats.remove();
+    
+    /* Filtra os dados do cliente */
+    const fv = document.getElementById('filter-from') ? document.getElementById('filter-from').value : '';
+    const tv = document.getElementById('filter-to') ? document.getElementById('filter-to').value : '';
+    const fD = fv ? new Date(fv + 'T00:00:00').getTime() : null;
+    const tD = tv ? new Date(tv + 'T23:59:59').getTime() : null;
+    
+    let cr = globalData.filter(d => d.entidade === clientKey);
+    if(fD || tD) cr = cr.filter(d => {
+      const t = d.dataAbertura.dateObj.getTime();
+      if(fD && t < fD) return false;
+      if(tD && t > tD) return false;
+      return true;
+    });
+    
+    /* Agrupa por categoria > subcategoria > títulos */
+    const catMap = {};
+    cr.forEach(d => {
+      const parts = (d.categoria || 'Geral > Outros').split('>').map(s => s.trim());
+      const catPrincipal = parts[0] || 'Geral';
+      const subCat = parts[1] || 'Outros';
+      
+      if(!catMap[catPrincipal]) catMap[catPrincipal] = {};
+      if(!catMap[catPrincipal][subCat]) catMap[catPrincipal][subCat] = [];
+      catMap[catPrincipal][subCat].push({
+        titulo: d.titulo,
+        id: d.id,
+        data: d.dataAbertura.dia + '/' + d.dataAbertura.mes + '/' + d.dataAbertura.ano,
+        tecnico: d.tecnico || 'N/A'
+      });
+    });
+    
+    /* Cria a seção expandida */
+    const section = document.createElement('div');
+    section.className = 'cats-expanded-section';
+    section.style.cssText = 'margin-top:32px; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius); padding:24px;';
+    
+    let html = '<h3 style="font-size:20px; font-weight:700; margin-bottom:16px; color:var(--blue-dark);">📂 Todas as Categorias e Solicitações (' + cr.length + ' chamados)</h3>';
+    html += '<div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">';
+    html += '<button class="btn-secondary" onclick="document.querySelectorAll(\'.cat-group\').forEach(g=>g.style.display=\'\')" style="padding:6px 14px; font-size:12px;">Expandir Todas</button>';
+    html += '<button class="btn-secondary" onclick="document.querySelectorAll(\'.cat-group\').forEach(g=>g.style.display=\'none\')" style="padding:6px 14px; font-size:12px;">Recolher Todas</button>';
+    html += '</div>';
+    
+    /* Ordena categorias por volume */
+    const sortedCats = Object.keys(catMap).sort((a, b) => {
+      const volA = Object.values(catMap[a]).reduce((sum, subs) => sum + subs.length, 0);
+      const volB = Object.values(catMap[b]).reduce((sum, subs) => sum + subs.length, 0);
+      return volB - volA;
+    });
+    
+    sortedCats.forEach(catPrincipal => {
+      const subCats = catMap[catPrincipal];
+      const totalVol = Object.values(subCats).reduce((sum, subs) => sum + subs.length, 0);
+      const pct = ((totalVol / cr.length) * 100).toFixed(1);
+      
+      html += '<div class="cat-group" style="margin-bottom:16px; border:1px solid var(--border-color); border-radius:var(--radius-sm); overflow:hidden;">';
+      html += '<div style="background:rgba(4,116,196,0.1); padding:12px 16px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display===\'none\'?\'block\':\'none\'">';
+      html += '<span style="font-weight:700; font-size:15px; color:var(--blue-dark);">📁 ' + catPrincipal + '</span>';
+      html += '<span style="font-size:13px; color:var(--text-muted); font-family:\'JetBrains Mono\';">' + totalVol + ' chamados (' + pct + '%)</span>';
+      html += '</div>';
+      
+      html += '<div style="padding:12px 16px;">';
+      
+      const sortedSubs = Object.keys(subCats).sort((a, b) => subCats[b].length - subCats[a].length);
+      sortedSubs.forEach(subCat => {
+        const subs = subCats[subCat];
+        const subPct = ((subs.length / cr.length) * 100).toFixed(1);
+        
+        html += '<div style="margin-bottom:12px; padding-left:16px; border-left:3px solid var(--blue-primary);">';
+        html += '<div style="font-weight:600; font-size:14px; color:var(--text-secondary); margin-bottom:8px;">📄 ' + subCat + ' <span style="font-size:12px; color:var(--text-muted);">(' + subs.length + ' · ' + subPct + '%)</span></div>';
+        
+        html += '<div style="display:flex; flex-direction:column; gap:6px; padding-left:16px;">';
+        subs.forEach(s => {
+          html += '<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:rgba(255,255,255,0.5); border-radius:6px; font-size:13px; cursor:pointer;" onclick="openTicketDetail(\'' + s.id + '\')">';
+          html += '<div style="flex:1;">';
+          html += '<div style="font-weight:500; color:var(--text-primary);">' + s.titulo + '</div>';
+          html += '<div style="font-size:11px; color:var(--text-muted); margin-top:2px;">ID: ' + s.id + ' · ' + s.data + ' · Técnico: ' + s.tecnico + '</div>';
+          html += '</div>';
+          html += '<span style="font-size:11px; color:var(--blue-primary); font-family:\'JetBrains Mono\';">VER →</span>';
+          html += '</div>';
+        });
+        html += '</div>';
+        html += '</div>';
+      });
+      
+      html += '</div>';
+      html += '</div>';
+    });
+    
+    section.innerHTML = html;
+    
+    /* Insere após a seção de categorias original */
+    const origCats = container.querySelector('h3[style*="font-size:20px"]');
+    if(origCats && origCats.textContent.includes('Top 20 Categorias')) {
+      origCats.parentElement.after(section);
+    } else {
+      container.querySelector('.modal-container').appendChild(section);
+    }
+  }, 200);
+};
+
+console.log('✅ CATEGORIAS-EXPANDIDAS instalado.');
+})();
+</script>
 </body>
 </html>
