@@ -605,7 +605,7 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',
 </div>
 <div class="visita-form-actions"><button type="button" class="btn-primary" onclick="salvarVisita()">💾 Salvar</button><button type="button" class="btn-secondary" onclick="closeModal('modal-visita')">Cancelar</button></div>
 </form></div></div>
-<div id="modal-visitas-lista" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-visitas-lista-title">Lista de Visitas</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="modal-close" onclick="closeModal('modal-visitas-lista')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="modal-visitas-lista-table"><thead><tr><th>Cliente</th><th>Data</th><th>Hora</th><th>Status</th><th>Local</th></tr></thead><tbody id="modal-visitas-lista-tbody"></tbody></table></div><div class="pagination-container"><span class="info" id="modal-visitas-lista-info"></span><div class="pagination-buttons" id="modal-visitas-lista-buttons"></div></div></div></div>
+<div id="modal-visitas-lista" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-visitas-lista-title">Lista de Visitas</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="modal-close" onclick="closeModal('modal-visitas-lista')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="modal-visitas-lista-table"><thead><tr><th>Cliente</th><th>Data</th><th>Hora</th><th>Status</th><th>Local</th><th>Link GPS</th></tr></thead>
 <div id="modal-lista-planos" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-lista-planos-title">Planos de Ação</h2><button class="modal-close" onclick="closeModal('modal-lista-planos')">Fechar</button></div><div id="modal-lista-planos-content"></div></div></div>
 <div id="modal-evidencias" class="modal-fullscreen"><div class="modal-container" style="max-width:600px;"><div class="modal-hdr"><h2 class="modal-title">📎 Evidências</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="modal-close" onclick="closeModal('modal-evidencias')">Fechar</button></div></div><div id="evidencias-lista"></div></div></div>
 <div id="modal-alertas" class="modal-fullscreen"><div class="modal-container" style="max-width:800px;"><div class="modal-hdr"><h2 class="modal-title">🔔 Central de Alertas</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="switchSection('alertas', document.querySelector('.nav-item[data-module=\'usuarios\']')); closeModal('modal-alertas');">⚙️ Configurar</button><button class="modal-close" onclick="closeModal('modal-alertas')">Fechar</button></div></div><div id="alertas-lista"></div></div></div>
@@ -1554,7 +1554,7 @@ function renderKanbanVisitas(){
       card.addEventListener('dragend',function(){card.classList.remove('dragging');dragInfo=null;clearDragOver();});
       card.setAttribute('onclick',"editarVisita('"+escapeStr(v.id)+"')");
       const badgeClass=coluna==='Concluído'?'success':(coluna==='Cancelado'?'danger':(coluna==='Em Andamento'?'info':(coluna==='Pausado'?'purple':'warn')));
-      card.innerHTML='<div class="kanban-card-top"><span class="kanban-card-code">VS-'+String(seqMap[v.id]||0).padStart(4,'0')+'</span><span class="kanban-card-badge kb-badge '+badgeClass+'" style="margin-top:0;">'+(v.status||'Planejada')+'</span></div><div class="kanban-card-title">'+cleanEntityName(v.cliente)+'</div><div class="kanban-card-meta">📅 '+formatarDataBR(v.data)+'</div>'+(v.hora?'<div class="kanban-card-meta">🕒 '+v.hora+'</div>':'')+(v.local?'<div class="kanban-card-meta">📍 '+v.local+'</div>':'')+'<div class="kanban-card-footer" style="margin-top:10px;">'+(v.objetivo||'Sem objetivo registrado')+'</div><div class="kanban-card-actions"><button onclick="event.stopPropagation(); editarVisita(\''+escapeStr(v.id)+'\')">✏️ Editar</button></div>';
+      card.innerHTML='<div class="kanban-card-top"><span class="kanban-card-code">VS-'+String(seqMap[v.id]||0).padStart(4,'0')+'</span><span class="kanban-card-badge kb-badge '+badgeClass+'" style="margin-top:0;">'+(v.status||'Planejada')+'</span></div><div class="kanban-card-title">'+cleanEntityName(v.cliente)+'</div><div class="kanban-card-meta">📅 '+formatarDataBR(v.data)+'</div>'+(v.hora?'<div class="kanban-card-meta">🕒 '+v.hora+'</div>':'')+(v.local?'<div class="kanban-card-meta">📍 '+v.local+'</div>':'')+(v.linkGps?'<div class="kanban-card-meta" style="cursor:pointer;" onclick="event.stopPropagation(); window.open(\''+v.linkGps.replace(/'/g,"\\'")+'\',\'_blank\')">🗺️ Ver no mapa</div>':'')+'<div class="kanban-card-footer"
       body.appendChild(card);
     });
     col.appendChild(body);anexarZonaDrop(col,coluna,'visita');board.appendChild(col);
@@ -1582,7 +1582,8 @@ function buildVisitaTooltipHTML(v){
   html+=montarLinhaTooltip('Data',formatarDataBR(v.data));
   html+=montarLinhaTooltip('Hora',v.hora);
   html+=montarLinhaTooltip('Local',v.local);
-  html+=montarLinhaTooltip('Status',v.status||'Planejada');
+html+=montarLinhaTooltip('Link GPS',v.linkGps);
+html+=montarLinhaTooltip('Status',v.status||'Planejada');
   html+=montarLinhaTooltip('Participantes',v.participantes);
   html+=montarLinhaTooltip('Objetivo',v.objetivo);
   html+=montarLinhaTooltip('Observações',v.obs);
@@ -1615,7 +1616,7 @@ function abrirListaVisitas(filtro,titulo){
   setText('modal-visitas-lista-title',titulo+' ('+dados.length+')');
   const tbody=el('modal-visitas-lista-tbody'),info=el('modal-visitas-lista-info'),buttons=el('modal-visitas-lista-buttons');
   const ps=50;let cp=0;const tp=Math.ceil(dados.length/ps);
-  function rp(page){cp=page;const s=page*ps,e=Math.min(s+ps,dados.length);if(tbody)tbody.innerHTML='';dados.slice(s,e).forEach(v=>{const tr=document.createElement('tr');tr.className='clickable-row';tr.setAttribute('onclick',"editarVisita('"+escapeStr(v.id)+"')");tr.innerHTML='<td>'+v.cliente+'</td><td>'+formatarDataBR(v.data)+'</td><td>'+(v.hora||'')+'</td><td><span class="status-badge '+(v.status==='Realizada'?'success':(v.status==='Cancelada'?'danger':'warn'))+'">'+(v.status||'Planejada')+'</span></td><td>'+(v.local||'')+'</td>';if(tbody)tbody.appendChild(tr);});if(info)info.innerText='Mostrando '+(dados.length>0?s+1:0)+'–'+e+' de '+dados.length;if(buttons)buttons.innerHTML='<button onclick="renderPage('+(cp-1)+')" '+(cp===0?'disabled':'')+'>◀</button><span style="padding:4px 12px;">'+(tp>0?cp+1:0)+' / '+(tp||1)+'</span><button onclick="renderPage('+(cp+1)+')" '+(cp>=tp-1?'disabled':'')+'>▶</button>';}
+  function rp(page){cp=page;const s=page*ps,e=Math.min(s+ps,dados.length);if(tbody)tbody.innerHTML='';dados.slice(s,e).forEach(v=>{const tr=document.createElement('tr');tr.className='clickable-row';tr.setAttribute('onclick',"editarVisita('"+escapeStr(v.id)+"')");tr.innerHTML='<td>'+v.cliente+'</td><td>'+formatarDataBR(v.data)+'</td><td>'+(v.hora||'')+'</td><td><span class="status-badge '+(v.status==='Realizada'?'success':(v.status==='Cancelada'?'danger':'warn'))+'">'+(v.status||'Planejada')+'</span></td><td>'+(v.local||'')+'</td><td>'+(v.linkGps?'<a href="'+v.linkGps+'" target="_blank" style="color:var(--blue-primary);">️ Abrir</a>':'—')+'</td>';if(tbody)tbody.appendChild(tr);
   window.renderPage=p=>{if(p<0||p>=tp)return;rp(p);};
   rp(0);
   regTable('modal-visitas-lista-table',{data:dados,extractors:[r=>r.cliente,r=>r.data,r=>r.hora,r=>r.status,r=>r.local],render:()=>rp(0)});
@@ -1627,11 +1628,11 @@ function abrirListaVisitasSemVisita(){
   const totais=new Set(currentFiltered.map(d=>d.entidade));
   const sem=[...totais].filter(c=>!comVisita.has(c));
   if(!sem.length){alert('Todos os clientes possuem pelo menos uma visita registrada.');return;}
-  const dados=sem.map(c=>({cliente:c,data:'',hora:'',status:'Sem visita',local:''}));
+  const dados=sem.map(c=>({cliente:c,data:'',hora:'',status:'Sem visita',local:'',linkGps:''}));
   setText('modal-visitas-lista-title','Clientes sem visita ('+dados.length+')');
   const tbody=el('modal-visitas-lista-tbody'),info=el('modal-visitas-lista-info'),buttons=el('modal-visitas-lista-buttons');
   if(tbody)tbody.innerHTML='';
-  dados.forEach(v=>{const tr=document.createElement('tr');tr.innerHTML='<td>'+v.cliente+'</td><td>—</td><td>—</td><td><span class="status-badge danger">Sem visita</span></td><td>—</td>';if(tbody)tbody.appendChild(tr);});
+  dados.forEach(v=>{const tr=document.createElement('tr');tr.innerHTML='<td>'+v.cliente+'</td><td>—</td><td>—</td><td><span class="status-badge danger">Sem visita</span></td><td>—</td><td>—</td>';if(tbody)tbody.appendChild(tr);
   if(info)info.innerText='Mostrando 1–'+dados.length+' de '+dados.length;
   if(buttons)buttons.innerHTML='<span style="padding:4px 12px;">1 / 1</span>';
   const m=el('modal-visitas-lista');if(m){m.style.display='block';document.body.style.overflow='hidden';}
@@ -1704,7 +1705,8 @@ function editarVisita(id){
   el('visita-data').value=visita.data||'';
   el('visita-hora').value=visita.hora||'';
   el('visita-local').value=visita.local||'';
-  el('visita-participantes').value=visita.participantes||'';
+if(el('visita-link-gps'))el('visita-link-gps').value=visita.linkGps||'';
+el('visita-participantes').value=visita.participantes||'';
   el('visita-objetivo').value=visita.objetivo||'';
   el('visita-obs').value=visita.obs||'';
   el('visita-status').value=visita.status||'Planejada';
