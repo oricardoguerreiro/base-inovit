@@ -378,8 +378,17 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',
 <table class="modern-table" id="table-top-categories"><thead><tr><th>Rank</th><th>Categoria do Chamado</th><th>Volume</th><th>% do Todo</th><th>Grau de Reincidência</th></tr></thead><tbody></tbody></table>
 </div>
 <h3 style="font-size:16px; font-family:'JetBrains Mono'; color:var(--text-secondary); margin-top:32px; margin-bottom:8px;">Relação Integral de Todos os Chamados do Período</h3>
-<div class="modern-table-container"><table class="modern-table" id="table-all-period-tickets"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Categoria</th><th>Serviço</th><th>Oferta</th><th>Abertura</th><th>Solução</th><th>Técnico</th><th>Equipe</th><th>SLA</th></tr></thead>
+<div class="modern-table-container">
+  <table class="modern-table" id="table-all-period-tickets">
+    <thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Categoria</th><th>Serviço</th><th>Oferta</th><th>Abertura</th><th>Solução</th><th>Técnico</th><th>Equipe</th><th>SLA</th></tr></thead>
+    <tbody id="all-tickets-tbody"></tbody>
+  </table>
+  <div class="pagination-container">
+    <span class="info" id="all-tickets-info"></span>
+    <div class="pagination-buttons" id="all-tickets-buttons"></div>
+  </div>
 </div>
+</div>                                                    <!-- fecha #panel-chamado -->
 <div id="panel-tecnicos" class="section-panel">
 <div class="panel-header"><h2 class="panel-title">Desempenho e Produtividade de Técnicos</h2><div class="panel-actions" data-html2canvas-ignore="true"><select id="select-tecnicos-client" class="select-custom" style="min-width:160px;" onchange="applyFilters()"></select><button class="btn-secondary" onclick="exportPanelToJPG('panel-tecnicos','Tecnicos')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('panel-tecnicos','Tecnicos')">PDF</button><button class="btn-secondary" onclick="exportCSV()">📥 CSV</button></div></div>
 <div class="search-bar-container" style="margin-bottom:16px;"><input type="text" id="tech-search-input" placeholder="Pesquisar técnico por nome..." onkeyup="filterTechCards()"></div>
@@ -2029,6 +2038,7 @@ const _rc = renderKanbanVisitas; window.renderKanbanVisitas=function(){ _rc(); p
   window.addEventListener('load',function(){ setTimeout(window.__injDel,1000); });
   if(window.renderPlanosAcao) window.renderPlanosAcao();
 })();
+</script>                                              
 <script>
 /* UNIFICA2 — save unificado de planos + lixeira de visitas (NAO REMOVER) */
 window.savePlanosAcao=function(p){ localStorage.setItem('inovit_planos_acao',JSON.stringify(p)); localStorage.setItem('inovit_planos',JSON.stringify(p)); fetch('https://jqgjfwlrkdxgkrdqbbrt.supabase.co/rest/v1/planos_acao?on_conflict=id',{method:'POST',headers:{apikey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZ2pmd2xya2R4Z2tyZHFiYnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2ODIzOTAsImV4cCI6MjEwMTI1ODM5MH0.XorwD-zu-CduG2_JnbVLQTHocTwmopx83MmlWQRSomo','Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},body:JSON.stringify(p.map(function(x){ return {id:x.id,payload:x}; }))}).catch(function(){}); };
@@ -2792,7 +2802,6 @@ console.log('✅ CATEGORIAS-EXPANDIDAS instalado.');
 </script>
   <script>
 console.log('✅ CONFIG-MENU instalado.');
-})();
 </script>
 <script>
 if(!DB.atendentes){DB.atendentes={};LS.set('inovit_atendentes',DB.atendentes);}
@@ -2814,6 +2823,5 @@ window.salvarAtendente=function(){const nome=document.getElementById('att-nome')
 window.removerAtendente=function(nome){if(!confirm('Remover atendente '+nome+'?'))return;const atendentes=getAtendentes();delete atendentes[nome];saveAtendentes(atendentes);renderGestaoAtendentes();};
 window.adicionarEquipe=function(){const nome=document.getElementById('nova-equipe-nome').value.trim();const niveis=document.getElementById('nova-equipe-niveis').value.split(',').map(n=>n.trim()).filter(n=>n);if(!nome){alert('Digite o nome da equipe.');return;}const equipes=getEquipes();equipes[nome]=niveis.length?niveis:['N1','N2','N3'];saveEquipes(equipes);alert('✅ Equipe '+nome+' criada!');document.getElementById('nova-equipe-nome').value='';renderGestaoAtendentes();};
 </script>  
-<script>
 </body>
 </html>
