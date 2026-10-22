@@ -581,6 +581,7 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',
 <div class="visita-form-group"><label>Data *</label><input type="date" id="visita-data" required></div>
 <div class="visita-form-group"><label>Hora</label><input type="time" id="visita-hora"></div>
 <div class="visita-form-group"><label>Local</label><input type="text" id="visita-local"></div>
+<div class="visita-form-group"><label>📍 Link GPS / Endereço</label><input type="text" id="visita-link-gps" placeholder="Ex: https://maps.google.com/?q=... ou Rua, nº, cidade"></div>
 <div class="visita-form-group"><label>Participantes</label><input type="text" id="visita-participantes"></div>
 <div class="visita-form-group"><label>Objetivo</label><input type="text" id="visita-objetivo"></div>
 <div class="visita-form-group full-width" style="border-top:1px solid var(--border-color); padding-top:12px;"><label style="font-weight:600;"><input type="checkbox" id="visita-gerar-plano" onchange="toggleVisitaPlanoContainer()"> Gerar Plano de Ação a partir desta visita</label></div>
@@ -1664,7 +1665,8 @@ function salvarVisita(){
   const data=el('visita-data').value;
   const hora=el('visita-hora').value;
   const local=el('visita-local').value.trim();
-  const participantes=el('visita-participantes').value.trim();
+const linkGps=el('visita-link-gps')?el('visita-link-gps').value.trim():'';
+const participantes=el('visita-participantes').value.trim();
   const objetivo=el('visita-objetivo').value.trim();
   const obs=el('visita-obs').value.trim();
   const status=el('visita-status').value;
