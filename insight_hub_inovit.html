@@ -529,7 +529,7 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',
 <div id="report-client-header-tag" style="font-family:'JetBrains Mono'; font-size:14px; color:var(--blue-primary); margin-bottom:12px; font-weight:600; display:flex; justify-content:space-between;"><span id="report-client-name"></span><span id="report-client-hours" style="background:var(--glass-bg); padding:6px 16px; border-radius:var(--radius-sm); border:1px solid var(--glass-border); font-weight:700;"></span></div>
 <div class="kpi-grid-10" id="modal-client-kpis"></div>
 <div style="margin:20px 0;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Top 20 Requerentes Mais Ativos</h3><div class="modern-table-container"><table class="modern-table" id="modal-client-table-requesters"><thead><tr><th>Rank</th><th>Nome do Requerente</th><th>Quantidade</th><th>Percentual</th><th>Horas</th></tr></thead><tbody id="modal-requesters-tbody"></tbody></table></div></div>
-<div><h3 class="panel-title" style="font-size:20px; margin:20px 0 8px;">Top 20 Categorias mais recorrentes</h3><div class="modern-table-container"><table class="modern-table" id="modal-client-table-tickets"><thead><tr><th>Quantidade</th><th>Categoria</th><th>% do Todo</th></tr></thead><tbody id="modal-cats-tbody"></tbody></table></div></div>
+<div><h3 class="panel-title" style="font-size:20px; margin:20px 0 8px;">Top 20 Categorias mais recorrentes</h3><div class="modern-table-container"><table class="modern-table" id="modal-client-table-tickets"><thead><tr><th>Categoria</th><th>Serviço</th><th>Oferta de Serviço</th><th>Quantidade</th><th>% do Todo</th></tr></thead><tbody id="modal-cats-tbody"></tbody></table></div></div>
 <div style="margin-top:24px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">📈 Tendência de SLA (últimos 6 meses)</h3><div style="height:220px; position:relative;"><canvas id="chart-client-sla-trend"></canvas></div></div>
 <div style="margin-top:24px;"><h3 class="panel-title" style="font-size:20px; margin-bottom:8px;">Distribuição por Dia da Semana</h3><div class="bar-chart-container">
 <div class="bar-chart-col"><div class="bar-chart-fill" id="modal-bar-day-0" style="height:0%;"><span class="bar-value" id="modal-bar-val-0">0</span></div><div class="bar-chart-lbl">Dom</div></div>
@@ -961,9 +961,22 @@ function openClientUniversalModal(clientKey,mode){
   function renderReq(){const rb=el('modal-requesters-tbody');if(!rb)return;rb.innerHTML='';window.__reqData.forEach(r=>{const tr=document.createElement('tr');tr.className='clickable-row';tr.setAttribute('onclick',"openRequesterTickets('"+escapeStr(r.req)+"','"+escapeStr(clientKey)+"')");tr.innerHTML='<td style="font-family:\'JetBrains Mono\';">#'+r.rank+'</td><td>'+r.req+'</td><td style="font-family:\'JetBrains Mono\';">'+r.qtd+'</td><td>'+r.pct+'%</td><td style="font-family:\'JetBrains Mono\';">'+r.horas+'h</td>';rb.appendChild(tr);});}
   renderReq();
   regTable('modal-client-table-requesters',{data:window.__reqData,extractors:[r=>r.rank,r=>r.req,r=>r.qtd,r=>r.pct,r=>r.horas],render:renderReq});
-  const cMap={};cr.forEach(d=>cMap[d.categoria]=(cMap[d.categoria]||0)+1);
-  window.__catData=Object.keys(cMap).sort((a,b)=>cMap[b]-cMap[a]).slice(0,20).map(cat=>({vol:cMap[cat],cat,pct:total>0?((cMap[cat]/total)*100).toFixed(1):'0.0'}));
-  function renderCats(){const rb=el('modal-cats-tbody');if(!rb)return;rb.innerHTML='';window.__catData.forEach(r=>{const tr=document.createElement('tr');tr.className='clickable-row';tr.setAttribute('onclick',"openTicketsByCategoryWithFilter('"+escapeStr(r.cat)+"','"+escapeStr(clientKey)+"')");tr.innerHTML='<td style="font-family:\'JetBrains Mono\'; font-weight:600;">'+r.vol+'</td><td>'+r.cat+'</td><td style="font-family:\'JetBrains Mono\'; color:var(--blue-primary);">'+r.pct+'%</td>';rb.appendChild(tr);});}
+  const cMap={};cr.forEach(d=>{
+  const key=d.categoria+'|'+(d.servico||'N/A')+'|'+(d.ofertaServico||'N/A');
+  if(!cMap[key])cMap[key]={cat:d.categoria,servico:d.servico||'N/A',ofertaServico:d.ofertaServico||'N/A',vol:0};
+  cMap[key].vol++;
+});
+window.__catData=Object.values(cMap).sort((a,b)=>b.vol-a.vol).slice(0,20).map(r=>({...r,pct:total>0?((r.vol/total)*100).toFixed(1):'0.0'}));
+  function renderCats(){
+  const rb=el('modal-cats-tbody');if(!rb)return;rb.innerHTML='';
+  window.__catData.forEach(r=>{
+    const tr=document.createElement('tr');
+    tr.className='clickable-row';
+    tr.setAttribute('onclick',"openTicketsByCategoryWithFilter('"+escapeStr(r.cat)+"','"+escapeStr(clientKey)+"')");
+    tr.innerHTML='<td>'+r.cat+'</td><td>'+(r.servico||'N/A')+'</td><td>'+(r.ofertaServico||'N/A')+'</td><td style="font-family:\'JetBrains Mono\'; font-weight:600;">'+r.vol+'</td><td style="font-family:\'JetBrains Mono\'; color:var(--blue-primary);">'+r.pct+'%</td>';
+    rb.appendChild(tr);
+  });
+}
   renderCats();
   regTable('modal-client-table-tickets',{data:window.__catData,extractors:[r=>r.vol,r=>r.cat,r=>r.pct],render:renderCats});
   if(el('chart-client-sla-trend')){if(chartInstances.clientSlaTrend){chartInstances.clientSlaTrend.destroy();delete chartInstances.clientSlaTrend;}const mesesArr=[];const now=new Date();for(let i=5;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1);mesesArr.push({y:d.getFullYear(),m:d.getMonth(),label:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'][d.getMonth()]+'/'+String(d.getFullYear()).slice(2)});}const vals=mesesArr.map(mm=>{const rr=globalData.filter(d=>d.entidade===clientKey&&!d.isBacklog&&d.dataAbertura.ano===mm.y&&d.dataAbertura.mes===mm.m+1);const den=rr.filter(d=>d.withinSLA===true).length;return rr.length?+((den/rr.length)*100).toFixed(1):null;});chartInstances.clientSlaTrend=new Chart(el('chart-client-sla-trend'),{type:'line',data:{labels:mesesArr.map(m=>m.label),datasets:[{label:'SLA %',data:vals,borderColor:'#0474c4',backgroundColor:'rgba(4,116,196,0.15)',fill:true,tension:0.3,spanGaps:true}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:0,max:100}},plugins:{legend:{display:false},datalabels:{display:false}}},plugins:[ChartDataLabels]});}
@@ -2195,7 +2208,7 @@ window.processFileRows = function(rows){
   const csatCol = findCol(sample,['satisfação','csat','nota','avaliação','avaliacao']);
   const reqCol = findCol(sample,['requerente','usuario','solicitante']);
   const statusCol = findCol(sample,['status']);
-  const durCol = findCol(sample,['duração','duracao','horas','tempo total']);
+  const durCol = findCol(sample,['duração','duracao','horas','tempo total']),serviceCol = findCol(sample,['serviço','servico']),offerCol = findCol(sample,['oferta de serviço','oferta de servico','oferta']);
 
   rows.forEach(row => {
     const openParsed = parseDate(row[openCol]); if(!openParsed) return;
@@ -2217,7 +2230,7 @@ window.processFileRows = function(rows){
     let rawTeam = row[teamCol] ? String(row[teamCol]).trim() : '';
     let teams = rawTeam ? rawTeam.split('+').map(t=>t.trim()).filter(t=>t) : ['Central de Suporte'];
     techs.forEach(te => teams.forEach(tm => {
-      globalData.push({id:ticketId,titulo:row[titleCol]||'Sem Título',entidade:row[entityCol]||'Inovit',dataAbertura:openParsed,dataSolucao:closeParsed,tipo:row[typeCol]||'Requisição',categoria:fullCat,tecnico:te,equipe:tm,duracao:duracao,csat:csatVal,withinSLA:withinSLA,isBacklog:isBacklog,requerente:row[reqCol]?String(row[reqCol]).trim():'Usuário Anônimo',status:rawStatus});
+      globalData.push({id:ticketId,titulo:row[titleCol]||'Sem Título',entidade:row[entityCol]||'Inovit',dataAbertura:openParsed,dataSolucao:closeParsed,tipo:row[typeCol]||'Requisição',categoria:fullCat,servico:row[serviceCol]||'N/A',ofertaServico:row[offerCol]||'N/A',tecnico:te,equipe:tm,duracao:duracao,csat:csatVal,withinSLA:withinSLA,isBacklog:isBacklog,requerente:row[reqCol]?String(row[reqCol]).trim():'Usuário Anônimo',status:rawStatus});
     }));
   });
 };
