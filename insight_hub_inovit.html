@@ -1682,7 +1682,7 @@ const participantes=el('visita-participantes').value.trim();
     planoData={cliente,titulo,porque:el('visita-plano-porque').value.trim(),descricaoGeral:'',onde:el('visita-plano-onde').value.trim(),responsavel,prazo,prioridade:el('visita-plano-prioridade').value,descricao,custo:el('visita-plano-custo').value,status:el('visita-plano-status').value,percentual:parseInt(el('visita-plano-percentual').value)||0,evidencias:el('visita-plano-evidencias').value.trim()};
   }
   const visitaId=id||Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-  const visita={id:visitaId,cliente,data,hora,local,participantes,objetivo,obs,status,gerouPlano:gerarPlano,anexos:[]};
+  const visita={id:visitaId,cliente,data,hora,local,linkGps:linkGps,participantes,objetivo,obs,status,gerouPlano:gerarPlano,anexos:[]};
   let visitas=getVisitas();
   const index=visitas.findIndex(v=>v.id===visita.id);
   if(index!==-1)visitas[index]=visita;else visitas.push(visita);
