@@ -890,15 +890,14 @@ grid.appendChild(card);
 });
 }
 function renderBacklogDashboard(){
-  const grid=el('grid-backlog-summary-cards');if(!grid)return;grid.innerHTML='';
-  const map={};currentFiltered.filter(d=>d.isBacklog).forEach(d=>map[d.entidade]=(map[d.entidade]||0)+1);
-  Object.keys(map).sort((a,b)=>map[b]-map[a]).forEach(c=>{
-    const card=document.createElement('div');card.className='client-summary-card';card.setAttribute('onclick',"drilldownBacklogIsolated('"+escapeStr(c)+"')");
-    card.innerHTML='<div class="client-card-title">'+cleanEntityName(c)+'</div><div class="client-metric-row"><span class="lbl">Backlog:</span><span class="val" style="color:'+(map[c]>10?'var(--danger)':'var(--warn)')+'; font-weight:700;">'+map[c]+' chamados</span></div><div style="margin-top:8px; font-size:11px; text-align:right; color:var(--text-muted);">EXIBIR CHAMADOS ↓</div>';
+const grid=el('grid-backlog-summary-cards');if(!grid)return;grid.innerHTML='';
+const map={};currentFiltered.filter(d=>d.isBacklog).forEach(d=>map[d.entidade]=(map[d.entidade]||0)+1);
+Object.keys(map).sort((a,b)=>map[b]-map[a]).forEach(c=>{
+const card=document.createElement('div');card.className='client-summary-card';card.setAttribute('onclick',"drilldownBacklogIsolated('"+escapeStr(c)+"')");
+card.innerHTML='<div class="client-card-title">'+cleanEntityName(c)+'</div><div class="client-metric-row"><span class="lbl">Backlog:</span><span class="val" style="color:'+(map[c]>10?'var(--danger)':'var(--warn)')+'; font-weight:700;">'+map[c]+' chamados</span></div><div style="margin-top:8px; font-size:11px; text-align:right; color:var(--text-muted);">EXIBIR CHAMADOS ↓</div>';
 grid.appendChild(card);
 });
-}
-  filterBacklogSummaryCards();
+filterBacklogSummaryCards();
 }
 // ================================================================
 // MODAIS / DRILL-DOWNS
