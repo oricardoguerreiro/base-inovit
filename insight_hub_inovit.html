@@ -893,17 +893,17 @@ tr.innerHTML='<td style="font-family:\'JetBrains Mono\';">'+d.id+'</td><td>'+cle
 regTable('table-all-period-tickets',{data:allTicketsData,extractors:[r=>r.id,r=>r.entidade,r=>r.titulo,r=>r.categoria,r=>r.servico,r=>r.ofertaServico,r=>r.dataAbertura,r=>r.dataSolucao,r=>r.tecnico,r=>r.equipe,r=>(r.isBacklog?'BACKLOG':(r.withinSLA?'DENTRO':'FORA'))],render:()=>{allTicketsCurrentPage=0;renderAllPeriodTickets();}});}
 function allTicketsGoToPage(p){const tp=Math.ceil(allTicketsData.length/allTicketsPageSize);if(p<0||p>=tp)return;allTicketsCurrentPage=p;renderAllPeriodTickets();}
 function renderTecnicosDashboard(){
-  const fc=el('select-tecnicos-client')?el('select-tecnicos-client').value:'Todos';
-  const localSet=(fc&&fc!=="Todos")?currentFiltered.filter(d=>d.entidade===fc):currentFiltered;
-  const grid=el('grid-tecnicos-cards');if(!grid)return;grid.innerHTML='';
-  const map={};localSet.forEach(d=>{if(!d.tecnico)return;if(!map[d.tecnico])map[d.tecnico]={vol:0,dentro:0,cs:0,cc:0,cli:new Set(),backlog:0,horas:0};const m=map[d.tecnico];m.vol++;if(d.withinSLA)m.dentro++;if(d.isBacklog)m.backlog++;if(d.csat!==null){m.cs+=d.csat;m.cc++;}m.cli.add(d.entidade);m.horas+=d.duracao||0;});
-  Object.keys(map).sort((a,b)=>map[b].vol-map[a].vol).forEach(t=>{
-    const m=map[t];const considered=m.vol-m.backlog;const sla=considered>0?((m.dentro/considered)*100).toFixed(1):"100.0";
-    const card=document.createElement('div');card.className='client-summary-card';card.setAttribute('onclick',"openTechnicianDetail('"+escapeStr(t)+"')");
-       const attInfo=DB.atendentes&&DB.atendentes[t]?DB.atendentes[t]:null;
+const fc=el('select-tecnicos-client')?el('select-tecnicos-client').value:'Todos';
+const localSet=(fc&&fc!=="Todos")?currentFiltered.filter(d=>d.entidade===fc):currentFiltered;
+const grid=el('grid-tecnicos-cards');if(!grid)return;grid.innerHTML='';
+const map={};localSet.forEach(d=>{if(!d.tecnico)return;if(!map[d.tecnico])map[d.tecnico]={vol:0,dentro:0,cs:0,cc:0,cli:new Set(),backlog:0,horas:0};const m=map[d.tecnico];m.vol++;if(d.withinSLA)m.dentro++;if(d.isBacklog)m.backlog++;if(d.csat!==null){m.cs+=d.csat;m.cc++;}m.cli.add(d.entidade);m.horas+=d.duracao||0;});
+Object.keys(map).sort((a,b)=>map[b].vol-map[a].vol).forEach(t=>{
+const m=map[t];const considered=m.vol-m.backlog;const sla=considered>0?((m.dentro/considered)*100).toFixed(1):"100.0";
+const card=document.createElement('div');card.className='client-summary-card';card.setAttribute('onclick',"openTechnicianDetail('"+escapeStr(t)+"')");
+const attInfo=DB.atendentes&&DB.atendentes[t]?DB.atendentes[t]:null;
 const equipeLabel=attInfo?attInfo.equipe:'Central de Suporte';
 const nivelLabel=attInfo?attInfo.nivel:'N1';
-card.innerHTML='<div class="client-card-title">‍💻 '+t+'</div><div class="client-metric-row"><span class="lbl">Equipe:</span><span class="val" style="color:var(--blue-primary);">'+equipeLabel+'</span></div><div class="client-metric-row"><span class="lbl">Nível:</span><span class="val">'+nivelLabel+'</span></div><div class="client-metric-row"><span class="lbl">Chamados:</span><span class="val">'+m.vol+'</span></div><div class="client-metric-row"><span class="lbl">SLA:</span><span class="val" style="color:'+(sla>=85?'var(--success)':'var(--warn)')+'">'+sla+'%</span></div><div class="client-metric-row"><span class="lbl">Clientes:</span><span class="val">'+m.cli.size+'</span></div><div class="client-metric-row"><span class="lbl">Horas:</span><span class="val">'+m.horas.toFixed(1)+'h</span></div><div class="client-metric-row"><span class="lbl">Média CSAT:</span><span class="val" style="color:var(--purple);">⭐ '+(m.cc>0?(m.cs/m.cc).toFixed(2):'N/A')+'</span></div>';
+card.innerHTML='<div class="client-card-title">👨‍💻 '+t+'</div><div class="client-metric-row"><span class="lbl">Equipe:</span><span class="val" style="color:var(--blue-primary);">'+equipeLabel+'</span></div><div class="client-metric-row"><span class="lbl">Nível:</span><span class="val">'+nivelLabel+'</span></div><div class="client-metric-row"><span class="lbl">Chamados:</span><span class="val">'+m.vol+'</span></div><div class="client-metric-row"><span class="lbl">SLA:</span><span class="val" style="color:'+(sla>=85?'var(--success)':'var(--warn)')+'">'+sla+'%</span></div><div class="client-metric-row"><span class="lbl">Clientes:</span><span class="val">'+m.cli.size+'</span></div><div class="client-metric-row"><span class="lbl">Horas:</span><span class="val">'+m.horas.toFixed(1)+'h</span></div><div class="client-metric-row"><span class="lbl">Média CSAT:</span><span class="val" style="color:var(--purple);">⭐ '+(m.cc>0?(m.cs/m.cc).toFixed(2):'N/A')+'</span></div>';
 grid.appendChild(card);
 });
 }
