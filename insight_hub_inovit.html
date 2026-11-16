@@ -268,15 +268,15 @@ body{
 .panel-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);padding-bottom:16px;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
 .panel-title{
   font-family:'Poppins',sans-serif;
-  font-weight:600;font-size:30px;
-  letter-spacing:-0.3px;
+  font-weight:600;font-size:32px;
+  letter-spacing:-0.5px;
   background:linear-gradient(135deg,var(--text-primary) 0%,var(--blue-primary) 60%,var(--blue-dark) 100%);
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;color:transparent;
 }
 #main-content h1{
   font-family:'Poppins',sans-serif;
-  font-weight:600;letter-spacing:-0.3px;
+  font-weight:600;letter-spacing:-0.5px;
   background:linear-gradient(135deg,var(--text-primary) 0%,var(--blue-primary) 100%);
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;color:transparent;
@@ -489,9 +489,6 @@ body{
   box-shadow:0 30px 80px -10px rgba(0,0,0,0.30),0 0 0 1px var(--glass-border) inset;
 }
 .modal-title{
-  font-family:'Poppins',sans-serif;
-  font-weight:600;
-  letter-spacing:-0.3px;
   background:linear-gradient(135deg,var(--text-primary) 0%,var(--blue-primary) 100%);
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;color:transparent;
@@ -859,69 +856,23 @@ input:focus,textarea:focus,select:focus{
   font-size:11px;color:var(--violet);font-weight:600;
 }
 
-/* ====== POPPINS TITLES (tipografia da referência) ====== */
-.modal-hdr h2,
-.modal-container h2,
-.modal-container h3,
-.modal-container h4,
-.section-panel h2,
-.section-panel h3,
-.section-panel h4,
-#main-content h2,
-#main-content h3,
-#main-content h4,
-.welcome-header h1,
-.plano-card .plano-header,
-.kanban-card-title,
-.client-card-title,
-.kanban-column-header,
-.chart-card .chart-title,
-.kpi-lbl,
-.kpi-label,
-h1.modal-title{
-  font-family:'Poppins',sans-serif!important;
-  font-weight:600!important;
-  letter-spacing:-0.2px;
+/* ====== POPPINS TITLES ====== */
+.modal-hdr h2,.modal-container h2,.modal-container h3,.modal-container h4,
+.section-panel h2,.section-panel h3,.section-panel h4,#main-content h2,
+#main-content h3,#main-content h4,.welcome-header h1,.plano-card .plano-header,
+.kanban-card-title,.client-card-title,.kanban-column-header,.chart-card .chart-title,
+.kpi-lbl,.kpi-label,h1.modal-title{
+  font-family:'Poppins',sans-serif!important;font-weight:600!important;letter-spacing:-0.2px;
 }
-/* H3 dentro de modais com tamanho maior */
-.modal-container h3:not(.panel-title){
-  font-family:'Poppins',sans-serif;
-  font-weight:600;
-  font-size:20px;
-  letter-spacing:-0.2px;
-  color:var(--text-primary);
-}
-/* KPI labels - Poppins uppercase tracking */
-.kpi-lbl,
-.kpi-label,
-.kanban-column-header,
-.chart-card .chart-title{
-  font-family:'Poppins',sans-serif;
-  font-weight:600;
-  letter-spacing:0.4px;
-}
-/* Card titles com Poppins mais bold */
-.kanban-card-title{
-  font-family:'Poppins',sans-serif;
-  font-weight:700;
-  letter-spacing:-0.3px;
-}
-.client-card-title{
-  font-family:'Poppins',sans-serif;
-  font-weight:600;
-  letter-spacing:-0.2px;
-}
-/* Login h2 também */
-.login-box h2{
-  font-family:'Poppins',sans-serif;
-  font-weight:600;
-  letter-spacing:-0.3px;
-}
-/* Brand watermark e versão - Poppins */
-.watermark-bl,
-.watermark-br{
-  font-family:'Poppins',sans-serif;
-}
+.kanban-card-title{font-weight:700;}
+.login-box h2{font-family:'Poppins',sans-serif;font-weight:600;}
+.watermark-bl,.watermark-br{font-family:'Poppins',sans-serif;}
+
+/* ====== CRM PROFISSIONAL + FILTROS ====== */
+.crm-actions button{font-size:12px;padding:7px 14px;min-height:34px;}
+.linhas-duplicadas input{border-color:var(--danger)!important;}
+/* Fix browser autofill on login inputs */
+.login-box input:-webkit-autofill,.login-box input:-webkit-autofill:hover,.login-box input:-webkit-autofill:focus{-webkit-text-fill-color:#fff!important;-webkit-box-shadow:0 0 0 1000px rgba(255,255,255,0.06) inset!important;caret-color:#fff!important;transition:background-color 5000s ease-in-out 0s;}
 </style>
 </head>
 <body>
@@ -1272,9 +1223,10 @@ h1.modal-title{
 </div>
 <div class="visita-form-actions"><button type="button" class="btn-primary" onclick="salvarVisita()">💾 Salvar</button><button type="button" class="btn-secondary" onclick="closeModal('modal-visita')">Cancelar</button></div>
 </form></div></div>
-<div id="modal-visitas-lista" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-visitas-lista-title">Lista de Visitas</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="modal-close" onclick="closeModal('modal-visitas-lista')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="modal-visitas-lista-table"><thead><tr><th>Cliente</th><th>Data</th><th>Hora</th><th>Status</th><th>Local</th><th>Link GPS</th></tr></thead>
+<div id="modal-visitas-lista" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-visitas-lista-title">Lista de Visitas</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="modal-close" onclick="closeModal('modal-visitas-lista')">Fechar</button></div></div><div class="modern-table-container"><table class="modern-table" id="modal-visitas-lista-table"><thead><tr><th>Cliente</th><th>Data</th><th>Hora</th><th>Status</th><th>Local</th><th>Link GPS</th></tr></thead><tbody id="modal-visitas-lista-tbody"></tbody></table></div><div class="pagination-container"><span class="info" id="modal-visitas-lista-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="modal-visitas-lista-buttons"></div></div></div></div>
 <div id="modal-lista-planos" class="modal-fullscreen"><div class="modal-container"><div class="modal-hdr"><h2 class="modal-title" id="modal-lista-planos-title">Planos de Ação</h2><button class="modal-close" onclick="closeModal('modal-lista-planos')">Fechar</button></div><div id="modal-lista-planos-content"></div></div></div>
 <div id="modal-evidencias" class="modal-fullscreen"><div class="modal-container" style="max-width:600px;"><div class="modal-hdr"><h2 class="modal-title">📎 Evidências</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="modal-close" onclick="closeModal('modal-evidencias')">Fechar</button></div></div><div id="evidencias-lista"></div></div></div>
+<div id="modal-relatorio-filtro" class="modal-fullscreen"><div class="modal-container" style="max-width:1400px;"><div class="modal-hdr"><h2 class="modal-title" id="relatorio-filtro-title">Relatório</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="exportPanelToJPG('modal-relatorio-filtro','Relatorio_Filtro')">JPG</button><button class="btn-secondary" onclick="openExportPdfPopup('modal-relatorio-filtro','Relatorio_Filtro')">PDF</button><button class="modal-close" onclick="closeModal('modal-relatorio-filtro')">Fechar</button></div></div><div id="relatorio-filtro-content"></div></div></div>
 <div id="modal-alertas" class="modal-fullscreen"><div class="modal-container" style="max-width:800px;"><div class="modal-hdr"><h2 class="modal-title">🔔 Central de Alertas</h2><div class="panel-actions" data-html2canvas-ignore="true"><button class="btn-secondary" onclick="switchSection('alertas', document.querySelector('.nav-item[data-module=\'usuarios\']')); closeModal('modal-alertas');">⚙️ Configurar</button><button class="modal-close" onclick="closeModal('modal-alertas')">Fechar</button></div></div><div id="alertas-lista"></div></div></div>
 <div id="perm-edit-modal"><div class="perm-edit-box"><h3>Editar Permissões</h3><div id="perm-edit-user" style="font-weight:600; margin-bottom:12px;"></div><div class="perm-checkboxes" id="perm-edit-checkboxes"></div><div><button class="btn-primary" onclick="savePermEdit()">Salvar</button><button class="btn-secondary" onclick="closePermEdit()">Cancelar</button></div></div></div>
 <div id="loading-overlay" class="loading-overlay"><div class="spinner"></div><div class="loading-text" id="loading-text">PROCESSANDO DADOS...</div></div>
@@ -1376,15 +1328,14 @@ function switchSection(key,btnEl){
   if(key==='acoes'){renderPlanosAcao();atualizarBadgePlanos();}
   if(key==='alertas')preencherCamposAlertas();
  if(key==='tecnicos')renderTecnicosDashboard();
-if(key==='atendentes')renderGestaoAtendentes();
 }
 // ================================================================
 // DADOS CSV + ORDENAÇÃO
 // ================================================================
 let globalData=[],currentFiltered=[],allTicketsData=[],allTicketsPageSize=50,allTicketsCurrentPage=0,chartInstances={};
-const BACKLOG_STATUSES=['novo','pendente','em atendimento (atribuído)','em atendimento (planejado)'];
+const BACKLOG_STATUSES=['novo','pendente','em atendimento (atribuído)','em atendimento (planejado)','aberto','triagem','em andamento','aguardando cliente','aguardando terceiro','aguardando encerramento','agendado'];
 function isBacklogStatus(s){if(!s)return false;const x=s.toLowerCase().trim();return BACKLOG_STATUSES.some(b=>x.includes(b));}
-function parseDuration(v){if(!v)return 0;if(typeof v==='number')return v;const s=String(v).trim();let n=parseFloat(s.replace(',','.'));if(!isNaN(n)&&s.indexOf(' ')===-1)return n;const m=s.match(/^(\d+):(\d+)$/);if(m)return parseInt(m[1])+parseInt(m[2])/60;const m2=s.match(/(\d+)h(\d+)min/i);if(m2)return parseInt(m2[1])+parseInt(m2[2])/60;const parts=s.split('\n').map(x=>x.trim()).filter(x=>x);let t=0;for(let p of parts){let d=0,h=0,min=0,sec=0;const dm=p.match(/(\d+)\s*dias?/),hm=p.match(/(\d+)\s*horas?/),mm=p.match(/(\d+)\s*minutos?/),sm=p.match(/(\d+)\s*segundos?/);if(dm)d=+dm[1];if(hm)h=+hm[1];if(mm)min=+mm[1];if(sm)sec=+sm[1];t+=d*24+h+min/60+sec/3600;}return Math.round(t*100)/100;}
+function parseDuration(v){if(!v)return 0;if(typeof v==='number')return v;const s=String(v).trim();/* Primeiro tenta o formato XhYYmin (do CSV) */const m2=s.match(/(\d+)h(\d+)min/i);if(m2)return parseInt(m2[1])+parseInt(m2[2])/60;const m3=s.match(/(\d+)h(\d+)/i);if(m3)return parseInt(m3[1])+parseInt(m3[2])/60;/* Depois tenta número puro */let n=parseFloat(s.replace(',','.'));if(!isNaN(n)&&s.indexOf(' ')===-1&&s.indexOf('h')===-1)return n;const m=s.match(/^(\d+):(\d+)$/);if(m)return parseInt(m[1])+parseInt(m[2])/60;const parts=s.split('\n').map(x=>x.trim()).filter(x=>x);let t=0;for(let p of parts){let d=0,h=0,min=0,sec=0;const dm=p.match(/(\d+)\s*dias?/),hm=p.match(/(\d+)\s*horas?/),mm=p.match(/(\d+)\s*minutos?/),sm=p.match(/(\d+)\s*segundos?/);if(dm)d=+dm[1];if(hm)h=+hm[1];if(mm)min=+mm[1];if(sm)sec=+sm[1];t+=d*24+h+min/60+sec/3600;}return Math.round(t*100)/100;}
 function findCol(row,kws){if(!row)return null;const keys=Object.keys(row);for(const kw of kws){for(const k of keys){if(k.toLowerCase().trim().includes(kw.toLowerCase().trim()))return k;}}return null;}
 function parseDate(v){if(!v)return null;let d=null;if(v instanceof Date)d=v;else if(typeof v==='string'){v=v.trim();const br=v.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})/);if(br)d=new Date(+br[3],+br[2]-1,+br[1]);else d=new Date(v);}else if(typeof v==='number'){d=(v>40000&&v<60000)?new Date((v-25569)*86400000):new Date(v);}if(!d||isNaN(d.getTime()))return null;return{dia:d.getDate(),mes:d.getMonth()+1,ano:d.getFullYear(),dateObj:d};}
 function calcularSla16HorasUteis(a,f){if(!a||!f)return true;let d1=new Date(a),d2=new Date(f);if(isNaN(d1.getTime())||isNaN(d2.getTime()))return true;if(d1>=d2)return true;let min=0,cur=new Date(d1.getTime());while(cur<d2){const dia=cur.getDay();if(dia!==0&&dia!==6){const h=cur.getHours();if((h>=8&&h<12)||(h>=14&&h<18))min++;}cur.setMinutes(cur.getMinutes()+1);}return (min/60)<=16;}
@@ -1426,7 +1377,7 @@ function processFileRows(rows){
     const ticketId=row[idCol]||'N/A';
     const fullCat=row[catCol]||'Geral > Outros';
     let duracao=0;if(durCol&&row[durCol])duracao=parseDuration(row[durCol]);
-    if(duracao===0){const h=String(ticketId).split('').reduce((a,c)=>a+c.charCodeAt(0),0);duracao=parseFloat(((h%8)+0.5).toFixed(1));}
+    /* Não gera duração fake — usa 0 se não houver duração real */
     let rawTech=row[techCol]?String(row[techCol]).trim():'';if(rawTech.toLowerCase().includes('grupo técnico'))rawTech='';
     let techs=rawTech?rawTech.split(/<br>/i).map(t=>t.trim()).filter(t=>t):[''];
     let rawTeam=row[teamCol]?String(row[teamCol]).trim():'';
@@ -1485,8 +1436,14 @@ function renderGlobalDashboard(){
   const totalHoras=Object.values(hpc).reduce((a,b)=>a+b,0);
   setText('kpi-sla-global',slaPct+'%');setText('kpi-clientes',totalClientes);setText('kpi-tickets',uniqueTickets);setText('kpi-acoes',totalAcoes);setText('kpi-dentro-sla',dentroSLA);setText('kpi-fora-sla',foraSLA);setText('kpi-backlog',backlogCount);setHTML('kpi-backlog-desc','Pendentes: '+pendCount+' | Novos: '+novosCount);setText('kpi-csat',csatArr.length);setHTML('kpi-csat-desc','Média CSAT: '+csatAvg);setText('kpi-tecnicos-count',totalTechs);setText('kpi-categorias-count',totalCats);
   const inc=currentFiltered.filter(d=>(d.tipo||'').toLowerCase().includes('incidente')).length;
-  setText('kpi-tipo-predominante','Incidentes: '+(totalAcoes>0?((inc/totalAcoes)*100).toFixed(0):0)+'%');
-  setText('kpi-tipo-detalhe','Req: '+(totalAcoes>0?(((totalAcoes-inc)/totalAcoes)*100).toFixed(0):0)+'%');
+  const req=currentFiltered.filter(d=>(d.tipo||'').toLowerCase().includes('requisi')).length;
+  const prob=currentFiltered.filter(d=>(d.tipo||'').toLowerCase().includes('problema')).length;
+  let tipoPred='',tipoPct=0;
+  if(req>=inc&&req>=prob){tipoPred='Requisições';tipoPct=req;}
+  else if(inc>=req&&inc>=prob){tipoPred='Incidentes';tipoPct=inc;}
+  else{tipoPred='Problemas';tipoPct=prob;}
+  setText('kpi-tipo-predominante',tipoPred+': '+(totalAcoes>0?((tipoPct/totalAcoes)*100).toFixed(0):0)+'%');
+  setHTML('kpi-tipo-detalhe','Inc: '+(totalAcoes>0?((inc/totalAcoes)*100).toFixed(0):0)+'% · Req: '+(totalAcoes>0?((req/totalAcoes)*100).toFixed(0):0)+'% · Prob: '+(totalAcoes>0?((prob/totalAcoes)*100).toFixed(0):0)+'%');
   const uq=Object.keys(hpc).length;const avgH=uq>0?(Object.values(hpc).reduce((a,b)=>a+b,0)/uq).toFixed(1):"0.0";
   setText('kpi-media-horas-chamado',avgH+'h');setText('kpi-horas-totais',totalHoras.toFixed(2)+'h');
   const visitas=getVisitas();
@@ -1573,6 +1530,8 @@ const nivelLabel=attInfo?attInfo.nivel:'N1';
 card.innerHTML='<div class="client-card-title">👨‍💻 '+t+'</div><div class="client-metric-row"><span class="lbl">Equipe:</span><span class="val" style="color:var(--blue-primary);">'+equipeLabel+'</span></div><div class="client-metric-row"><span class="lbl">Nível:</span><span class="val">'+nivelLabel+'</span></div><div class="client-metric-row"><span class="lbl">Chamados:</span><span class="val">'+m.vol+'</span></div><div class="client-metric-row"><span class="lbl">SLA:</span><span class="val" style="color:'+(sla>=85?'var(--success)':'var(--warn)')+'">'+sla+'%</span></div><div class="client-metric-row"><span class="lbl">Clientes:</span><span class="val">'+m.cli.size+'</span></div><div class="client-metric-row"><span class="lbl">Horas:</span><span class="val">'+m.horas.toFixed(1)+'h</span></div><div class="client-metric-row"><span class="lbl">Média CSAT:</span><span class="val" style="color:var(--purple);">⭐ '+(m.cc>0?(m.cs/m.cc).toFixed(2):'N/A')+'</span></div>';
 grid.appendChild(card);
 });
+/* Renderiza a barra de equipes com botões Todas/Destaques */
+if(typeof renderBotoesEquipe === 'function') renderBotoesEquipe();
 }
 function renderBacklogDashboard(){
 const grid=el('grid-backlog-summary-cards');if(!grid)return;grid.innerHTML='';
@@ -1598,7 +1557,7 @@ function openTicketList(title,data,columns,clickable,rowCb){
     data.slice(s,e).forEach(row=>{
       const tr=document.createElement('tr');
       if(clickable&&row.id){tr.className='clickable-row';tr.setAttribute('onclick',rowCb?rowCb(row):"openTicketDetail('"+escapeStr(row.id)+"')");}
-      tr.innerHTML=columns.map(col=>{let v=row[col]!==undefined?row[col]:'';if(col==='sla'){if(row.isBacklog)return '<span class="status-badge warn">BACKLOG</span>';return row.withinSLA===true?'<span class="status-badge success">DENTRO</span>':'<span class="status-badge danger">FORA</span>';}if(col==='dataAbertura'&&row.dataAbertura)return row.dataAbertura.dia+'/'+row.dataAbertura.mes+'/'+row.dataAbertura.ano;if(col==='dataSolucao'&&row.dataSolucao)return row.dataSolucao.dia+'/'+row.dataSolucao.mes+'/'+row.dataSolucao.ano;if(col==='entidade')return cleanEntityName(row.entidade);if(col==='csat')return row.csat!==null?'⭐ '+row.csat:'—';if(col==='duracao')return (row.duracao||0).toFixed(1)+'h';return v;}).map(c=>'<td>'+c+'</td>').join('');
+      tr.innerHTML=columns.map(col=>{let v=row[col]!==undefined?row[col]:'';if(col==='sla'){if(row.isBacklog)return '<span class="status-badge warn">BACKLOG</span>';return row.withinSLA===true?'<span class="status-badge success">DENTRO</span>':'<span class="status-badge danger">FORA</span>';}if(col==='dataAbertura'&&row.dataAbertura)return row.dataAbertura.dia+'/'+row.dataAbertura.mes+'/'+row.dataAbertura.ano;if(col==='dataSolucao'){if(row.dataSolucao&&row.dataSolucao.dia)return row.dataSolucao.dia+'/'+row.dataSolucao.mes+'/'+row.dataSolucao.ano;return 'ABERTO';}if(col==='entidade')return cleanEntityName(row.entidade);if(col==='csat')return row.csat!==null?'⭐ '+row.csat:'—';if(col==='duracao')return (row.duracao||0).toFixed(1)+'h';return v;}).map(c=>'<td>'+c+'</td>').join('');
       tbody.appendChild(tr);
     });
     setText('ticket-list-info','Mostrando '+(data.length>0?s+1:0)+'–'+e+' de '+data.length);
@@ -1729,13 +1688,13 @@ function openTechnicianDetail(techKey){
   const clients=[...new Set(rows.map(d=>d.entidade))];
   const categorias={};rows.forEach(d=>categorias[d.categoria]=(categorias[d.categoria]||0)+1);
   const top10=Object.keys(categorias).sort((a,b)=>categorias[b]-categorias[a]).slice(0,10);
-  setHTML('technician-detail-content','<div class="detail-grid"><div class="detail-item"><span class="label">Total de Chamados</span><span class="value">'+rows.length+'</span></div><div class="detail-item"><span class="label">SLA</span><span class="value" style="color:'+(slaPct>=85?'var(--success)':'var(--warn)')+'">'+slaPct+'%</span></div><div class="detail-item"><span class="label">Horas Trabalhadas</span><span class="value">'+totalHoras.toFixed(1)+'h</span></div><div class="detail-item"><span class="label">CSAT</span><span class="value" style="color:var(--purple); cursor:pointer;" onclick="closeModal(\'modal-technician-detail\'); openTechEvaluatedTickets(\''+escapeStr(techKey)+'\')">⭐ '+csatAvg+'</span></div><div class="detail-item"><span class="label">Clientes Atendidos</span><span class="value">'+clients.length+'</span></div><div class="detail-item"><span class="label">Top 10 Categorias Atendidas</span><span class="value">'+(top10.map(c=>c+' ('+categorias[c]+')').join(', ')||'—')+'</span></div></div><div style="margin-top:24px;"><h4 style="font-weight:600; margin-bottom:12px;">📋 Chamados Atendidos ('+rows.length+')</h4><div class="modern-table-container"><table class="modern-table" id="tech-tickets-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Data da Solução</th><th>Nota</th><th>Requerente</th></tr></thead><tbody id="tech-tickets-tbody"></tbody></table></div><div class="pagination-container"><span class="info" id="tech-tickets-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="tech-tickets-buttons"></div></div></div>');
+  setHTML('technician-detail-content','<div class="detail-grid"><div class="detail-item"><span class="label">Total de Chamados</span><span class="value">'+rows.length+'</span></div><div class="detail-item"><span class="label">SLA</span><span class="value" style="color:'+(slaPct>=85?'var(--success)':'var(--warn)')+'">'+slaPct+'%</span></div><div class="detail-item"><span class="label">Horas Trabalhadas</span><span class="value">'+totalHoras.toFixed(1)+'h</span></div><div class="detail-item"><span class="label">CSAT</span><span class="value" style="color:var(--purple); cursor:pointer;" onclick="closeModal(\'modal-technician-detail\'); openTechEvaluatedTickets(\''+escapeStr(techKey)+'\')">⭐ '+csatAvg+'</span></div><div class="detail-item"><span class="label">Clientes Atendidos</span><span class="value">'+clients.length+'</span></div><div class="detail-item"><span class="label">Top 10 Categorias Atendidas</span><span class="value">'+(top10.map(c=>c+' ('+categorias[c]+')').join(', ')||'—')+'</span></div></div><div style="margin-top:24px;"><h4 style="font-weight:600; margin-bottom:12px;">📋 Chamados Atendidos ('+rows.length+')</h4><div class="modern-table-container"><table class="modern-table" id="tech-tickets-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Data da Solução</th><th>Tempo</th><th>Nota</th><th>Requerente</th></tr></thead><tbody id="tech-tickets-tbody"></tbody></table></div><div class="pagination-container"><span class="info" id="tech-tickets-info">Mostrando 0 de 0</span><div class="pagination-buttons" id="tech-tickets-buttons"></div></div></div>');
   const tbody=el('tech-tickets-tbody'),info=el('tech-tickets-info'),buttons=el('tech-tickets-buttons');
   const ps=20;let cp=0;const tp=Math.ceil(rows.length/ps);
-  function rp(page){cp=page;const s=page*ps,e=Math.min(s+ps,rows.length);if(tbody)tbody.innerHTML='';rows.slice(s,e).forEach(d=>{const tr=document.createElement('tr');tr.className='clickable-row';tr.setAttribute('onclick',"openTicketDetail('"+escapeStr(d.id)+"')");tr.innerHTML='<td style="font-family:\'JetBrains Mono\';">'+d.id+'</td><td>'+cleanEntityName(d.entidade)+'</td><td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">'+d.titulo+'</td><td>'+(d.dataSolucao?d.dataSolucao.dia+'/'+d.dataSolucao.mes+'/'+d.dataSolucao.ano:'ABERTO')+'</td><td style="font-weight:600; color:'+(d.csat!==null?'var(--success)':'var(--text-muted)')+';">'+(d.csat!==null?'⭐ '+d.csat:'—')+'</td><td>'+d.requerente+'</td>';if(tbody)tbody.appendChild(tr);});if(info)info.innerText='Mostrando '+(rows.length>0?s+1:0)+'–'+e+' de '+rows.length;if(buttons)buttons.innerHTML='<button onclick="techTicketsPage('+(cp-1)+')" '+(cp===0?'disabled':'')+'>◀</button><span style="padding:4px 12px;">'+(tp>0?cp+1:0)+' / '+(tp||1)+'</span><button onclick="techTicketsPage('+(cp+1)+')" '+(cp>=tp-1?'disabled':'')+'>▶</button>';}
+  function rp(page){cp=page;const s=page*ps,e=Math.min(s+ps,rows.length);if(tbody)tbody.innerHTML='';rows.slice(s,e).forEach(d=>{const tr=document.createElement('tr');tr.className='clickable-row';tr.setAttribute('onclick',"openTicketDetail('"+escapeStr(d.id)+"')");tr.innerHTML='<td style="font-family:\'JetBrains Mono\';">'+d.id+'</td><td>'+cleanEntityName(d.entidade)+'</td><td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">'+d.titulo+'</td><td>'+(d.dataSolucao?d.dataSolucao.dia+'/'+d.dataSolucao.mes+'/'+d.dataSolucao.ano:'ABERTO')+'</td><td style="font-family:\'JetBrains Mono\';font-weight:600;color:var(--cyan);">'+(d.duracao||0).toFixed(2)+'h</td><td style="font-weight:600; color:'+(d.csat!==null?'var(--success)':'var(--text-muted)')+';">'+(d.csat!==null?'⭐ '+d.csat:'—')+'</td><td>'+d.requerente+'</td>';if(tbody)tbody.appendChild(tr);});if(info)info.innerText='Mostrando '+(rows.length>0?s+1:0)+'–'+e+' de '+rows.length;if(buttons)buttons.innerHTML='<button onclick="techTicketsPage('+(cp-1)+')" '+(cp===0?'disabled':'')+'>◀</button><span style="padding:4px 12px;">'+(tp>0?cp+1:0)+' / '+(tp||1)+'</span><button onclick="techTicketsPage('+(cp+1)+')" '+(cp>=tp-1?'disabled':'')+'>▶</button>';}
   window.techTicketsPage=p=>{if(p<0||p>=tp)return;rp(p);};
   rp(0);
-  regTable('tech-tickets-table',{data:rows,extractors:[r=>r.id,r=>r.entidade,r=>r.titulo,r=>r.dataSolucao,r=>r.csat,r=>r.requerente],render:()=>rp(0)});
+  regTable('tech-tickets-table',{data:rows,extractors:[r=>r.id,r=>r.entidade,r=>r.titulo,r=>r.dataSolucao,r=>(r.duracao||0),r=>r.csat,r=>r.requerente],render:()=>rp(0)});
   const m=el('modal-technician-detail');if(m)m.style.display='block';
   document.body.style.overflow='hidden';
 }
@@ -1821,22 +1780,72 @@ function carregarLogoDataUrl(){
 function addPeriodHeaderToExport(container){
   const old=container.querySelector('.export-period-header');if(old)old.remove();
   const header=document.createElement('div');header.className='export-period-header';
-  header.style.cssText='display:flex; justify-content:space-between; align-items:center; width:100%;';
-  header.innerHTML='<span>📅 '+getPeriodLabel()+'</span>'+(LOGO_DATA_URL?'<img src="'+LOGO_DATA_URL+'" style="height:30px; width:auto;">':'');
+  header.style.cssText='display:flex;justify-content:space-between;align-items:center;width:100%;box-sizing:border-box;padding:10px 20px;background:#fff;border-bottom:2px solid #0474c4;margin-bottom:10px;';
+  header.innerHTML='<span style="font-size:14px;font-weight:600;color:#0474c4;font-family:Poppins,sans-serif;">📅 '+getPeriodLabel()+'</span>'+(LOGO_DATA_URL?'<img src="'+LOGO_DATA_URL+'" style="height:30px;width:auto;">':'');
   container.prepend(header);return header;
 }
 function replaceGradientsWithSolidColor(root){
   const orig=[];
-  root.querySelectorAll('*').forEach(n=>{const bg=window.getComputedStyle(n).backgroundImage;if(bg&&(bg.includes('linear-gradient')||bg.includes('radial-gradient'))){orig.push({el:n,bg:bg});n.style.backgroundImage='none';n.style.backgroundColor='#0474c4';}});
+  root.querySelectorAll('*').forEach(n=>{
+    const bg=window.getComputedStyle(n).backgroundImage;
+    if(bg&&(bg.includes('linear-gradient')||bg.includes('radial-gradient'))){
+      orig.push({el:n,bg:bg});
+      n.style.backgroundImage='none';
+      /* Não usa azul sólido — usa a cor de fundo atual ou branco */
+      const bgc=window.getComputedStyle(n).backgroundColor;
+      if(!bgc||bgc==='rgba(0, 0, 0, 0)'||bgc==='transparent'){
+        n.style.backgroundColor='#ffffff';
+      }
+    }
+  });
   return function(){orig.forEach(o=>{o.el.style.backgroundImage=o.bg;o.el.style.backgroundColor='';});};
 }
+/* Converte canvas de gráficos (Chart.js) em imagens para o html2canvas capturar */
+function converterCanvasParaImagem(container){
+  const canvases = container.querySelectorAll('canvas');
+  const restaurados = [];
+  canvases.forEach(canvas => {
+    try {
+      /* Cria imagem a partir do canvas */
+      const img = document.createElement('img');
+      img.src = canvas.toDataURL('image/png');
+      img.style.cssText = canvas.style.cssText;
+      img.style.width = canvas.offsetWidth + 'px';
+      img.style.height = canvas.offsetHeight + 'px';
+      img.style.maxWidth = '100%';
+      img.className = canvas.className;
+      img.dataset.canvasReplacement = '1';
+      /* Substitui o canvas pela imagem */
+      canvas.parentNode.insertBefore(img, canvas);
+      canvas.style.display = 'none';
+      restaurados.push({canvas: canvas, img: img});
+    } catch(e) {
+      console.warn('Erro ao converter canvas:', e);
+    }
+  });
+  return function(){
+    restaurados.forEach(r => {
+      if(r.img.parentNode) r.img.parentNode.removeChild(r.img);
+      r.canvas.style.display = '';
+    });
+  };
+}
+
 function exportPanelToJPG(id,label){
   const elm=el(id);if(!elm)return;showLoadingOverlay('GERANDO JPG...');
   carregarLogoDataUrl().then(()=>{
     const h=addPeriodHeaderToExport(elm);
     const ign=elm.querySelectorAll('[data-html2canvas-ignore="true"]');ign.forEach(i=>i.removeAttribute('data-html2canvas-ignore'));
+    const actionBtns=elm.querySelectorAll('.panel-actions, .modal-close, .btn-secondary, .btn-primary, .crm-actions, .btn-crm-save, .btn-crm-add, .btn-crm-copy, .btn-backup');
+    const hiddenBtns=[];actionBtns.forEach(b=>{hiddenBtns.push({el:b,display:b.style.display});b.style.display='none';});
     const r=replaceGradientsWithSolidColor(elm);
-    html2canvas(elm,{backgroundColor:'#eef3f6',scale:2,windowWidth:elm.scrollWidth,windowHeight:elm.scrollHeight}).then(cv=>{r();if(h)h.remove();ign.forEach(i=>i.setAttribute('data-html2canvas-ignore','true'));const a=document.createElement('a');a.download='INOVIT_'+label+'.jpg';a.href=cv.toDataURL('image/jpeg',0.95);a.click();hideLoadingOverlay();}).catch(e=>{r();if(h)h.remove();hideLoadingOverlay();alert('Erro JPG: '+e.message);});
+    /* Converte canvas (gráficos) em imagens para o html2canvas capturar */
+    const restoreCanvas=converterCanvasParaImagem(elm);
+    html2canvas(elm,{backgroundColor:'#ffffff',scale:2,windowWidth:elm.scrollWidth,windowHeight:elm.scrollHeight}).then(cv=>{
+      r();restoreCanvas();if(h)h.remove();ign.forEach(i=>i.setAttribute('data-html2canvas-ignore','true'));
+      hiddenBtns.forEach(b=>{b.el.style.display=b.display;});
+      const a=document.createElement('a');a.download='INOVIT_'+label+'.jpg';a.href=cv.toDataURL('image/jpeg',0.95);a.click();hideLoadingOverlay();
+    }).catch(e=>{r();restoreCanvas();if(h)h.remove();hiddenBtns.forEach(b=>{b.el.style.display=b.display;});hideLoadingOverlay();alert('Erro JPG: '+e.message);});
   });
 }
 function openExportPdfPopup(id,label){
@@ -1844,8 +1853,38 @@ function openExportPdfPopup(id,label){
   carregarLogoDataUrl().then(()=>{
     const h=addPeriodHeaderToExport(elm);
     const ign=elm.querySelectorAll('[data-html2canvas-ignore="true"]');ign.forEach(i=>i.removeAttribute('data-html2canvas-ignore'));
+    const actionBtns=elm.querySelectorAll('.panel-actions, .modal-close, .btn-secondary, .btn-primary, .crm-actions, .btn-crm-save, .btn-crm-add, .btn-crm-copy, .btn-backup, .equipes-bar, .crm-actions, [style*="data-html2canvas-ignore"]');
+    const hiddenBtns=[];actionBtns.forEach(b=>{hiddenBtns.push({el:b,display:b.style.display});b.style.display='none';});
     const r=replaceGradientsWithSolidColor(elm);
-    html2canvas(elm,{backgroundColor:'#eef3f6',scale:2,windowWidth:elm.scrollWidth,windowHeight:elm.scrollHeight}).then(cv=>{r();if(h)h.remove();ign.forEach(i=>i.setAttribute('data-html2canvas-ignore','true'));const img=cv.toDataURL('image/jpeg',0.95);const jsPDF=window.jspdf.jsPDF;const pdf=new jsPDF('p','mm','a4');const iw=210,ih=cv.height*iw/cv.width;let hl=ih,pos=0;pdf.addImage(img,'JPEG',0,pos,iw,ih);hl-=297;while(hl>=0){pos=hl-ih;pdf.addPage();pdf.addImage(img,'JPEG',0,pos,iw,ih);hl-=297;}pdf.save('INOVIT_'+label+'.pdf');hideLoadingOverlay();}).catch(e=>{r();if(h)h.remove();hideLoadingOverlay();alert('Erro PDF: '+e.message);});
+    /* Converte canvas (gráficos) em imagens para o html2canvas capturar */
+    const restoreCanvas=converterCanvasParaImagem(elm);
+    html2canvas(elm,{backgroundColor:'#ffffff',scale:2,windowWidth:elm.scrollWidth,windowHeight:elm.scrollHeight}).then(cv=>{
+      r();restoreCanvas();if(h)h.remove();ign.forEach(i=>i.setAttribute('data-html2canvas-ignore','true'));
+      hiddenBtns.forEach(b=>{b.el.style.display=b.display;});
+      const img=cv.toDataURL('image/jpeg',0.95);
+      const jsPDF=window.jspdf.jsPDF;
+      const pdf=new jsPDF('p','mm','a4');
+      /* Calcula dimensões para ocupar a página inteira sem margens */
+      const pageW=210,pageH=297;
+      const imgRatio=cv.height/cv.width;
+      let iw=pageW,ih=pageW*imgRatio;
+      /* Se a imagem for mais alta que a página, divide em páginas */
+      if(ih<=pageH){
+        pdf.addImage(img,'JPEG',0,0,iw,ih);
+      } else {
+        /* Imagem longa: divide em páginas A4 */
+        let pos=0;
+        pdf.addImage(img,'JPEG',0,pos,iw,ih);
+        let remaining=ih-pageH;
+        while(remaining>0){
+          pos-=pageH;
+          pdf.addPage();
+          pdf.addImage(img,'JPEG',0,pos,iw,ih);
+          remaining-=pageH;
+        }
+      }
+      pdf.save('INOVIT_'+label+'.pdf');hideLoadingOverlay();
+    }).catch(e=>{r();restoreCanvas();if(h)h.remove();hiddenBtns.forEach(b=>{b.el.style.display=b.display;});hideLoadingOverlay();alert('Erro PDF: '+e.message);});
   });
 }
 function exportCSV(){
@@ -1884,6 +1923,11 @@ async function fetchTextAuto(url){
 }
 function parseCrmLine(line){
   if(!line||!line.trim())return null;
+  /* Formato CSV: ID, TIPO, NOME, CLIENTE, WHATSAPP, EMAIL */
+  const q = line.split(',').map(s => s.trim());
+  if((q[0]||'').toLowerCase()==='id') return null;
+  if(q.length>=6) return {nome:q[2], cliente:q[3], whatsapp:q[4], email:q[5]};
+  /* Fallback: regex para linhas que não são CSV */
   let texto=line,email='',telefone='';
   const em=texto.match(/([\w\.-]+@[\w\.-]+\.\w+)/);if(em){email=em[1];texto=texto.replace(em[0],'').trim();}
   const tm=texto.match(/(\+\d{1,3}\s*)?(?:\(?\d{2}\)?[\s\-]*)?\d{4,5}[\s\-]*\d{4}/);if(tm){telefone=tm[0].trim();texto=texto.replace(tm[0],'').trim();}
@@ -2282,13 +2326,16 @@ function abrirListaVisitas(filtro,titulo){
   if(!dados.length){alert('Nenhuma visita encontrada para este filtro.');return;}
   setText('modal-visitas-lista-title',titulo+' ('+dados.length+')');
   const tbody=el('modal-visitas-lista-tbody'),info=el('modal-visitas-lista-info'),buttons=el('modal-visitas-lista-buttons');
-  const ps=50;let cp=0;const tp=Math.ceil(dados.length/ps);
-  function rp(page){cp=page;const s=page*ps,e=Math.min(s+ps,dados.length);if(tbody)tbody.innerHTML='';dados.slice(s,e).forEach(v=>{const tr=document.createElement('tr');tr.className='clickable-row';tr.setAttribute('onclick',"editarVisita('"+escapeStr(v.id)+"')");tr.innerHTML='<td>'+v.cliente+'</td><td>'+formatarDataBR(v.data)+'</td><td>'+(v.hora||'')+'</td><td><span class="status-badge '+(v.status==='Realizada'?'success':(v.status==='Cancelada'?'danger':'warn'))+'">'+(v.status||'Planejada')+'</span></td><td>'+(v.local||'')+'</td><td>'+(v.linkGps?'<a href="'+v.linkGps+'" target="_blank" style="color:var(--blue-primary);">️ Abrir</a>':'—')+'</td>';if(tbody)tbody.appendChild(tr);
+  if(tbody)tbody.innerHTML='';
+  dados.forEach(v=>{
+    const tr=document.createElement('tr');
+    tr.className='clickable-row';
+    tr.setAttribute('onclick',"editarVisita('"+escapeStr(v.id)+"')");
+    tr.innerHTML='<td>'+v.cliente+'</td><td>'+formatarDataBR(v.data)+'</td><td>'+(v.hora||'')+'</td><td><span class="status-badge '+(v.status==='Realizada'?'success':(v.status==='Cancelada'?'danger':'warn'))+'">'+(v.status||'Planejada')+'</span></td><td>'+(v.local||'')+'</td><td>'+(v.linkGps?'<a href="'+v.linkGps+'" target="_blank" style="color:var(--blue-primary);">Abrir</a>':'—')+'</td>';
+    if(tbody)tbody.appendChild(tr);
   });
-  window.renderPage=p=>{if(p<0||p>=tp)return;rp(p);};
-  rp(0);
-  regTable('modal-visitas-lista-table',{data:dados,extractors:[r=>r.cliente,r=>r.data,r=>r.hora,r=>r.status,r=>r.local],render:()=>rp(0)});
-  }
+  if(info)info.innerText='Mostrando 1–'+dados.length+' de '+dados.length;
+  if(buttons)buttons.innerHTML='<span style="padding:4px 12px;">1 / 1</span>';
   const m=el('modal-visitas-lista');if(m){m.style.display='block';document.body.style.overflow='hidden';}
 }
 function abrirListaVisitasSemVisita(){
@@ -2730,6 +2777,907 @@ document.addEventListener('mousemove', function(e){
 
 console.log('✅ PREMIUM ENHANCEMENTS v2.0 instalado: dark mode + ripple + animated counters + slide-in modals');
 
+
+/* ================================================================
+   RELATÓRIOS DE FILTRO — abre modal com KPIs ao clicar nos botões
+   ================================================================ */
+/* Funcoes helper */
+function fecharRelatorioTec(id){ closeModal('modal-relatorio-filtro'); openTechnicianDetail(id); }
+function fecharRelatorioCli(id){ closeModal('modal-relatorio-filtro'); openClientUniversalModal(id,'cliente'); }
+
+/* ================================================================
+   RELATÓRIO SISTEMA "TODOS" — KPIs completos do sistema
+   ================================================================ */
+function gerarRelatorioSistemaTodos(){
+  const data = currentFiltered;
+  if(!data || !data.length) return '<div class="empty-state">Nenhum dado disponível.</div>';
+  
+  /* === CÁLCULOS GERAIS === */
+  const totalAcoes = data.length;
+  const uniqueTickets = new Set(data.map(d => d.id)).size;
+  const totalClientes = new Set(data.map(d => d.entidade)).size;
+  const totalTechs = new Set(data.filter(d => d.tecnico).map(d => d.tecnico)).size;
+  const totalCats = new Set(data.map(d => d.categoria)).size;
+  
+  const naoBacklog = data.filter(d => !d.isBacklog);
+  const dentroSLA = naoBacklog.filter(d => d.withinSLA === true).length;
+  const foraSLA = naoBacklog.length - dentroSLA;
+  const backlogCount = data.filter(d => d.isBacklog).length;
+  const slaPct = naoBacklog.length > 0 ? ((dentroSLA/naoBacklog.length)*100).toFixed(1) : '100.0';
+  
+  const csatArr = data.filter(d => d.csat !== null).map(d => d.csat);
+  const csatAvg = csatArr.length > 0 ? (csatArr.reduce((a,b)=>a+b,0)/csatArr.length).toFixed(2) : 'N/A';
+  
+  const hpc = {};
+  data.forEach(d => { if(!hpc[d.id]) hpc[d.id] = d.duracao || 0; });
+  const totalHoras = Object.values(hpc).reduce((a,b)=>a+b,0);
+  const avgH = uniqueTickets > 0 ? (totalHoras/uniqueTickets).toFixed(1) : '0.0';
+  
+  /* Tipos */
+  const inc = data.filter(d => (d.tipo||'').toLowerCase().includes('incidente')).length;
+  const req = data.filter(d => (d.tipo||'').toLowerCase().includes('requisi')).length;
+  const prob = data.filter(d => (d.tipo||'').toLowerCase().includes('problema')).length;
+  
+  /* Visitas */
+  const visitas = (typeof getVisitas === 'function') ? getVisitas() : [];
+  const visR = visitas.filter(v => v.status === 'Realizada').length;
+  const visP = visitas.filter(v => v.status === 'Planejada').length;
+  
+  /* Planos de Ação */
+  const planos = (typeof getPlanosAcao === 'function') ? getPlanosAcao() : [];
+  const planosPend = planos.filter(p => p.status !== 'Concluído' && (p.percentual||0) < 100).length;
+  
+  /* Equipes */
+  const equipesSet = new Set(data.map(d => d.equipe).filter(e => e));
+  
+  /* Top 5 clientes por volume */
+  const cliMap = {};
+  data.forEach(d => { cliMap[d.entidade] = (cliMap[d.entidade]||0) + 1; });
+  const topClientes = Object.keys(cliMap).sort((a,b) => cliMap[b] - cliMap[a]).slice(0, 5);
+  
+  /* Top 5 técnicos por volume */
+  const techMap = {};
+  data.forEach(d => { if(!d.tecnico) return; if(!techMap[d.tecnico]) techMap[d.tecnico] = {vol:0, dentro:0, backlog:0, cs:0, cc:0, horas:0}; const m = techMap[d.tecnico]; m.vol++; if(d.withinSLA) m.dentro++; if(d.isBacklog) m.backlog++; if(d.csat!==null){m.cs+=d.csat; m.cc++;} m.horas += d.duracao||0; });
+  const topTechs = Object.keys(techMap).sort((a,b) => techMap[b].vol - techMap[a].vol).slice(0, 5);
+  
+  /* Top 5 categorias */
+  const catMap = {};
+  data.forEach(d => { catMap[d.categoria] = (catMap[d.categoria]||0) + 1; });
+  const topCats = Object.keys(catMap).sort((a,b) => catMap[b] - catMap[a]).slice(0, 5);
+  
+  /* Distribuição por status */
+  const statusMap = {};
+  data.forEach(d => { statusMap[d.status] = (statusMap[d.status]||0) + 1; });
+  const topStatus = Object.keys(statusMap).sort((a,b) => statusMap[b] - statusMap[a]).slice(0, 6);
+  
+  /* === HTML DO RELATÓRIO === */
+  let html = '';
+  
+  /* Banner */
+  html += '<div style="background:linear-gradient(135deg,rgba(75,123,236,0.12),rgba(124,58,237,0.10));border:1px solid var(--indigo);border-radius:var(--radius);padding:22px;margin-bottom:24px;display:flex;align-items:center;gap:16px;">';
+  html += '<div style="font-size:40px;">📊</div>';
+  html += '<div><div style="font-weight:700;font-size:22px;color:var(--indigo);font-family:Poppins,sans-serif;">Relatório Geral Completo</div>';
+  html += '<div style="font-size:13px;color:var(--text-muted);margin-top:4px;">Visão consolidada de todos os indicadores do sistema — '+totalAcoes+' registros processados no período</div></div></div>';
+  
+  /* === KPIs PRINCIPAIS (8 cards) === */
+  html += '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin:0 0 14px;font-family:Poppins,sans-serif;">📌 Indicadores Principais</h3>';
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-bottom:28px;">';
+  
+  const kpiStyle = 'background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:18px 14px;text-align:center;position:relative;overflow:hidden;';
+  const kpiBar = (color) => '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:'+color+';"></div>';
+  const kpiIcon = (icon) => '<div style="font-size:22px;margin-bottom:4px;">'+icon+'</div>';
+  const kpiLabel = (label) => '<div style="font-size:10px;text-transform:uppercase;color:var(--text-muted);font-weight:600;letter-spacing:0.5px;font-family:Poppins,sans-serif;">'+label+'</div>';
+  const kpiValue = (val, color) => '<div style="font-weight:700;font-size:26px;color:'+(color||'var(--blue-primary)')+';margin:4px 0 2px;font-family:Poppins,sans-serif;">'+val+'</div>';
+  const kpiSub = (sub) => '<div style="font-size:11px;color:var(--text-muted);">'+sub+'</div>';
+  
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--blue-primary)')+kpiIcon('🎫')+kpiLabel('Chamados Totais')+kpiValue(totalAcoes)+kpiSub(uniqueTickets+' únicos')+'</div>';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--success)')+kpiIcon('✅')+kpiLabel('SLA Global')+kpiValue(slaPct+'%', parseFloat(slaPct)>=85?'var(--success)':'var(--warn)')+kpiSub(dentroSLA+' dentro / '+foraSLA+' fora')+'</div>';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--purple)')+kpiIcon('⭐')+kpiLabel('CSAT Médio')+kpiValue(csatAvg, 'var(--purple)')+kpiSub(csatArr.length+' avaliações')+'</div>';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--cyan)')+kpiIcon('⏱️')+kpiLabel('Horas Totais')+kpiValue(totalHoras.toFixed(0)+'h', 'var(--cyan)')+kpiSub(avgH+'h por chamado')+'</div>';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--warn)')+kpiIcon('⏳')+kpiLabel('Backlog')+kpiValue(backlogCount, 'var(--warn)')+kpiSub(((backlogCount/totalAcoes)*100).toFixed(0)+'% do total')+'</div>';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--blue-primary)')+kpiIcon('🏢')+kpiLabel('Clientes')+kpiValue(totalClientes)+kpiSub('ativos no período')+'</div>';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--indigo)')+kpiIcon('👥')+kpiLabel('Técnicos')+kpiValue(totalTechs, 'var(--indigo)')+kpiSub(equipesSet.size+' equipes')+'</div>';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--accent-amber)')+kpiIcon('📂')+kpiLabel('Categorias')+kpiValue(totalCats, 'var(--accent-amber)')+kpiSub('segmentações')+'</div>';
+  html += '</div>';
+  
+  /* === KPIs SECUNDÁRIOS (6 cards menores) === */
+  html += '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin:0 0 14px;font-family:Poppins,sans-serif;">📊 Distribuição e Indicadores Auxiliares</h3>';
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-bottom:28px;">';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--danger)')+kpiIcon('❌')+kpiLabel('Fora do SLA')+kpiValue(foraSLA, 'var(--danger)')+kpiSub(((foraSLA/naoBacklog.length)*100).toFixed(0)+'% dos avaliados')+'</div>';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--danger)')+kpiIcon('🔧')+kpiLabel('Incidentes')+kpiValue(inc, 'var(--danger)')+kpiSub(((inc/totalAcoes)*100).toFixed(0)+'% do total')+'</div>';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--blue-primary)')+kpiIcon('📝')+kpiLabel('Requisições')+kpiValue(req, 'var(--blue-primary)')+kpiSub(((req/totalAcoes)*100).toFixed(0)+'% do total')+'</div>';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--warn)')+kpiIcon('⚠️')+kpiLabel('Problemas')+kpiValue(prob, 'var(--warn)')+kpiSub(((prob/totalAcoes)*100).toFixed(0)+'% do total')+'</div>';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--success)')+kpiIcon('🗓️')+kpiLabel('Visitas Realizadas')+kpiValue(visR, 'var(--success)')+kpiSub(visP+' planejadas')+'</div>';
+  html += '<div style="'+kpiStyle+'">'+kpiBar('var(--accent-amber)')+kpiIcon('📋')+kpiLabel('Planos Pendentes')+kpiValue(planosPend, 'var(--accent-amber)')+kpiSub(planos.length+' planos totais')+'</div>';
+  html += '</div>';
+  
+  /* === INSIGHTS === */
+  html += '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin:0 0 14px;font-family:Poppins,sans-serif;">💡 Insights Estratégicos</h3>';
+  
+  const insightStyle = 'background:var(--glass-bg);border-left:4px solid $COLOR;border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;';
+  const insightIcon = (icon) => '<div style="font-size:22px;flex-shrink:0;">'+icon+'</div>';
+  const insightTitle = (title, color) => '<div style="font-weight:600;color:$COLOR;margin-bottom:4px;font-family:Poppins,sans-serif;font-size:14px;">'+title+'</div>';
+  const insightText = (text) => '<div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">'+text+'</div>';
+  
+  /* Insight 1: SLA */
+  const slaColor = parseFloat(slaPct) >= 85 ? 'var(--success)' : (parseFloat(slaPct) >= 70 ? 'var(--warn)' : 'var(--danger)');
+  html += '<div style="'+insightStyle.replace('$COLOR', slaColor)+'">'+insightIcon(parseFloat(slaPct)>=85?'✅':'⚠️')+'<div>'+insightTitle('SLA Global', slaColor).replace('$COLOR', slaColor)+insightText('O SLA global está em <strong>'+slaPct+'%</strong> ('+dentroSLA+' dentro do prazo de '+naoBacklog.length+' avaliados). '+(parseFloat(slaPct)>=85?'Excelente conformidade!':'Atenção: há '+foraSLA+' chamados fora do SLA que precisam de intervenção.'))+'</div></div></div>';
+  
+  /* Insight 2: Maior cliente */
+  html += '<div style="'+insightStyle.replace('$COLOR', 'var(--blue-primary)')+'">'+insightIcon('🏆')+'<div>'+insightTitle('Maior Cliente', 'var(--blue-primary)').replace('$COLOR', 'var(--blue-primary)')+insightText('<strong>'+cleanEntityName(topClientes[0])+'</strong> é o cliente com maior volume: <strong>'+cliMap[topClientes[0]]+' chamados</strong> ('+((cliMap[topClientes[0]]/totalAcoes)*100).toFixed(1)+'% do total).')+'</div></div></div>';
+  
+  /* Insight 3: Técnico mais produtivo */
+  if(topTechs.length){
+    const topTech = topTechs[0];
+    const m = techMap[topTech];
+    html += '<div style="'+insightStyle.replace('$COLOR', 'var(--indigo)')+'">'+insightIcon('👨‍💻')+'<div>'+insightTitle('Técnico Mais Produtivo', 'var(--indigo)').replace('$COLOR', 'var(--indigo)')+insightText('<strong>'+topTech+'</strong> lidera com <strong>'+m.vol+' chamados</strong> atendidos ('+((m.vol/totalAcoes)*100).toFixed(1)+'% do total), com '+m.horas.toFixed(0)+'h trabalhadas.')+'</div></div></div>';
+  }
+  
+  /* Insight 4: Satisfação */
+  if(csatArr.length){
+    const csatColor = parseFloat(csatAvg) >= 4 ? 'var(--success)' : (parseFloat(csatAvg) >= 3 ? 'var(--warn)' : 'var(--danger)');
+    html += '<div style="'+insightStyle.replace('$COLOR', csatColor)+'">'+insightIcon('⭐')+'<div>'+insightTitle('Satisfação do Cliente', csatColor).replace('$COLOR', csatColor)+insightText('A média CSAT é <strong>'+csatAvg+'</strong> baseada em '+csatArr.length+' avaliações. '+(parseFloat(csatAvg)>=4?'Excelente nível de satisfação!':'Há espaço para melhoria na qualidade do atendimento.'))+'</div></div></div>';
+  }
+  
+  /* Insight 5: Backlog */
+  if(backlogCount > 0){
+    html += '<div style="'+insightStyle.replace('$COLOR', 'var(--warn)')+'">'+insightIcon('⏳')+'<div>'+insightTitle('Backlog Ativo', 'var(--warn)').replace('$COLOR', 'var(--warn)')+insightText('Há <strong>'+backlogCount+' chamados em backlog</strong> ('+((backlogCount/totalAcoes)*100).toFixed(0)+'% do total). Estes chamados estão com status Aberto, Triagem, Em Andamento ou Aguardando.')+'</div></div></div>';
+  }
+  
+  /* Insight 6: Visitas */
+  if(visR + visP > 0){
+    const visPct = (visR+visP) > 0 ? ((visR/(visR+visP))*100).toFixed(0) : 0;
+    html += '<div style="'+insightStyle.replace('$COLOR', 'var(--success)')+'">'+insightIcon('🗓️')+'<div>'+insightTitle('Visitas e Relacionamento', 'var(--success)').replace('$COLOR', 'var(--success)')+insightText('<strong>'+visR+' visitas realizadas</strong> de '+(visR+visP)+' totais ('+visPct+'% de conclusão). '+visP+' visitas planejadas pendentes.')+'</div></div></div>';
+  }
+  
+  /* === TABELAS === */
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px;">';
+  
+  /* Top 5 Clientes */
+  html += '<div><h3 style="font-size:16px;font-weight:600;color:var(--blue-dark);margin:0 0 12px;font-family:Poppins,sans-serif;">🏆 Top 5 Clientes por Volume</h3>';
+  html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>#</th><th>Cliente</th><th>Vol</th><th>%</th></tr></thead><tbody>';
+  topClientes.forEach((c, i) => {
+    const vol = cliMap[c];
+    const pct = ((vol/totalAcoes)*100).toFixed(1);
+    html += '<tr><td style="font-family:JetBrains Mono;font-weight:600;">#'+(i+1)+'</td><td>'+cleanEntityName(c)+'</td><td style="font-family:JetBrains Mono;font-weight:600;">'+vol+'</td><td style="color:var(--blue-primary);font-family:JetBrains Mono;">'+pct+'%</td></tr>';
+  });
+  html += '</tbody></table></div></div>';
+  
+  /* Top 5 Técnicos */
+  html += '<div><h3 style="font-size:16px;font-weight:600;color:var(--blue-dark);margin:0 0 12px;font-family:Poppins,sans-serif;">👨‍💻 Top 5 Técnicos por Volume</h3>';
+  html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>#</th><th>Técnico</th><th>Vol</th><th>SLA</th><th>CSAT</th></tr></thead><tbody>';
+  topTechs.forEach((t, i) => {
+    const m = techMap[t];
+    const cons = m.vol - m.backlog;
+    const sla = cons > 0 ? ((m.dentro/cons)*100).toFixed(1) : '100.0';
+    const csat = m.cc > 0 ? '⭐ '+(m.cs/m.cc).toFixed(2) : '—';
+    html += '<tr><td style="font-family:JetBrains Mono;font-weight:600;">#'+(i+1)+'</td><td>'+t+'</td><td style="font-family:JetBrains Mono;font-weight:600;">'+m.vol+'</td><td style="color:'+(parseFloat(sla)>=85?'var(--success)':'var(--warn)')+';">'+sla+'%</td><td style="color:var(--purple);">'+csat+'</td></tr>';
+  });
+  html += '</tbody></table></div></div>';
+  
+  html += '</div>'; /* fecha grid 2 colunas */
+  
+  /* Top 5 Categorias + Distribuição por Status */
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px;">';
+  
+  html += '<div><h3 style="font-size:16px;font-weight:600;color:var(--blue-dark);margin:0 0 12px;font-family:Poppins,sans-serif;">📂 Top 5 Categorias</h3>';
+  html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>#</th><th>Categoria</th><th>Vol</th><th>%</th></tr></thead><tbody>';
+  topCats.forEach((c, i) => {
+    const vol = catMap[c];
+    const pct = ((vol/totalAcoes)*100).toFixed(1);
+    html += '<tr><td style="font-family:JetBrains Mono;font-weight:600;">#'+(i+1)+'</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+c+'</td><td style="font-family:JetBrains Mono;font-weight:600;">'+vol+'</td><td style="color:var(--blue-primary);font-family:JetBrains Mono;">'+pct+'%</td></tr>';
+  });
+  html += '</tbody></table></div></div>';
+  
+  html += '<div><h3 style="font-size:16px;font-weight:600;color:var(--blue-dark);margin:0 0 12px;font-family:Poppins,sans-serif;">📋 Distribuição por Status</h3>';
+  html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>Status</th><th>Vol</th><th>%</th></tr></thead><tbody>';
+  topStatus.forEach(s => {
+    const vol = statusMap[s];
+    const pct = ((vol/totalAcoes)*100).toFixed(1);
+    const badgeClass = s === 'Encerrado' || s === 'Solucionado' ? 'success' : (s === 'Cancelado' ? 'danger' : 'warn');
+    html += '<tr><td><span class="status-badge '+badgeClass+'">'+s+'</span></td><td style="font-family:JetBrains Mono;font-weight:600;">'+vol+'</td><td style="color:var(--blue-primary);font-family:JetBrains Mono;">'+pct+'%</td></tr>';
+  });
+  html += '</tbody></table></div></div>';
+  
+  html += '</div>'; /* fecha grid 2 colunas */
+  
+  return html;
+}
+
+/* ================================================================
+   RELATÓRIO TODAS AS EQUIPES (KPIs clicáveis)
+   ================================================================ */
+function gerarRelatorioTodasEquipes(localSet){
+  if(!localSet || !localSet.length) return '<div class="empty-state">Nenhum dado disponível.</div>';
+  
+  const nomesMeses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const hoje = new Date();
+  
+  const techMap = {};
+  localSet.forEach(d => {
+    if(!d.tecnico) return;
+    if(!techMap[d.tecnico]) techMap[d.tecnico] = {vol:0, dentro:0, backlog:0, cs:0, cc:0, cli:new Set(), horas:0, equipes:new Set()};
+    const m = techMap[d.tecnico];
+    m.vol++; if(d.withinSLA) m.dentro++; if(d.isBacklog) m.backlog++;
+    if(d.csat !== null){ m.cs += d.csat; m.cc++; }
+    m.cli.add(d.entidade);
+    m.horas += d.duracao || 0;
+    if(d.equipe) m.equipes.add(d.equipe);
+  });
+  
+  const techs = Object.keys(techMap);
+  if(!techs.length) return '<div class="empty-state">Nenhum técnico encontrado.</div>';
+  
+  const totalVol = techs.reduce((s,t) => s + techMap[t].vol, 0);
+  const totalDentro = techs.reduce((s,t) => s + techMap[t].dentro, 0);
+  const totalBacklog = techs.reduce((s,t) => s + techMap[t].backlog, 0);
+  const considered = totalVol - totalBacklog;
+  const slaMedio = considered > 0 ? ((totalDentro/considered)*100).toFixed(1) : '100.0';
+  const csatArr = []; techs.forEach(t => { if(techMap[t].cc > 0) csatArr.push(techMap[t].cs/techMap[t].cc); });
+  const csatMedio = csatArr.length ? (csatArr.reduce((a,b)=>a+b,0)/csatArr.length).toFixed(2) : 'N/A';
+  const totalHoras = techs.reduce((s,t) => s + techMap[t].horas, 0);
+  const mediaVol = techs.length ? (totalVol/techs.length).toFixed(1) : '0';
+  const totalClientes = new Set(localSet.map(d => d.entidade)).size;
+  
+  const equipeMap = {};
+  localSet.forEach(d => {
+    const eq = d.equipe || 'Central de Suporte';
+    if(!equipeMap[eq]) equipeMap[eq] = {vol:0, dentro:0, backlog:0, cs:0, cc:0, horas:0, techs:new Set(), clientes:new Set()};
+    const m = equipeMap[eq];
+    m.vol++; if(d.withinSLA) m.dentro++; if(d.isBacklog) m.backlog++;
+    if(d.csat !== null){ m.cs += d.csat; m.cc++; }
+    m.horas += d.duracao || 0;
+    if(d.tecnico) m.techs.add(d.tecnico);
+    m.clientes.add(d.entidade);
+  });
+  const equipes = Object.keys(equipeMap).sort((a,b) => equipeMap[b].vol - equipeMap[a].vol);
+  
+  const techRanking = techs.map(t => {
+    const m = techMap[t];
+    const cons = m.vol - m.backlog;
+    return {tec:t, equipe:m.equipes.size>0?Array.from(m.equipes).join(', '):'Central de Suporte', vol:m.vol, dentro:m.dentro, sla:cons>0?((m.dentro/cons)*100):100, csat:m.cc>0?m.cs/m.cc:0, horas:m.horas, clientes:m.cli.size};
+  }).sort((a,b) => b.vol - a.vol);
+  
+  let html = '';
+  html += '<div style="background:linear-gradient(135deg,rgba(75,123,236,0.12),rgba(124,58,237,0.10));border:1px solid var(--indigo);border-radius:var(--radius);padding:22px;margin-bottom:24px;display:flex;align-items:center;gap:16px;">';
+  html += '<div style="font-size:40px;">📊</div>';
+  html += '<div><div style="font-weight:700;font-size:22px;color:var(--indigo);font-family:Poppins,sans-serif;">Relatório de Todas as Equipes</div>';
+  html += '<div style="font-size:13px;color:var(--text-muted);margin-top:4px;">'+equipes.length+' equipes • '+techs.length+' técnicos • '+totalVol+' chamados • '+totalClientes+' clientes</div></div></div>';
+  
+  html += '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin:0 0 14px;font-family:Poppins,sans-serif;">📌 Indicadores Gerais (clique para detalhar)</h3>';
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:28px;">';
+  
+  const kpi = (icon, label, val, sub, color, onclick) => {
+    const c = color || 'var(--blue-primary)';
+    const cs = onclick ? 'cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform=\'translateY(-3px)\';this.style.boxShadow=\'0 8px 20px rgba(75,123,236,0.20)\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'\'" onclick="'+onclick : '';
+    return '<div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:16px 14px;text-align:center;position:relative;overflow:hidden;'+cs+'">'+
+      '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:'+c+';"></div>'+
+      '<div style="font-size:20px;margin-bottom:4px;">'+icon+'</div>'+
+      '<div style="font-size:10px;text-transform:uppercase;color:var(--text-muted);font-weight:600;letter-spacing:0.5px;font-family:Poppins,sans-serif;">'+label+'</div>'+
+      '<div style="font-weight:700;font-size:24px;color:'+c+';margin:4px 0 2px;font-family:Poppins,sans-serif;">'+val+'</div>'+
+      '<div style="font-size:11px;color:var(--text-muted);">'+sub+'</div></div>';
+  };
+  
+  html += kpi('👥', 'Técnicos', techs.length, 'em '+equipes.length+' equipes', 'var(--indigo)', 'abrirDrilldownRelatorio(\'tecnicos-lista\')');
+  html += kpi('🎫', 'Chamados', totalVol, totalBacklog+' em backlog', 'var(--blue-primary)', 'abrirDrilldownRelatorio(\'chamados-todos\')');
+  html += kpi('✅', 'SLA Médio', slaMedio+'%', totalDentro+' dentro / '+(considered-totalDentro)+' fora', parseFloat(slaMedio)>=85?'var(--success)':'var(--warn)', 'abrirDrilldownRelatorio(\'sla-detalhe\')');
+  html += kpi('⭐', 'CSAT Médio', csatMedio, csatArr.length+' avaliações', 'var(--purple)', 'abrirDrilldownRelatorio(\'csat-detalhe\')');
+  html += kpi('⏱️', 'Horas Trabalhadas', totalHoras.toFixed(0)+'h', mediaVol+' chamados/técnico', 'var(--cyan)', 'abrirDrilldownRelatorio(\'horas-detalhe\')');
+  html += kpi('🏢', 'Clientes', totalClientes, 'atendidos no período', 'var(--accent-amber)', 'abrirDrilldownRelatorio(\'clientes-detalhe\')');
+  html += '</div>';
+  
+  html += '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin:0 0 14px;font-family:Poppins,sans-serif;">🏢 Resumo por Equipe (clique para detalhar)</h3>';
+  html += '<div class="modern-table-container" style="margin-bottom:28px;"><table class="modern-table"><thead><tr><th>Equipe</th><th>Técnicos</th><th>Chamados</th><th>SLA</th><th>CSAT</th><th>Horas</th><th>Clientes</th><th>Backlog</th></tr></thead><tbody>';
+  equipes.forEach(eq => {
+    const m = equipeMap[eq]; const cons = m.vol - m.backlog; const sla = cons > 0 ? ((m.dentro/cons)*100).toFixed(1) : '100.0'; const csat = m.cc > 0 ? (m.cs/m.cc).toFixed(2) : 'N/A';
+    html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');abrirRelatorioEquipe(\''+escapeStr(eq)+'\')"><td style="font-weight:600;">'+eq+'</td><td>'+m.techs.size+'</td><td style="font-family:JetBrains Mono;font-weight:600;">'+m.vol+'</td><td style="color:'+(parseFloat(sla)>=85?'var(--success)':'var(--warn)')+';font-weight:600;">'+sla+'%</td><td style="color:var(--purple);">'+(csat!=='N/A'?'⭐ ':'')+csat+'</td><td style="font-family:JetBrains Mono;">'+m.horas.toFixed(0)+'h</td><td>'+m.clientes.size+'</td><td>'+(m.backlog>0?'<span style="color:var(--warn);">'+m.backlog+'</span>':'—')+'</td></tr>';
+  });
+  html += '</tbody></table></div>';
+  
+  html += '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin:0 0 14px;font-family:Poppins,sans-serif;">🏆 Ranking de Produtividade por Técnico (clique para detalhar)</h3>';
+  html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th style="width:50px;">Rank</th><th>Técnico</th><th>Equipe</th><th>Chamados</th><th>SLA</th><th>CSAT</th><th>Horas</th><th>Clientes</th></tr></thead><tbody>';
+  techRanking.forEach((t, i) => {
+    const slaTxt = t.sla.toFixed(1)+'%'; const csatTxt = t.csat > 0 ? '⭐ '+t.csat.toFixed(2) : '—'; const medalha = i===0?'🥇':(i===1?'🥈':(i===2?'🥉':''));
+    html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openTechnicianDetail(\''+escapeStr(t.tec)+'\')"><td style="font-family:JetBrains Mono;font-weight:700;">'+medalha+'#'+(i+1)+'</td><td style="font-weight:600;">'+t.tec+'</td><td><span style="background:rgba(75,123,236,0.10);color:var(--indigo);padding:2px 10px;border-radius:40px;font-size:11px;font-weight:600;">'+t.equipe+'</span></td><td style="font-family:JetBrains Mono;font-weight:700;">'+t.vol+'</td><td style="color:'+(parseFloat(slaTxt)>=85?'var(--success)':'var(--warn)')+';font-weight:600;">'+slaTxt+'</td><td style="color:var(--purple);">'+csatTxt+'</td><td style="font-family:JetBrains Mono;">'+t.horas.toFixed(1)+'h</td><td>'+t.clientes+'</td></tr>';
+  });
+  html += '</tbody></table></div>';
+  
+  return html;
+}
+
+/* DRILLDOWN RELATÓRIO — abre detalhe ao clicar nos KPIs */
+function abrirDrilldownRelatorio(tipo){
+  const content = el('relatorio-filtro-content');
+  if(!content) return;
+  let html = '';
+  const fc = el('select-tecnicos-client') ? el('select-tecnicos-client').value : 'Todos';
+  const localSet = (fc && fc !== 'Todos') ? currentFiltered.filter(d => d.entidade === fc) : currentFiltered;
+  
+  if(tipo === 'tecnicos-lista'){
+    const map = {};
+    localSet.forEach(d => { if(!d.tecnico) return; if(!map[d.tecnico]) map[d.tecnico] = {vol:0,dentro:0,backlog:0,cs:0,cc:0,cli:new Set(),horas:0}; const m = map[d.tecnico]; m.vol++; if(d.withinSLA) m.dentro++; if(d.isBacklog) m.backlog++; if(d.csat!==null){m.cs+=d.csat; m.cc++;} m.cli.add(d.entidade); m.horas+=d.duracao||0; });
+    const techs = Object.keys(map).sort((a,b) => map[b].vol - map[a].vol);
+    html = '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin-bottom:14px;font-family:Poppins;">👥 Todos os Técnicos ('+techs.length+')</h3>';
+    html += '<button class="btn-secondary" onclick="abrirRelatorioFiltro(\'tecnicos\',\'todas\')" style="margin-bottom:16px;">← Voltar</button>';
+    html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>Rank</th><th>Técnico</th><th>Chamados</th><th>Dentro SLA</th><th>SLA</th><th>CSAT</th><th>Horas</th><th>Clientes</th><th>Backlog</th></tr></thead><tbody>';
+    techs.forEach((t, i) => { const m = map[t]; const cons = m.vol - m.backlog; const sla = cons > 0 ? ((m.dentro/cons)*100).toFixed(1) : '100.0'; html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openTechnicianDetail(\''+escapeStr(t)+'\')"><td>#'+(i+1)+'</td><td style="font-weight:600;">'+t+'</td><td>'+m.vol+'</td><td style="color:var(--success);">'+m.dentro+'</td><td style="color:'+(parseFloat(sla)>=85?'var(--success)':'var(--warn)')+';">'+sla+'%</td><td>'+(m.cc>0?'⭐ '+(m.cs/m.cc).toFixed(2):'—')+'</td><td>'+m.horas.toFixed(1)+'h</td><td>'+m.cli.size+'</td><td>'+(m.backlog>0?'<span style="color:var(--warn);">'+m.backlog+'</span>':'—')+'</td></tr>'; });
+    html += '</tbody></table></div>';
+  }
+  else if(tipo === 'chamados-todos'){
+    html = '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin-bottom:14px;font-family:Poppins;">🎫 Todos os Chamados ('+localSet.length+')</h3>';
+    html += '<button class="btn-secondary" onclick="abrirRelatorioFiltro(\'tecnicos\',\'todas\')" style="margin-bottom:16px;">← Voltar</button>';
+    html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Técnico</th><th>Abertura</th><th>SLA</th></tr></thead><tbody>';
+    localSet.slice(0, 200).forEach(d => { html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openTicketDetail(\''+escapeStr(d.id)+'\')"><td style="font-family:JetBrains Mono;">'+d.id+'</td><td>'+cleanEntityName(d.entidade)+'</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+d.titulo+'</td><td>'+(d.tecnico||'N/A')+'</td><td>'+d.dataAbertura.dia+'/'+d.dataAbertura.mes+'/'+d.dataAbertura.ano+'</td><td>'+(d.isBacklog?'<span class="status-badge warn">BACKLOG</span>':(d.withinSLA?'<span class="status-badge success">DENTRO</span>':'<span class="status-badge danger">FORA</span>'))+'</td></tr>'; });
+    html += '</tbody></table></div>';
+    if(localSet.length > 200) html += '<p style="text-align:center;color:var(--text-muted);margin-top:12px;">Mostrando 200 de '+localSet.length+' chamados.</p>';
+  }
+  else if(tipo === 'sla-detalhe'){
+    const naoBacklog = localSet.filter(d => !d.isBacklog);
+    const dentro = naoBacklog.filter(d => d.withinSLA === true);
+    const fora = naoBacklog.filter(d => d.withinSLA !== true);
+    html = '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin-bottom:14px;font-family:Poppins;">✅ Detalhe SLA</h3>';
+    html += '<button class="btn-secondary" onclick="abrirRelatorioFiltro(\'tecnicos\',\'todas\')" style="margin-bottom:16px;">← Voltar</button>';
+    html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">';
+    html += '<div><h4 style="color:var(--success);margin-bottom:10px;">✅ Dentro do SLA ('+dentro.length+')</h4><div class="modern-table-container" style="max-height:400px;overflow-y:auto;"><table class="modern-table"><thead><tr><th>ID</th><th>Cliente</th><th>Técnico</th></tr></thead><tbody>';
+    dentro.slice(0,50).forEach(d => { html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openTicketDetail(\''+escapeStr(d.id)+'\')"><td>'+d.id+'</td><td>'+cleanEntityName(d.entidade)+'</td><td>'+(d.tecnico||'—')+'</td></tr>'; });
+    html += '</tbody></table></div></div>';
+    html += '<div><h4 style="color:var(--danger);margin-bottom:10px;">❌ Fora do SLA ('+fora.length+')</h4><div class="modern-table-container" style="max-height:400px;overflow-y:auto;"><table class="modern-table"><thead><tr><th>ID</th><th>Cliente</th><th>Técnico</th></tr></thead><tbody>';
+    fora.slice(0,50).forEach(d => { html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openTicketDetail(\''+escapeStr(d.id)+'\')"><td>'+d.id+'</td><td>'+cleanEntityName(d.entidade)+'</td><td>'+(d.tecnico||'—')+'</td></tr>'; });
+    html += '</tbody></table></div></div>';
+    html += '</div>';
+  }
+  else if(tipo === 'csat-detalhe'){
+    const avaliados = localSet.filter(d => d.csat !== null).sort((a,b) => b.csat - a.csat);
+    html = '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin-bottom:14px;font-family:Poppins;">⭐ Chamados Avaliados ('+avaliados.length+')</h3>';
+    html += '<button class="btn-secondary" onclick="abrirRelatorioFiltro(\'tecnicos\',\'todas\')" style="margin-bottom:16px;">← Voltar</button>';
+    html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>ID</th><th>Cliente</th><th>Técnico</th><th>CSAT</th></tr></thead><tbody>';
+    avaliados.forEach(d => { html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openTicketDetail(\''+escapeStr(d.id)+'\')"><td>'+d.id+'</td><td>'+cleanEntityName(d.entidade)+'</td><td>'+(d.tecnico||'—')+'</td><td style="color:var(--purple);font-weight:700;">⭐ '+d.csat+'</td></tr>'; });
+    html += '</tbody></table></div>';
+  }
+  else if(tipo === 'horas-detalhe'){
+    const map = {};
+    localSet.forEach(d => { if(!d.tecnico) return; if(!map[d.tecnico]) map[d.tecnico] = 0; map[d.tecnico] += d.duracao || 0; });
+    const techs = Object.keys(map).sort((a,b) => map[b] - map[a]);
+    const totalH = techs.reduce((s,t) => s + map[t], 0);
+    html = '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin-bottom:14px;font-family:Poppins;">⏱️ Horas Trabalhadas por Técnico</h3>';
+    html += '<button class="btn-secondary" onclick="abrirRelatorioFiltro(\'tecnicos\',\'todas\')" style="margin-bottom:16px;">← Voltar</button>';
+    html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>Rank</th><th>Técnico</th><th>Horas</th><th>% do Total</th></tr></thead><tbody>';
+    techs.forEach((t, i) => { const pct = totalH > 0 ? ((map[t]/totalH)*100).toFixed(1) : '0.0'; html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openTechnicianDetail(\''+escapeStr(t)+'\')"><td>#'+(i+1)+'</td><td style="font-weight:600;">'+t+'</td><td style="font-family:JetBrains Mono;font-weight:700;">'+map[t].toFixed(1)+'h</td><td style="color:var(--blue-primary);">'+pct+'%</td></tr>'; });
+    html += '</tbody></table></div>';
+  }
+  else if(tipo === 'clientes-detalhe'){
+    const map = {};
+    localSet.forEach(d => { map[d.entidade] = (map[d.entidade] || 0) + 1; });
+    const clientes = Object.keys(map).sort((a,b) => map[b] - map[a]);
+    html = '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin-bottom:14px;font-family:Poppins;">🏢 Clientes Atendidos ('+clientes.length+')</h3>';
+    html += '<button class="btn-secondary" onclick="abrirRelatorioFiltro(\'tecnicos\',\'todas\')" style="margin-bottom:16px;">← Voltar</button>';
+    html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>Rank</th><th>Cliente</th><th>Chamados</th><th>% do Total</th></tr></thead><tbody>';
+    clientes.forEach((c, i) => { const pct = localSet.length > 0 ? ((map[c]/localSet.length)*100).toFixed(1) : '0.0'; html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openClientUniversalModal(\''+escapeStr(c)+'\',\'cliente\')"><td>#'+(i+1)+'</td><td style="font-weight:600;">'+cleanEntityName(c)+'</td><td style="font-family:JetBrains Mono;font-weight:700;">'+map[c]+'</td><td style="color:var(--blue-primary);">'+pct+'%</td></tr>'; });
+    html += '</tbody></table></div>';
+  }
+  
+  content.innerHTML = html;
+  content.scrollTop = 0;
+}
+
+
+/* ================================================================
+   ORDENAÇÃO AUTOMÁTICA EM TODAS AS TABELAS DE RELATÓRIO
+   ================================================================ */
+function registrarTodasTabelasRelatorio(){
+  const modal = el('modal-relatorio-filtro');
+  if(!modal) return;
+  const tables = modal.querySelectorAll('table');
+  tables.forEach((table, idx) => {
+    if(table.id) return; /* já tem ID, foi registrada manualmente */
+    const tbody = table.querySelector('tbody');
+    if(!tbody || !tbody.children.length) return;
+    /* Extrai dados das linhas */
+    const ths = table.querySelectorAll('thead th');
+    if(!ths.length) return;
+    const numCols = ths.length;
+    const data = [];
+    tbody.querySelectorAll('tr').forEach(tr => {
+      const tds = tr.querySelectorAll('td');
+      if(tds.length >= numCols){
+        const row = {};
+        const onclick = tr.getAttribute('onclick') || '';
+        row._onclick = onclick;
+        row._html = tr.innerHTML;
+        for(let i = 0; i < numCols; i++){
+          row[i] = tds[i] ? tds[i].textContent.trim() : '';
+        }
+        data.push(row);
+      }
+    });
+    if(!data.length) return;
+    const tableId = 'auto-table-' + idx + '-' + Date.now();
+    table.id = tableId;
+    /* Cria extractors baseados no índice da coluna */
+    const extractors = [];
+    for(let i = 0; i < numCols; i++){
+      extractors.push((r) => r[i]);
+    }
+    /* Registra para ordenação */
+    regTable(tableId, {
+      data: data,
+      extractors: extractors,
+      render: function(){
+        const tb = table.querySelector('tbody');
+        if(!tb) return;
+        tb.innerHTML = '';
+        data.forEach(r => {
+          const tr = document.createElement('tr');
+          if(r._onclick) tr.setAttribute('onclick', r._onclick);
+          tr.innerHTML = r._html;
+          tb.appendChild(tr);
+        });
+      }
+    });
+  });
+}
+
+/* Hook: sempre que o conteúdo do modal-relatorio-filtro muda, registrar tabelas */
+const _origAbrirRelatorioFiltro = window.abrirRelatorioFiltro;
+if(_origAbrirRelatorioFiltro){
+  window.abrirRelatorioFiltro = function(tipo, categoria){
+    _origAbrirRelatorioFiltro(tipo, categoria);
+    setTimeout(registrarTodasTabelasRelatorio, 200);
+  };
+}
+const _origAbrirDrilldownRelatorio = window.abrirDrilldownRelatorio;
+if(_origAbrirDrilldownRelatorio){
+  window.abrirDrilldownRelatorio = function(tipo){
+    _origAbrirDrilldownRelatorio(tipo);
+    setTimeout(registrarTodasTabelasRelatorio, 200);
+  };
+}
+const _origAbrirRelatorioEquipe = window.abrirRelatorioEquipe;
+if(_origAbrirRelatorioEquipe){
+  window.abrirRelatorioEquipe = function(eq){
+    _origAbrirRelatorioEquipe(eq);
+    setTimeout(registrarTodasTabelasRelatorio, 200);
+  };
+}
+
+
+/* ================================================================
+   KPIS CLICÁVEIS EM TODOS OS RELATÓRIOS
+   ================================================================ */
+/* Torna todos os KPIs (cards com text-align:center) clicáveis */
+function tornarKpisClicaveis(){
+  const modal = el('modal-relatorio-filtro');
+  if(!modal) return;
+  /* Busca todos os divs que contêm text-transform:uppercase (label de KPI) */
+  const allDivs = modal.querySelectorAll('div');
+  const kpis = [];
+  allDivs.forEach(d => {
+    const cs = d.getAttribute('style') || '';
+    if(cs.indexOf('text-align') >= 0 && cs.indexOf('center') >= 0){
+      const inner = d.querySelector('div[style*="uppercase"]');
+      if(inner) kpis.push(d);
+    }
+  });
+  kpis.forEach(kpi => {
+    if(kpi.dataset.clickable) return; /* já processado */
+    const label = kpi.querySelector('div[style*="text-transform:uppercase"]');
+    if(!label) return;
+    const labelText = label.textContent.trim().toLowerCase();
+    /* Só torna clicável se tiver um drilldown correspondente */
+    const drilldownMap = {
+      'técnicos': 'tecnicos-lista',
+      'tecnicos': 'tecnicos-lista',
+      'chamados': 'chamados-todos',
+      'sla médio': 'sla-detalhe',
+      'sla': 'sla-detalhe',
+      'csat médio': 'csat-detalhe',
+      'csat': 'csat-detalhe',
+      'horas trabalhadas': 'horas-detalhe',
+      'horas': 'horas-detalhe',
+      'horas totais': 'horas-detalhe',
+      'clientes': 'clientes-detalhe',
+      'backlog': 'backlog-detalhe',
+      'incidentes': 'incidentes-detalhe',
+      'requisições': 'requisicoes-detalhe',
+      'requisicoes': 'requisicoes-detalhe',
+      'categorias': 'categorias-detalhe',
+      'vol. médio': 'vol-medio-detalhe',
+      'vol. medio': 'vol-medio-detalhe',
+      'dentro do sla': 'sla-detalhe',
+      'fora do sla': 'sla-detalhe',
+      'clientes únicos': 'clientes-detalhe',
+      'sem backlog': 'backlog-detalhe',
+    };
+    const drilldown = drilldownMap[labelText];
+    if(drilldown){
+      kpi.dataset.clickable = '1';
+      kpi.style.cursor = 'pointer';
+      kpi.style.transition = 'transform 0.2s, box-shadow 0.2s';
+      kpi.onmouseover = function(){ this.style.transform = 'translateY(-3px)'; this.style.boxShadow = '0 8px 20px rgba(75,123,236,0.20)'; };
+      kpi.onmouseout = function(){ this.style.transform = ''; this.style.boxShadow = ''; };
+      kpi.onclick = function(){ abrirDrilldownRelatorio(drilldown); };
+    }
+  });
+}
+
+/* Adiciona mais drilldowns genéricos */
+const _origAbrirDrilldown = window.abrirDrilldownRelatorio;
+window.abrirDrilldownRelatorio = function(tipo){
+  /* Primeiro tenta os drilldowns existentes */
+  const tiposExistentes = ['tecnicos-lista','chamados-todos','sla-detalhe','csat-detalhe','horas-detalhe','clientes-detalhe'];
+  if(tiposExistentes.indexOf(tipo) >= 0){
+    if(_origAbrirDrilldown) _origAbrirDrilldown(tipo);
+    setTimeout(tornarKpisClicaveis, 200);
+    setTimeout(registrarTodasTabelasRelatorio, 300);
+    return;
+  }
+  /* Drilldowns genéricos para novos tipos */
+  const content = el('relatorio-filtro-content');
+  if(!content) return;
+  const fc = el('select-tecnicos-client') ? el('select-tecnicos-client').value : 'Todos';
+  const localSet = (fc && fc !== 'Todos') ? currentFiltered.filter(d => d.entidade === fc) : currentFiltered;
+  let html = '';
+  
+  if(tipo === 'backlog-detalhe'){
+    const backlog = localSet.filter(d => d.isBacklog);
+    html = '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin-bottom:14px;font-family:Poppins;">⏳ Chamados em Backlog ('+backlog.length+')</h3>';
+    html += '<button class="btn-secondary" onclick="abrirRelatorioFiltro(\'tecnicos\',\'todas\')" style="margin-bottom:16px;">← Voltar</button>';
+    html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Status</th><th>Técnico</th></tr></thead><tbody>';
+    backlog.slice(0,200).forEach(d => { html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openTicketDetail(\''+escapeStr(d.id)+'\')"><td>'+d.id+'</td><td>'+cleanEntityName(d.entidade)+'</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+d.titulo+'</td><td><span class="status-badge warn">'+(d.status||'Backlog')+'</span></td><td>'+(d.tecnico||'—')+'</td></tr>'; });
+    html += '</tbody></table></div>';
+  }
+  else if(tipo === 'incidentes-detalhe'){
+    const inc = localSet.filter(d => (d.tipo||'').toLowerCase().includes('incidente'));
+    html = '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin-bottom:14px;font-family:Poppins;">🔧 Incidentes ('+inc.length+')</h3>';
+    html += '<button class="btn-secondary" onclick="abrirRelatorioFiltro(\'tecnicos\',\'todas\')" style="margin-bottom:16px;">← Voltar</button>';
+    html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Técnico</th><th>SLA</th></tr></thead><tbody>';
+    inc.slice(0,200).forEach(d => { html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openTicketDetail(\''+escapeStr(d.id)+'\')"><td>'+d.id+'</td><td>'+cleanEntityName(d.entidade)+'</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+d.titulo+'</td><td>'+(d.tecnico||'—')+'</td><td>'+(d.isBacklog?'<span class="status-badge warn">BACKLOG</span>':(d.withinSLA?'<span class="status-badge success">DENTRO</span>':'<span class="status-badge danger">FORA</span>'))+'</td></tr>'; });
+    html += '</tbody></table></div>';
+  }
+  else if(tipo === 'requisicoes-detalhe'){
+    const req = localSet.filter(d => (d.tipo||'').toLowerCase().includes('requisi'));
+    html = '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin-bottom:14px;font-family:Poppins;">📝 Requisições ('+req.length+')</h3>';
+    html += '<button class="btn-secondary" onclick="abrirRelatorioFiltro(\'tecnicos\',\'todas\')" style="margin-bottom:16px;">← Voltar</button>';
+    html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>ID</th><th>Cliente</th><th>Título</th><th>Técnico</th><th>SLA</th></tr></thead><tbody>';
+    req.slice(0,200).forEach(d => { html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openTicketDetail(\''+escapeStr(d.id)+'\')"><td>'+d.id+'</td><td>'+cleanEntityName(d.entidade)+'</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+d.titulo+'</td><td>'+(d.tecnico||'—')+'</td><td>'+(d.isBacklog?'<span class="status-badge warn">BACKLOG</span>':(d.withinSLA?'<span class="status-badge success">DENTRO</span>':'<span class="status-badge danger">FORA</span>'))+'</td></tr>'; });
+    html += '</tbody></table></div>';
+  }
+  else if(tipo === 'categorias-detalhe'){
+    const catMap = {};
+    localSet.forEach(d => { catMap[d.categoria] = (catMap[d.categoria]||0)+1; });
+    const cats = Object.keys(catMap).sort((a,b) => catMap[b]-catMap[a]);
+    html = '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin-bottom:14px;font-family:Poppins;">📂 Categorias ('+cats.length+')</h3>';
+    html += '<button class="btn-secondary" onclick="abrirRelatorioFiltro(\'tecnicos\',\'todas\')" style="margin-bottom:16px;">← Voltar</button>';
+    html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>Rank</th><th>Categoria</th><th>Volume</th><th>% Total</th></tr></thead><tbody>';
+    cats.forEach((c,i) => { const pct = localSet.length>0?((catMap[c]/localSet.length)*100).toFixed(1):'0.0'; html += '<tr><td>#'+(i+1)+'</td><td>'+c+'</td><td>'+catMap[c]+'</td><td>'+pct+'%</td></tr>'; });
+    html += '</tbody></table></div>';
+  }
+  else if(tipo === 'vol-medio-detalhe'){
+    const map = {};
+    localSet.forEach(d => { map[d.entidade] = (map[d.entidade]||0)+1; });
+    const clientes = Object.keys(map).sort((a,b) => map[b]-map[a]);
+    const totalVol = clientes.reduce((s,c)=>s+map[c],0);
+    const media = clientes.length ? totalVol/clientes.length : 0;
+    html = '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin-bottom:14px;font-family:Poppins;">📊 Volume Médio por Cliente</h3>';
+    html += '<button class="btn-secondary" onclick="abrirRelatorioFiltro(\'tecnicos\',\'todas\')" style="margin-bottom:16px;">← Voltar</button>';
+    html += '<div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:16px;margin-bottom:16px;text-align:center;font-size:16px;"><strong>Média:</strong> '+media.toFixed(1)+' chamados por cliente ('+clientes.length+' clientes)</div>';
+    html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>Rank</th><th>Cliente</th><th>Volume</th><th>vs Média</th></tr></thead><tbody>';
+    clientes.forEach((c,i) => { const diff = map[c]-media; const diffTxt = diff>=0?('+'+diff.toFixed(1)+' acima'): (diff.toFixed(1)+' abaixo'); const color = diff>=0?'var(--success)':'var(--danger)'; html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openClientUniversalModal(\''+escapeStr(c)+'\',\'cliente\')"><td>#'+(i+1)+'</td><td>'+cleanEntityName(c)+'</td><td>'+map[c]+'</td><td style="color:'+color+';">'+diffTxt+'</td></tr>'; });
+    html += '</tbody></table></div>';
+  }
+  
+  if(html){
+    content.innerHTML = html;
+    content.scrollTop = 0;
+  }
+  setTimeout(tornarKpisClicaveis, 200);
+  setTimeout(registrarTodasTabelasRelatorio, 300);
+};
+
+/* Hook: sempre que abrirRelatorioFiltro roda, tornar KPIs clicáveis */
+const _origAbrirRel = window.abrirRelatorioFiltro;
+if(_origAbrirRel){
+  window.abrirRelatorioFiltro = function(t, c){
+    _origAbrirRel(t, c);
+    setTimeout(tornarKpisClicaveis, 200);
+    setTimeout(registrarTodasTabelasRelatorio, 300);
+  };
+}
+
+function abrirRelatorioFiltro(tipo, categoria){
+  const modal = el('modal-relatorio-filtro');
+  const content = el('relatorio-filtro-content');
+  const title = el('relatorio-filtro-title');
+  if(!modal || !content) return;
+  let html = '';
+  const fc = el('select-tecnicos-client') ? el('select-tecnicos-client').value : 'Todos';
+  const localSet = (fc && fc !== 'Todos') ? currentFiltered.filter(d => d.entidade === fc) : currentFiltered;
+  
+  if(tipo === 'sistema' && categoria === 'todos'){
+    title.textContent = '📊 Relatório Geral Completo do Sistema';
+    html = gerarRelatorioSistemaTodos();
+  } else if(tipo === 'tecnicos' && categoria === 'todas'){
+    title.textContent = '📊 Relatório de Todas as Equipes';
+    html = gerarRelatorioTodasEquipes(localSet);
+  } else if(tipo === 'tecnicos' && categoria === 'destaques'){
+    title.textContent = '⭐ Técnicos em Destaque';
+    const map = {};
+    localSet.forEach(d => { if(!d.tecnico) return; if(!map[d.tecnico]) map[d.tecnico] = {vol:0,dentro:0,backlog:0,cs:0,cc:0,cli:new Set(),horas:0}; const m = map[d.tecnico]; m.vol++; if(d.withinSLA) m.dentro++; if(d.isBacklog) m.backlog++; if(d.csat!==null){m.cs+=d.csat; m.cc++;} m.cli.add(d.entidade); m.horas+=d.duracao||0; });
+    const techs = Object.keys(map);
+    const mediaVol = techs.length ? techs.reduce((s,t)=>s+map[t].vol,0)/techs.length : 0;
+    const destaques = [];
+    techs.forEach(t=>{const m=map[t];const cons=m.vol-m.backlog;const sla=cons>0?(m.dentro/cons)*100:100;const csat=m.cc>0?m.cs/m.cc:0;const motivos=[];if(m.vol>=mediaVol)motivos.push('Vol≥média');if(sla>=95)motivos.push('SLA≥95%');if(csat>=4.5)motivos.push('CSAT≥4.5');if(motivos.length>0)destaques.push({tec:t,m:motivos.length,sla,csat,vol:m.vol,horas:m.horas,motivos});});
+    destaques.sort((a,b)=>b.m-a.m||b.vol-a.vol);
+    
+    if(!destaques.length){ html = '<div class="empty-state">Nenhum técnico em destaque.</div>'; }
+    else {
+      html += '<div style="background:linear-gradient(135deg,rgba(255,193,7,0.10),rgba(253,121,168,0.08));border:1px solid var(--accent-amber);border-radius:var(--radius);padding:18px;margin-bottom:20px;"><div style="font-weight:700;font-size:18px;color:#B8860B;font-family:Poppins;">⭐ '+destaques.length+' Técnicos em Destaque</div><div style="font-size:13px;color:var(--text-muted);">Volume acima da média, SLA ≥ 95% ou CSAT ≥ 4.5</div></div>';
+      html += '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin:24px 0 12px;font-family:Poppins;">📋 Ranking</h3>';
+      html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>Rank</th><th>Técnico</th><th>Motivos</th><th>Chamados</th><th>SLA</th><th>CSAT</th></tr></thead><tbody>';
+      destaques.forEach((d,i)=>{
+        html += '<tr ><td>#'+(i+1)+'</td><td>⭐ '+d.tec+'</td><td>'+d.motivos.map(m=>'<span style="background:rgba(255,193,7,0.20);color:#B8860B;padding:2px 8px;border-radius:40px;font-size:11px;margin:1px;display:inline-block;">'+m+'</span>').join('')+'</td><td>'+d.vol+'</td><td>'+d.sla.toFixed(1)+'%</td><td>'+(d.csat>0?'⭐ '+d.csat.toFixed(2):'—')+'</td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+  } else if(tipo === 'clientes' && categoria === 'todos'){
+    title.textContent = '🏢 Relatório Geral de Clientes';
+    const map = {};
+    currentFiltered.forEach(d=>{if(!map[d.entidade])map[d.entidade]={vol:0,dentro:0,backlog:0,cs:0,cc:0,horas:0};const m=map[d.entidade];m.vol++;if(d.withinSLA)m.dentro++;if(d.isBacklog)m.backlog++;if(d.csat!==null){m.cs+=d.csat;m.cc++;}m.horas+=d.duracao||0;});
+    const clientes = Object.keys(map);
+    const totalVol = clientes.reduce((s,c)=>s+map[c].vol,0);
+    const totalDentro = clientes.reduce((s,c)=>s+map[c].dentro,0);
+    const totalBacklog = clientes.reduce((s,c)=>s+map[c].backlog,0);
+    const considered = totalVol - totalBacklog;
+    const slaMedio = considered>0?((totalDentro/considered)*100).toFixed(1):'100.0';
+    const mediaVol = clientes.length ? totalVol/clientes.length : 0;
+    const totalHoras = clientes.reduce((s,c)=>s+map[c].horas,0);
+    const csatArr = []; clientes.forEach(c=>{if(map[c].cc>0)csatArr.push(map[c].cs/map[c].cc);});
+    const csatMedio = csatArr.length ? (csatArr.reduce((a,b)=>a+b,0)/csatArr.length).toFixed(2) : 'N/A';
+    
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:24px;">';
+    html += '<div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:16px;text-align:center;"><div style="font-size:20px;">🏢</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:600;">Clientes</div><div style="font-size:24px;font-weight:700;color:var(--blue-primary);font-family:Poppins;">'+clientes.length+'</div></div>';
+    html += '<div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:16px;text-align:center;"><div style="font-size:20px;">🎫</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:600;">Chamados</div><div style="font-size:24px;font-weight:700;color:var(--blue-primary);font-family:Poppins;">'+totalVol+'</div></div>';
+    html += '<div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:16px;text-align:center;"><div style="font-size:20px;">✅</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:600;">SLA Médio</div><div style="font-size:24px;font-weight:700;color:'+(parseFloat(slaMedio)>=85?'var(--success)':'var(--warn)')+';font-family:Poppins;">'+slaMedio+'%</div></div>';
+    html += '<div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:16px;text-align:center;"><div style="font-size:20px;">⏳</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:600;">Backlog</div><div style="font-size:24px;font-weight:700;color:var(--warn);font-family:Poppins;">'+totalBacklog+'</div></div>';
+    html += '<div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:16px;text-align:center;"><div style="font-size:20px;">📊</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:600;">Vol. Médio</div><div style="font-size:24px;font-weight:700;color:var(--blue-primary);font-family:Poppins;">'+mediaVol.toFixed(1)+'</div></div>';
+    html += '<div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:16px;text-align:center;"><div style="font-size:20px;">🔧</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:600;">Incidentes</div><div style="font-size:24px;font-weight:700;color:var(--danger);font-family:Poppins;">'+(currentFiltered.filter(d=>(d.tipo||'').toLowerCase().includes('incidente')).length)+'</div></div>';
+    html += '<div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:16px;text-align:center;"><div style="font-size:20px;">📝</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:600;">Requisições</div><div style="font-size:24px;font-weight:700;color:var(--blue-primary);font-family:Poppins;">'+(currentFiltered.filter(d=>(d.tipo||'').toLowerCase().includes('requisi')).length)+'</div></div>';
+    html += '<div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:16px;text-align:center;"><div style="font-size:20px;">📂</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:600;">Categorias</div><div style="font-size:24px;font-weight:700;color:var(--accent-amber);font-family:Poppins;">'+(new Set(currentFiltered.map(d=>d.categoria)).size)+'</div></div>';
+    html += '<div style="background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:16px;text-align:center;"><div style="font-size:20px;">⏱️</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:600;">Horas Totais</div><div style="font-size:24px;font-weight:700;color:var(--cyan);font-family:Poppins;">'+totalHoras.toFixed(0)+'h</div></div>';
+    html += '</div>';
+    
+    /* Calcula equipe principal e consumo de horas por cliente */
+    const clienteEquipeMap = {};
+    const clienteHorasMap = {};
+    currentFiltered.forEach(d=>{
+      if(!clienteEquipeMap[d.entidade])clienteEquipeMap[d.entidade]={};
+      const eq=d.equipe||'Central de Suporte';
+      clienteEquipeMap[d.entidade][eq]=(clienteEquipeMap[d.entidade][eq]||0)+1;
+      if(!clienteHorasMap[d.entidade])clienteHorasMap[d.entidade]={};
+      if(!clienteHorasMap[d.entidade][eq])clienteHorasMap[d.entidade][eq]=0;
+      clienteHorasMap[d.entidade][eq]+=(d.duracao||0);
+    });
+    
+    html += '<h3 style="font-size:18px;font-weight:600;color:var(--blue-dark);margin:24px 0 12px;font-family:Poppins;">🏆 Top 10 Clientes por Volume (com Consumo de Horas da Equipe)</h3>';
+    html += '<div class="modern-table-container"><table class="modern-table" id="table-clientes-relatorio"><thead><tr><th>Rank</th><th>Cliente</th><th>Volume</th><th>SLA</th><th>Backlog</th><th>% Total</th><th>Equipe Principal</th><th>Consumo de Horas</th><th>H. Equipe Principal</th></tr></thead><tbody>';
+    const clientesData = clientes.sort((a,b)=>map[b].vol-map[a].vol).slice(0,10).map((c,i)=>{
+      const m=map[c];const cons=m.vol-m.backlog;const sla=cons>0?((m.dentro/cons)*100).toFixed(1):'100.0';const pct=((m.vol/totalVol)*100).toFixed(1);
+      /* Encontra equipe principal */
+      let eqPrincipal='',eqMax=0;
+      if(clienteEquipeMap[c]){Object.keys(clienteEquipeMap[c]).forEach(eq=>{if(clienteEquipeMap[c][eq]>eqMax){eqMax=clienteEquipeMap[c][eq];eqPrincipal=eq;}});}
+      /* Horas da equipe principal */
+      const horasEqPrincipal = (clienteHorasMap[c] && clienteHorasMap[c][eqPrincipal]) ? clienteHorasMap[c][eqPrincipal] : 0;
+      return {rank:i+1,cliente:c,vol:m.vol,sla:sla,backlog:m.backlog,pct:pct,eqPrincipal:eqPrincipal,horas:m.horas,horasEq:horasEqPrincipal};
+    });
+    clientesData.forEach(r=>{
+      html += '<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openClientUniversalModal(\''+escapeStr(r.cliente)+'\',\'cliente\')"><td>#'+r.rank+'</td><td>'+cleanEntityName(r.cliente)+'</td><td>'+r.vol+'</td><td style="color:'+(parseFloat(r.sla)>=85?'var(--success)':'var(--warn)')+';">'+r.sla+'%</td><td>'+r.backlog+'</td><td>'+r.pct+'%</td><td><span style="background:rgba(75,123,236,0.10);color:var(--indigo);padding:2px 10px;border-radius:40px;font-size:11px;font-weight:600;">'+r.eqPrincipal+'</span></td><td style="font-family:JetBrains Mono;font-weight:600;color:var(--cyan);">'+r.horas.toFixed(1)+'h</td><td style="font-family:JetBrains Mono;color:var(--blue-primary);">'+r.horasEq.toFixed(1)+'h</td></tr>';
+    });
+    html += '</tbody></table></div>';
+    /* Registra tabela para ordenação */
+    setTimeout(function(){ regTable('table-clientes-relatorio',{data:clientesData,extractors:[r=>r.rank,r=>r.cliente,r=>r.vol,r=>r.sla,r=>r.backlog,r=>r.pct,r=>r.eqPrincipal,r=>r.horas,r=>r.horasEq],render:function(){var tbody=document.querySelector('#table-clientes-relatorio tbody');if(!tbody)return;tbody.innerHTML='';clientesData.forEach(function(r){tbody.insertAdjacentHTML('beforeend','<tr style="cursor:pointer;" onclick="closeModal(\'modal-relatorio-filtro\');openClientUniversalModal(\''+escapeStr(r.cliente)+'\',\'cliente\')"><td>#'+r.rank+'</td><td>'+cleanEntityName(r.cliente)+'</td><td>'+r.vol+'</td><td>'+r.sla+'%</td><td>'+r.backlog+'</td><td>'+r.pct+'%</td><td>'+r.eqPrincipal+'</td><td>'+r.horas.toFixed(1)+'h</td><td>'+r.horasEq.toFixed(1)+'h</td></tr>');});}}); },100);
+    
+  } else if(tipo === 'clientes' && categoria === 'destaque'){
+    title.textContent = '⭐ Clientes em Destaque';
+    const map = {};
+    currentFiltered.forEach(d=>{if(!map[d.entidade])map[d.entidade]={vol:0,dentro:0,backlog:0,cs:0,cc:0,horas:0};const m=map[d.entidade];m.vol++;if(d.withinSLA)m.dentro++;if(d.isBacklog)m.backlog++;if(d.csat!==null){m.cs+=d.csat;m.cc++;}m.horas+=d.duracao||0;});
+    const clientes = Object.keys(map);
+    const mediaVol = clientes.length ? clientes.reduce((s,c)=>s+map[c].vol,0)/clientes.length : 0;
+    const destaques = [];
+    clientes.forEach(c=>{const m=map[c];const cons=m.vol-m.backlog;const sla=cons>0?(m.dentro/cons)*100:100;const motivos=[];if(m.vol>=mediaVol)motivos.push('Vol≥média');if(sla>=95)motivos.push('SLA≥95%');if(m.backlog===0&&m.vol>=10)motivos.push('Sem backlog');if(motivos.length>0)destaques.push({cli:c,m:motivos.length,sla,vol:m.vol,motivos});});
+    destaques.sort((a,b)=>b.m-a.m||b.vol-a.vol);
+    
+    if(!destaques.length){ html = '<div class="empty-state">Nenhum cliente em destaque.</div>'; }
+    else {
+      html += '<div style="background:linear-gradient(135deg,rgba(255,193,7,0.10),rgba(253,121,168,0.08));border:1px solid var(--accent-amber);border-radius:var(--radius);padding:18px;margin-bottom:20px;"><div style="font-weight:700;font-size:18px;color:#B8860B;font-family:Poppins;">⭐ '+destaques.length+' Clientes em Destaque</div></div>';
+      html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>Rank</th><th>Cliente</th><th>Motivos</th><th>Volume</th><th>SLA</th></tr></thead><tbody>';
+      destaques.forEach((d,i)=>{
+        html += '<tr style="cursor:pointer;" ><td>#'+(i+1)+'</td><td>⭐ '+cleanEntityName(d.cli)+'</td><td>'+d.motivos.map(m=>'<span style="background:rgba(255,193,7,0.20);color:#B8860B;padding:2px 8px;border-radius:40px;font-size:11px;margin:1px;display:inline-block;">'+m+'</span>').join('')+'</td><td>'+d.vol+'</td><td>'+d.sla.toFixed(1)+'%</td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+  } else if(tipo === 'clientes' && categoria === 'csat-baixo'){
+    title.textContent = '⚠️ Clientes com CSAT Baixo';
+    const map = {};
+    currentFiltered.forEach(d=>{if(!map[d.entidade])map[d.entidade]={vol:0,dentro:0,backlog:0,cs:0,cc:0,horas:0};const m=map[d.entidade];m.vol++;if(d.withinSLA)m.dentro++;if(d.isBacklog)m.backlog++;if(d.csat!==null){m.cs+=d.csat;m.cc++;}m.horas+=d.duracao||0;});
+    const csatBaixo = [];
+    Object.keys(map).forEach(c=>{const m=map[c];if(m.cc>0){const csat=m.cs/m.cc;if(csat<3.5)csatBaixo.push({cli:c,csat,avaliacoes:m.cc,vol:m.vol});}});
+    csatBaixo.sort((a,b)=>a.csat-b.csat);
+    
+    if(!csatBaixo.length){ html = '<div class="empty-state">✅ Nenhum cliente com CSAT baixo. Excelente!</div>'; }
+    else {
+      html += '<div style="background:linear-gradient(135deg,rgba(220,53,69,0.10),rgba(253,121,168,0.08));border:1px solid var(--danger);border-radius:var(--radius);padding:18px;margin-bottom:20px;"><div style="font-weight:700;font-size:18px;color:var(--danger);font-family:Poppins;">⚠️ '+csatBaixo.length+' Clientes com CSAT Baixo</div></div>';
+      html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>Rank</th><th>Cliente</th><th>CSAT</th><th>Avaliações</th><th>Volume</th><th>Risco</th></tr></thead><tbody>';
+      csatBaixo.forEach((d,i)=>{
+        const risco = d.csat<2?'CRÍTICO':(d.csat<3?'ALTO':'MÉDIO');
+        html += '<tr style="cursor:pointer;" ><td>#'+(i+1)+'</td><td>⚠️ '+cleanEntityName(d.cli)+'</td><td style="color:var(--danger);font-weight:700;">⭐ '+d.csat.toFixed(2)+'</td><td>'+d.avaliacoes+'</td><td>'+d.vol+'</td><td><span class="status-badge danger">'+risco+'</span></td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+  } else if(tipo === 'clientes' && categoria === 'sla-baixo'){
+    title.textContent = '⚠️ Clientes com SLA Baixo';
+    const map = {};
+    currentFiltered.forEach(d=>{if(!map[d.entidade])map[d.entidade]={vol:0,dentro:0,backlog:0,cs:0,cc:0,horas:0};const m=map[d.entidade];m.vol++;if(d.withinSLA)m.dentro++;if(d.isBacklog)m.backlog++;if(d.csat!==null){m.cs+=d.csat;m.cc++;}m.horas+=d.duracao||0;});
+    const slaBaixo = [];
+    Object.keys(map).forEach(c=>{const m=map[c];const cons=m.vol-m.backlog;if(cons>0){const sla=(m.dentro/cons)*100;if(sla<85)slaBaixo.push({cli:c,sla,dentro:m.dentro,fora:cons-m.dentro,vol:m.vol});}});
+    slaBaixo.sort((a,b)=>a.sla-b.sla);
+    
+    if(!slaBaixo.length){ html = '<div class="empty-state">✅ Nenhum cliente com SLA baixo. Excelente!</div>'; }
+    else {
+      html += '<div style="background:linear-gradient(135deg,rgba(220,53,69,0.10),rgba(253,121,168,0.08));border:1px solid var(--danger);border-radius:var(--radius);padding:18px;margin-bottom:20px;"><div style="font-weight:700;font-size:18px;color:var(--danger);font-family:Poppins;">⚠️ '+slaBaixo.length+' Clientes com SLA Baixo</div></div>';
+      html += '<div class="modern-table-container"><table class="modern-table"><thead><tr><th>Rank</th><th>Cliente</th><th>SLA</th><th>Dentro</th><th>Fora SLA</th><th>Volume</th><th>Risco</th></tr></thead><tbody>';
+      slaBaixo.forEach((d,i)=>{
+        const risco = d.sla<60?'CRÍTICO':(d.sla<75?'ALTO':'MÉDIO');
+        html += '<tr style="cursor:pointer;" ><td>#'+(i+1)+'</td><td>⚠️ '+cleanEntityName(d.cli)+'</td><td style="color:var(--danger);font-weight:700;">'+d.sla.toFixed(1)+'%</td><td style="color:var(--success);">'+d.dentro+'</td><td style="color:var(--danger);font-weight:600;">'+d.fora+'</td><td>'+d.vol+'</td><td><span class="status-badge danger">'+risco+'</span></td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+  }
+  
+  content.innerHTML = html;
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+
+
+/* ================================================================
+   FILTROS TÉCNICOS: Todas + Destaques + barras de filtro
+   ================================================================ */
+function filtrarCardsTecnicos(categoria, equipeNome){
+  const grid = el('grid-tecnicos-cards');
+  if(!grid) return;
+  const cards = grid.querySelectorAll('.client-summary-card');
+  const fc = el('select-tecnicos-client') ? el('select-tecnicos-client').value : 'Todos';
+  const localSet = (fc && fc !== 'Todos') ? currentFiltered.filter(d => d.entidade === fc) : currentFiltered;
+  const techMap = {};
+  localSet.forEach(d => {
+    if(!d.tecnico) return;
+    if(!techMap[d.tecnico]) techMap[d.tecnico] = {vol:0, dentro:0, backlog:0, cs:0, cc:0};
+    const m = techMap[d.tecnico];
+    m.vol++; if(d.withinSLA) m.dentro++; if(d.isBacklog) m.backlog++;
+    if(d.csat !== null){ m.cs += d.csat; m.cc++; }
+  });
+  const mediaVol = Object.keys(techMap).length ? Object.values(techMap).reduce((s,m) => s + m.vol, 0) / Object.keys(techMap).length : 0;
+  
+  cards.forEach(card => {
+    const titleEl = card.querySelector('.client-card-title');
+    if(!titleEl){ card.style.display = ''; return; }
+    const nomeTec = titleEl.textContent.replace('👨‍💻 ', '').trim();
+    
+    if(categoria === 'todas'){
+      card.style.display = '';
+    } else if(categoria === 'destaques'){
+      const m = techMap[nomeTec];
+      if(!m){ card.style.display = 'none'; return; }
+      const considered = m.vol - m.backlog;
+      const sla = considered > 0 ? (m.dentro/considered)*100 : 100;
+      const csat = m.cc > 0 ? m.cs/m.cc : 0;
+      const ehDestaque = m.vol >= mediaVol || sla >= 95 || csat >= 4.5;
+      card.style.display = ehDestaque ? '' : 'none';
+    } else if(categoria === 'equipe'){
+      const attInfo = DB.atendentes && DB.atendentes[nomeTec];
+      const eqTec = attInfo ? attInfo.equipe : 'Central de Suporte';
+      card.style.display = (eqTec === equipeNome) ? '' : 'none';
+    }
+  });
+}
+
+/* Sobrescreve renderBotoesEquipe para adicionar Todas e Destaques */
+/* NOTA: A função original renderBotoesEquipe é definida mais abaixo (linha ~3784).
+   Como const _origRenderBotoesEquipe captura undefined (a função ainda não foi definida),
+   fazemos o hook DENTRO da função original diretamente. */
+
+/* Barra de filtro para Por Cliente */
+function renderBotoesClientes(){
+  let bar = el('clientes-filter-bar');
+  if(!bar){
+    /* Cria a barra se não existir */
+    const panel = el('panel-cliente');
+    if(!panel) return;
+    const search = panel.querySelector('.search-bar-container');
+    if(!search) return;
+    bar = document.createElement('div');
+    bar.id = 'clientes-filter-bar';
+    search.after(bar);
+  }
+  
+  const map = {};
+  currentFiltered.forEach(d => { if(!map[d.entidade]) map[d.entidade] = {vol:0,dentro:0,backlog:0,cs:0,cc:0}; const m = map[d.entidade]; m.vol++; if(d.withinSLA) m.dentro++; if(d.isBacklog) m.backlog++; if(d.csat!==null){m.cs+=d.csat; m.cc++;} });
+  const clientes = Object.keys(map);
+  const mediaVol = clientes.length ? clientes.reduce((s,c)=>s+map[c].vol,0)/clientes.length : 0;
+  
+  let destaqueCount=0, csatBaixoCount=0, slaBaixoCount=0;
+  clientes.forEach(c=>{const m=map[c];const cons=m.vol-m.backlog;const sla=cons>0?(m.dentro/cons)*100:100;const csat=m.cc>0?m.cs/m.cc:5;if(m.vol>=mediaVol||sla>=95||(m.backlog===0&&m.vol>=10))destaqueCount++;if(m.cc>0&&csat<3.5)csatBaixoCount++;if(cons>0&&sla<85)slaBaixoCount++;});
+  
+  bar.style.cssText = 'display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0 20px;padding:14px 18px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius);';
+  bar.innerHTML = 
+    '<span style="font-weight:600;font-size:13px;color:var(--text-muted);margin-right:8px;font-family:Poppins;">🏢 Clientes:</span>' +
+    '<button class="btn-cli-filtro" data-cat="todos" onclick="filtrarClientesTodos(this)" style="padding:8px 14px;border-radius:40px;border:1px solid var(--blue-primary);background:linear-gradient(135deg,var(--blue-primary),var(--blue-dark));color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:Poppins;">Todos <span style="background:rgba(255,255,255,0.20);padding:1px 8px;border-radius:40px;font-size:11px;">'+clientes.length+'</span></button>' +
+    '<button class="btn-cli-filtro" data-cat="destaque" onclick="filtrarClientesDestaque(this)" style="padding:8px 14px;border-radius:40px;border:1px solid var(--accent-amber);background:linear-gradient(135deg,rgba(255,193,7,0.15),rgba(253,121,168,0.10));color:#B8860B;font-size:13px;font-weight:600;cursor:pointer;font-family:Poppins;">⭐ Destaque <span style="background:rgba(255,193,7,0.25);color:#B8860B;padding:1px 8px;border-radius:40px;font-size:11px;">'+destaqueCount+'</span></button>' +
+    '<button class="btn-cli-filtro" data-cat="csat-baixo" onclick="filtrarClientesCsatBaixo(this)" style="padding:8px 14px;border-radius:40px;border:1px solid var(--danger);background:rgba(220,53,69,0.10);color:var(--danger);font-size:13px;font-weight:600;cursor:pointer;font-family:Poppins;">⚠️ CSAT Baixo <span style="background:rgba(220,53,69,0.20);color:var(--danger);padding:1px 8px;border-radius:40px;font-size:11px;">'+csatBaixoCount+'</span></button>' +
+    '<button class="btn-cli-filtro" data-cat="sla-baixo" onclick="filtrarClientesSlaBaixo(this)" style="padding:8px 14px;border-radius:40px;border:1px solid var(--danger);background:rgba(220,53,69,0.10);color:var(--danger);font-size:13px;font-weight:600;cursor:pointer;font-family:Poppins;">⚠️ SLA Baixo <span style="background:rgba(220,53,69,0.20);color:var(--danger);padding:1px 8px;border-radius:40px;font-size:11px;">'+slaBaixoCount+'</span></button>';
+}
+
+/* Wrappers para botoes de filtro de clientes */
+function filtrarClientesTodos(btn){ filtrarCardsClientes('todos', btn); abrirRelatorioFiltro('clientes','todos'); }
+function filtrarClientesDestaque(btn){ filtrarCardsClientes('destaque', btn); abrirRelatorioFiltro('clientes','destaque'); }
+function filtrarClientesCsatBaixo(btn){ filtrarCardsClientes('csat-baixo', btn); abrirRelatorioFiltro('clientes','csat-baixo'); }
+function filtrarClientesSlaBaixo(btn){ filtrarCardsClientes('sla-baixo', btn); abrirRelatorioFiltro('clientes','sla-baixo'); }
+
+function filtrarCardsClientes(categoria, btnAtivo){
+  const grid = el('grid-clientes-cards');
+  if(!grid) return;
+  const cards = grid.querySelectorAll('.client-summary-card');
+  const map = {};
+  currentFiltered.forEach(d => { if(!map[d.entidade]) map[d.entidade] = {vol:0,dentro:0,backlog:0,cs:0,cc:0}; const m = map[d.entidade]; m.vol++; if(d.withinSLA) m.dentro++; if(d.isBacklog) m.backlog++; if(d.csat!==null){m.cs+=d.csat; m.cc++;} });
+  const clientes = Object.keys(map);
+  const mediaVol = clientes.length ? clientes.reduce((s,c)=>s+map[c].vol,0)/clientes.length : 0;
+  
+  cards.forEach(card => {
+    const titleEl = card.querySelector('.client-card-title');
+    if(!titleEl){ card.style.display = ''; return; }
+    const nomeCli = titleEl.textContent.trim();
+    const m = map[nomeCli];
+    if(!m){ card.style.display = categoria === 'todos' ? '' : 'none'; return; }
+    const considered = m.vol - m.backlog;
+    const sla = considered > 0 ? (m.dentro/considered)*100 : 100;
+    const csat = m.cc > 0 ? m.cs/m.cc : 5;
+    let mostrar = false;
+    if(categoria === 'todos') mostrar = true;
+    else if(categoria === 'destaque') mostrar = m.vol >= mediaVol || sla >= 95 || (m.backlog === 0 && m.vol >= 10);
+    else if(categoria === 'csat-baixo') mostrar = m.cc > 0 && csat < 3.5;
+    else if(categoria === 'sla-baixo') mostrar = considered > 0 && sla < 85;
+    card.style.display = mostrar ? '' : 'none';
+  });
+  
+  /* Atualiza visual dos botões */
+  if(btnAtivo){
+    const bar = el('clientes-filter-bar');
+    if(bar){
+      bar.querySelectorAll('.btn-cli-filtro').forEach(b => {
+        const cat = b.dataset.cat;
+        b.style.background = cat === 'todos' ? 'var(--glass-bg)' : (cat === 'destaque' ? 'linear-gradient(135deg,rgba(255,193,7,0.15),rgba(253,121,168,0.10))' : 'rgba(220,53,69,0.10)');
+        b.style.color = 'var(--text-primary)';
+      });
+      btnAtivo.style.background = 'linear-gradient(135deg,var(--blue-primary),var(--blue-dark))';
+      btnAtivo.style.color = '#fff';
+    }
+  }
+}
+
+/* Hook: chamar renderBotoesClientes quando renderClienteDashboard rodar */
+const _origRenderClienteDashboard = window.renderClienteDashboard;
+if(_origRenderClienteDashboard){
+  window.renderClienteDashboard = function(){
+    _origRenderClienteDashboard.apply(this, arguments);
+    renderBotoesClientes();
+  };
+}
+
+/* Botão "Todos" também abre relatório */
+const _origFiltrarCardsClientes = filtrarCardsClientes;
+
+
 /* 6) CRM limpo – já está na função renderCrmTable */
 </script> 
 <script>
@@ -2774,6 +3722,8 @@ console.log('✅ PREMIUM ENHANCEMENTS v2.0 instalado: dark mode + ripple + anima
         var mg=Object.values(m);
         localStorage.setItem('inovit_visitas',JSON.stringify(mg));
         if(window.renderCalendario) window.renderCalendario();
+        if(window.renderGlobalDashboard) window.renderGlobalDashboard();
+        if(window.renderKanbanVisitas) window.renderKanbanVisitas();
         return mg.length;
       }).catch(function(e){ console.warn('pull visitas:',e); });
   }
@@ -2822,7 +3772,7 @@ console.log('✅ PREMIUM ENHANCEMENTS v2.0 instalado: dark mode + ripple + anima
 (function(){
   if(window.__CRM_MIN) return; window.__CRM_MIN=true;
   function pd(t){var o=[];t.split(/\r?\n/).forEach(function(l){if(!l.trim())return;var q=l.split(',').map(function(s){return s.trim();});if((q[0]||'').toLowerCase()==='id')return;if(q.length>=6)o.push({nome:q[2],cliente:q[3],whatsapp:q[4],email:q[5]});});return o;}
-  function pg(t){var o=[];t.split(/\r?\n/).forEach(function(l){if(!l.trim())return;var q=l.split(',').map(function(s){return s.trim();});var ei=-1;for(var i=0;i<q.length;i++){if(q[i]&&q[i].indexOf('@')>-1){ei=i;break;}}if(ei>-1)o.push({nome:q.slice(0,ei).join(' ').replace(/\s*\|.*$/,'').trim(),cliente:q[ei].split('@')[1]||'',whatsapp:q[ei+1]||'',email:q[ei]});});return o;}
+  function pg(t){var o=[];t.split(/\r?\n/).forEach(function(l){if(!l.trim())return;var q=l.split(',').map(function(s){return s.trim();});if((q[0]||'').toLowerCase()==='id')return;if(q.length>=6)o.push({nome:q[2],cliente:q[3],whatsapp:q[4],email:q[5]});});return o;}
   function go(){ return Promise.all([ fetch('https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/decisores.txt?v='+Date.now()).then(function(r){return r.text();}), fetch('https://raw.githubusercontent.com/oricardoguerreiro/base-inovit/refs/heads/main/geral.txt?v='+Date.now()).then(function(r){return r.text();}) ]).then(function(rs){ var d=pd(rs[0]),g=pg(rs[1]); localStorage.setItem('inovit_crm_decisores',JSON.stringify(d)); localStorage.setItem('inovit_crm_geral',JSON.stringify(g)); localStorage.setItem('crm_decisores',JSON.stringify(d)); localStorage.setItem('crm_geral',JSON.stringify(g)); if(window.loadCrmData) window.loadCrmData(); return {d:d.length,g:g.length}; }); }
   window.resetCrmData=function(){ return go().then(function(o){ alert('✅ CRM recarregado: '+o.d+' decisores, '+o.g+' gerais.'); }); };
   window.addEventListener('load',function(){ setTimeout(go,1500); });
@@ -3052,7 +4002,7 @@ window.processFileRows = function(rows){
     const fullCat = row[catCol] || 'Geral > Outros';
     let duracao = 0;
     if(durCol && row[durCol]) duracao = parseDuration(row[durCol]);
-    if(duracao === 0){ const h = String(ticketId).split('').reduce((a,c)=>a+c.charCodeAt(0),0); duracao = parseFloat(((h%8)+0.5).toFixed(1)); }
+    /* Não gera duração fake — usa 0 se não houver duração real */
     let rawTech = row[techCol] ? String(row[techCol]).trim() : '';
     if(rawTech.toLowerCase().includes('grupo técnico')) rawTech = '';
     let techs = rawTech ? rawTech.split(/<br>/i).map(t=>t.trim()).filter(t=>t) : [''];
@@ -3070,13 +4020,16 @@ window.parseDuration = function(v){
   if(!v) return 0;
   if(typeof v === 'number') return v;
   const s = String(v).trim();
-  let n = parseFloat(s.replace(',','.'));
-  if(!isNaN(n) && s.indexOf(' ') === -1) return n;
-  const m = s.match(/^(\d+):(\d+)$/);
-  if(m) return parseInt(m[1]) + parseInt(m[2])/60;
-  /* NOVO: formato XhYmin (ex: 0h55min, 2h44min, 176h15min) */
+  /* Primeiro tenta o formato XhYYmin (do CSV) */
   const m2 = s.match(/(\d+)h(\d+)min/i);
   if(m2) return parseInt(m2[1]) + parseInt(m2[2])/60;
+  const m3 = s.match(/(\d+)h(\d+)/i);
+  if(m3) return parseInt(m3[1]) + parseInt(m3[2])/60;
+  /* Depois tenta número puro (sem 'h') */
+  let n = parseFloat(s.replace(',','.'));
+  if(!isNaN(n) && s.indexOf(' ') === -1 && s.indexOf('h') === -1) return n;
+  const m = s.match(/^(\d+):(\d+)$/);
+  if(m) return parseInt(m[1]) + parseInt(m[2])/60;
   const parts = s.split('\n').map(x=>x.trim()).filter(x=>x);
   let t = 0;
   for(let p of parts){
@@ -3123,6 +4076,40 @@ function renderBotoesEquipe(){
   label.textContent = '👥 Equipes:';
   label.style.cssText = 'font-weight:600; font-size:13px; color:var(--text-muted); margin-right:8px; align-self:center;';
   bar.appendChild(label);
+  
+  /* === Botões Todas e Destaques (adicionados no início da barra) === */
+  /* Conta técnicos e destaques */
+  const fc = el('select-tecnicos-client') ? el('select-tecnicos-client').value : 'Todos';
+  const localSet = (fc && fc !== 'Todos') ? currentFiltered.filter(d => d.entidade === fc) : currentFiltered;
+  const techMapCount = {};
+  localSet.forEach(d => { if(!d.tecnico) return; if(!techMapCount[d.tecnico]) techMapCount[d.tecnico] = {vol:0,dentro:0,backlog:0,cs:0,cc:0}; const m = techMapCount[d.tecnico]; m.vol++; if(d.withinSLA) m.dentro++; if(d.isBacklog) m.backlog++; if(d.csat!==null){m.cs+=d.csat; m.cc++;} });
+  const techsCount = Object.keys(techMapCount);
+  const mediaVol = techsCount.length ? techsCount.reduce((s,t)=>s+techMapCount[t].vol,0)/techsCount.length : 0;
+  let destaquesCount = 0;
+  techsCount.forEach(t=>{const m=techMapCount[t];const cons=m.vol-m.backlog;const sla=cons>0?(m.dentro/cons)*100:100;const csat=m.cc>0?m.cs/m.cc:0;if(m.vol>=mediaVol||sla>=95||csat>=4.5)destaquesCount++;});
+  
+  /* Botão "Todas" - relatório de todas as equipes */
+  const btnTodas = document.createElement('button');
+  btnTodas.className = 'btn-filtro-tec';
+  btnTodas.innerHTML = '📊 Todas <span style="background:rgba(255,255,255,0.25);color:#fff;padding:1px 8px;border-radius:40px;font-size:11px;margin-left:4px;font-weight:700;">'+techsCount.length+'</span>';
+  btnTodas.style.cssText = 'padding:8px 14px;border-radius:40px;border:2px solid var(--indigo);background:linear-gradient(135deg,var(--indigo),var(--violet));color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:Poppins,sans-serif;display:inline-flex;align-items:center;box-shadow:0 4px 12px rgba(99,102,241,0.30);';
+  btnTodas.title = 'Relatório completo de todas as equipes';
+  btnTodas.onclick = function(){ filtrarCardsTecnicos('todas'); abrirRelatorioFiltro('tecnicos','todas'); };
+  bar.appendChild(btnTodas);
+  
+  /* Botão "Destaques" */
+  const btnDest = document.createElement('button');
+  btnDest.className = 'btn-filtro-tec';
+  btnDest.innerHTML = '⭐ Destaques <span style="background:rgba(255,193,7,0.25);color:#B8860B;padding:1px 8px;border-radius:40px;font-size:11px;margin-left:4px;font-weight:700;">'+destaquesCount+'</span>';
+  btnDest.style.cssText = 'padding:8px 14px;border-radius:40px;border:1px solid var(--accent-amber);background:linear-gradient(135deg,rgba(255,193,7,0.15),rgba(253,121,168,0.10));color:#B8860B;font-size:13px;font-weight:600;cursor:pointer;font-family:Poppins,sans-serif;display:inline-flex;align-items:center;';
+  btnDest.onclick = function(){ filtrarCardsTecnicos('destaques'); abrirRelatorioFiltro('tecnicos','destaques'); };
+  bar.appendChild(btnDest);
+  
+  /* Separador */
+  const sep = document.createElement('span');
+  sep.textContent = '|';
+  sep.style.cssText = 'color:var(--border-color);margin:0 4px;font-size:18px;align-self:center;';
+  bar.appendChild(sep);
   
   equipes.forEach(eq => {
     const btn = document.createElement('button');
@@ -3414,23 +4401,21 @@ function injetarBotoesExport(modalId, label){
   
   /* Verifica se já existem botões JPG ou PDF no header (qualquer botão com texto JPG/PDF) */
   const existingButtons = hdr.querySelectorAll('button');
-  let hasJpg = false, hasPdf = false, hasFechar = false;
+  let hasJpg = false, hasPdf = false;
   existingButtons.forEach(btn => {
     const txt = (btn.textContent || '').trim().toUpperCase();
     if(txt === 'JPG') hasJpg = true;
     else if(txt === 'PDF') hasPdf = true;
-    else if(txt === 'FECHAR' || btn.classList.contains('modal-close')) hasFechar = true;
   });
   
-  /* Se já tem JPG e PDF, não injeta duplicatas - apenas garante que Fechar existe */
+  /* Se já tem JPG e PDF, não injeta duplicatas */
   if(hasJpg && hasPdf){
-    /* Remove qualquer container de export duplicado que tenha sido injetado antes */
     const dupContainers = hdr.querySelectorAll('.modal-export-buttons');
     dupContainers.forEach(c => c.remove());
     return;
   }
   
-  /* Remove container antigo se existir (para recriar limpo) */
+  /* Remove container antigo se existir */
   const oldContainer = hdr.querySelector('.modal-export-buttons');
   if(oldContainer) oldContainer.remove();
   
@@ -3458,10 +4443,8 @@ function injetarBotoesExport(modalId, label){
     btnContainer.appendChild(btnPdf);
   }
   
-  /* Se não adicionou nenhum botão (caso raro), remove o container vazio */
-  if(btnContainer.children.length === 0){
-    return;
-  }
+  /* Se não adicionou nenhum botão, remove o container vazio */
+  if(btnContainer.children.length === 0) return;
   
   /* Insere antes do botão Fechar, ou no final do header */
   const btnFechar = hdr.querySelector('.modal-close');
@@ -3515,65 +4498,25 @@ window.closeModal = function(id){
   }
 };
 
-/* 6) Garantir que cada modal tenha no máximo 1 botão Fechar */
-function deduplicarBotoesFechar(){
-  document.querySelectorAll('.modal-hdr').forEach(hdr => {
-    const botoesFechar = hdr.querySelectorAll('.modal-close');
-    if(botoesFechar.length > 1){
-      /* Mantém apenas o primeiro, remove os demais */
-      for(let i = 1; i < botoesFechar.length; i++){
-        botoesFechar[i].remove();
-      }
-    }
-  });
-}
-
-/* 7) Garantir que cada modal tenha no máximo 1 botão JPG e 1 PDF */
-function deduplicarBotoesExport(){
+/* Deduplicação contínua: remove botões JPG/PDF/Fechar duplicados */
+function deduplicarBotoesModais(){
   document.querySelectorAll('.modal-hdr').forEach(hdr => {
     const btns = hdr.querySelectorAll('button');
-    const jpgBtns = [], pdfBtns = [];
+    const jpgBtns = [], pdfBtns = [], fecharBtns = [];
     btns.forEach(btn => {
       const txt = (btn.textContent || '').trim().toUpperCase();
       if(txt === 'JPG') jpgBtns.push(btn);
       else if(txt === 'PDF') pdfBtns.push(btn);
+      else if(txt === 'FECHAR' || btn.classList.contains('modal-close')) fecharBtns.push(btn);
     });
-    /* Remove JPGs extras (mantém apenas o primeiro) */
+    /* Mantém apenas o primeiro de cada, remove os demais */
     for(let i = 1; i < jpgBtns.length; i++) jpgBtns[i].remove();
-    /* Remove PDFs extras (mantém apenas o primeiro) */
     for(let i = 1; i < pdfBtns.length; i++) pdfBtns[i].remove();
+    for(let i = 1; i < fecharBtns.length; i++) fecharBtns[i].remove();
   });
 }
-
-/* Rodar deduplicação periodicamente e após abrir modais */
-setInterval(function(){
-  deduplicarBotoesFechar();
-  deduplicarBotoesExport();
-}, 800);
-
-/* Rodar na carga e após pequeno delay */
-window.addEventListener('load', function(){
-  setTimeout(function(){
-    deduplicarBotoesFechar();
-    deduplicarBotoesExport();
-  }, 1000);
-});
-
-/* Hook em closeModal para re-deduplicar quando modais reabrem */
-const _origCloseModalDedup = window.closeModal;
-window.closeModal = function(id){
-  _origCloseModalDedup(id);
-  /* Remove botões injetados para forçar re-injeção limpa na próxima abertura */
-  const modal = document.getElementById(id);
-  if(modal){
-    const injBtns = modal.querySelectorAll('.modal-export-buttons');
-    injBtns.forEach(c => c.remove());
-  }
-  setTimeout(function(){
-    deduplicarBotoesFechar();
-    deduplicarBotoesExport();
-  }, 100);
-};
+setInterval(deduplicarBotoesModais, 800);
+window.addEventListener('load', function(){ setTimeout(deduplicarBotoesModais, 1000); });
 
 console.log('✅ MODAL-EXPORT instalado: botões JPG/PDF em todos os modais + DEDUPLICACAO ativa.');
 })();
